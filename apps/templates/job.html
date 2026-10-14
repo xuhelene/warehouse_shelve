@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block body %}
+<section class="hero">
+  <span class="eyebrow">Job Status</span>
+  <h1>{{ module_title }} 任务</h1>
+  <p class="sub">任务以异步方式执行。页面会自动轮询状态，完成后提供结果入口。</p>
+</section>
+<div class="job-box">
+  <div class="job-header">
+    <div><div class="muted">任务 ID</div><div style="font-size:20px;font-weight:800;">{{ job_id }}</div></div>
+    <div class="job-progress" id="jobProgress">
+      <div class="spinner"></div>
+      <div class="spinner-text" id="spinnerText">Running</div>
+    </div>
+    <div class="job-header-right">
+      <div class="status-pill" id="statusPill">queued</div>
+    </div>
+  </div>
+  <div class="stats" style="margin-top:18px;">
+    <div class="stat"><div class="k">创建时间</div><div class="v" style="font-size:15px;" id="createdAt">-</div></div>
+    <div class="stat"><div class="k">开始时间</div><div class="v" style="font-size:15px;" id="startedAt">-</div></div>
+    <div class="stat"><div class="k">完成时间</div><div class="v" style="font-size:15px;" id="finishedAt">-</div></div>
+  </div>
+  <div class="panel" style="margin-top:18px;">
+    <h2>任务摘要</h2>
+    <pre id="jobPayload">loading...</pre>
+  </div>
+  <div class="button-row">
+    <a class="button hidden" id="resultLink" href="/results/{{ job_id }}">查看结果</a>
+    <a class="button secondary" href="/modules/{{ module_key }}">返回模块配置</a>
+  </div>
+</div>
+<script>
+  (function () {
+    const jobId = {{ job_id | tojson }};
+    async function refreshJob() {
+      const response = await fetch("/api/jobs/" + jobId);
+      const job = await response.json();
+      document.getElementById("statusPill").textContent = job.status;
+      document.getElementById("createdAt").textContent = job.created_at || "-";
+      document.getElementById("startedAt").textContent = job.started_at || "-";
+      document.getElementById("finishedAt").textContent = job.finished_at || "-";
+      document.getElementById("jobPayload").textContent = job.status === "failed" ? (job.error || "") : JSON.stringify(job, null, 2);
+      const running = job.status === "queued" || job.status === "running";
+      document.getElementById("jobProgress").classList.toggle("hidden", !running);
+      document.getElementById("spinnerText").textContent = job.status === "queued" ? "Queued" : "Running";
+      if (job.status === "completed") {
+        document.getElementById("resultLink").classList.remove("hidden");
+      }
+      if (job.status === "queued" || job.status === "running") {
+        window.setTimeout(refreshJob, 1500);
+      }
+    }
+    refreshJob();
+  })();
+</script>
+{% endblock %}

@@ -1,0 +1,4 @@
+aisle_id,aisle_type,x,y,length,width,direction
+A_ROW_2C1_2C2,row,0,7,2,104,bidirectional
+A_ROW_2C3_2C4,row,0,23,2,104,bidirectional
+A_CROSS_17_18,cross,51,0,32,2,bidirectional

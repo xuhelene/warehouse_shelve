@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block body %}
+<section class="hero">
+  <span class="eyebrow">Result View</span>
+  <h1>拣货路径优化结果</h1>
+  <p class="sub">查看拣货路径的订单汇总和逐步路线。结果文件保存在 <code>{{ outputs_dir }}</code>。路径视图支持鼠标滚轮缩放和拖拽平移。</p>
+</section>
+{% include "partials/result_picking_path.html" %}
+<script>
+  window.initPickingPathResult({{ job_id | tojson }});
+</script>
+{% endblock %}

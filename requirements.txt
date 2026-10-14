@@ -1,0 +1,14 @@
+fastapi==0.128.8
+jinja2==3.1.6
+numpy==1.26.4
+openpyxl==3.1.5
+ortools==9.14.6206
+pandas==2.2.3
+python-multipart==0.0.20
+uvicorn==0.39.0
+
+# COPT solver backend. Requires a valid local COPT license/setup.
+coptpy==8.0.3
+
+# Tests
+pytest==8.4.2

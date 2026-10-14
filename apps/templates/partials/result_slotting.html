@@ -1,0 +1,201 @@
+{# 货位推荐结果视图：模块配置页（内嵌右栏）与独立结果页共用，脚本暴露 window.initSlottingResult(jobId)。 #}
+<div class="stats">
+  <div class="stat"><div class="k">记录数</div><div class="v" id="assignedRecords">-</div></div>
+  <div class="stat"><div class="k">已占货位</div><div class="v" id="distinctSlots">-</div></div>
+  <div class="stat"><div class="k">SKU 数</div><div class="v" id="distinctSkus">-</div></div>
+  <div class="stat"><div class="k">分配箱数</div><div class="v" id="assignedBoxes">-</div></div>
+  <div class="stat"><div class="k">已有货物（箱）</div><div class="v" id="existingBoxes">-</div></div>
+  <div class="stat"><div class="k">新增入库（箱）</div><div class="v" id="inboundBoxes">-</div></div>
+</div>
+<section class="result-shell" id="resultShell">
+  <div class="result-main">
+    <div class="toolbar">
+      <div>
+        <div class="toolbar-title">货位布局</div>
+        <div class="toolbar-meta" id="toolbarMeta">等待加载结果</div>
+        <div class="legend">
+          <span><i style="background:#4c9e77;"></i>已有货物</span>
+          <span><i style="background:#e4ddd1;"></i>未使用货位</span>
+          <span><i style="background:#d96c4d;"></i>新增入库</span>
+        </div>
+      </div>
+      <div class="toolbar-actions">
+        <button class="tool-btn" id="zoomOutBtn" type="button">缩小</button>
+        <div class="zoom-badge" id="zoomBadge">100%</div>
+        <button class="tool-btn" id="zoomInBtn" type="button">放大</button>
+        <button class="tool-btn" id="resetViewBtn" type="button">重置视图</button>
+      </div>
+    </div>
+    <div class="panel slotting-result-panel">
+      <div class="warehouse-wrap slotting-warehouse-wrap">
+        <div class="viewport slotting-viewport" id="viewport">
+          <div class="scene" id="scene">
+            <div class="warehouse slotting-warehouse" id="warehouse"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="slot-tooltip hidden" id="slotTooltip"></div>
+<div class="button-row" style="margin-top:18px;">
+  <a class="button secondary" data-download="solution" href="#">下载 solution.csv</a>
+  {{ result_extra_actions | default("") | safe }}
+</div>
+<script src="/static/viewport.js"></script>
+<script>
+  (function () {
+    const emptySlotColor = "#e4ddd1";
+    const inboundSlotColor = "#d96c4d";
+    const existingSlotColor = "#4c9e77";
+    let viewport = null;
+
+    // tooltip 用 position:fixed 按 clientX/clientY 定位，但模块配置页把结果嵌在 .panel 里，
+    // 而 .panel 的 backdrop-filter 会成为 fixed 的包含块导致整体偏移，所以挂到 body 下。
+    const tooltipNode = document.getElementById("slotTooltip");
+    if (tooltipNode.parentElement !== document.body) document.body.appendChild(tooltipNode);
+
+    // 视口控制器只在首次展示结果时创建，避免在 display:none 状态下初始化拿到 0 尺寸。
+    function ensureViewport() {
+      if (!viewport) {
+        viewport = window.initViewport({
+          viewportId: "viewport",
+          sceneId: "scene",
+          zoomBadgeId: "zoomBadge",
+          zoomInId: "zoomInBtn",
+          zoomOutId: "zoomOutBtn",
+          resetId: "resetViewBtn",
+          snapToOriginWhenZoomedOut: true,
+          resizeViewportToScene: true,
+        });
+      }
+      return viewport;
+    }
+
+    function slotColor(slot) {
+      const allocated = slot.allocation;
+      if (!allocated) return emptySlotColor;
+      return allocated.inventory_type === "已有货物" ? existingSlotColor : inboundSlotColor;
+    }
+
+    function renderDetails(slot, event) {
+      const allocated = slot.allocation || {};
+      const detailRows = [
+        ["货物类型", allocated.inventory_type || (slot.allocation ? "新增入库" : "空货位")],
+        ["slot_name", slot.slot_name],
+        ["item_id", allocated.item_id],
+        ["qty_boxes_in_slot", allocated.qty_boxes_in_slot],
+        ["qty_boxes", allocated.qty_boxes],
+        ["boxes_per_pallet", allocated.boxes_per_pallet],
+      ];
+      const tooltip = document.getElementById("slotTooltip");
+      tooltip.innerHTML = '<div class="tooltip-title">货位详情</div>' +
+        detailRows.map(function (kv) {
+          return '<div class="tooltip-row"><span>' + window.escapeHtml(kv[0]) + '</span><span>' + window.escapeHtml(kv[1]) + '</span></div>';
+        }).join("");
+      tooltip.classList.remove("hidden");
+      const width = tooltip.offsetWidth;
+      const height = tooltip.offsetHeight;
+      const viewportWidth = document.documentElement.clientWidth;
+      const viewportHeight = document.documentElement.clientHeight;
+      const pointerGap = 2;
+      const rightOfPointer = event.clientX + pointerGap;
+      const left = rightOfPointer + width <= viewportWidth - 12
+        ? rightOfPointer
+        : Math.max(12, event.clientX - width - pointerGap);
+      const top = Math.min(Math.max(12, event.clientY + pointerGap), viewportHeight - height - 12);
+      tooltip.style.left = left + "px";
+      tooltip.style.top = top + "px";
+    }
+
+    window.initSlottingResult = async function initSlottingResult(jobId) {
+      document.querySelectorAll("[data-download]").forEach(function (link) {
+        link.href = "/api/jobs/" + jobId + "/download/" + link.dataset.download;
+      });
+      const jobRes = await fetch("/api/jobs/" + jobId);
+      const job = await jobRes.json();
+      document.getElementById("assignedRecords").textContent = job.summary.assigned_records == null ? 0 : job.summary.assigned_records;
+      document.getElementById("distinctSlots").textContent = job.summary.distinct_slots == null ? 0 : job.summary.distinct_slots;
+      document.getElementById("distinctSkus").textContent = job.summary.distinct_skus == null ? 0 : job.summary.distinct_skus;
+      document.getElementById("assignedBoxes").textContent = job.summary.assigned_boxes == null ? 0 : job.summary.assigned_boxes;
+      document.getElementById("existingBoxes").textContent = job.summary.existing_boxes || 0;
+      document.getElementById("inboundBoxes").textContent = job.summary.inbound_boxes || 0;
+      document.getElementById("toolbarMeta").textContent =
+        "已占货位 " + (job.summary.distinct_slots == null ? 0 : job.summary.distinct_slots) +
+        " / SKU " + (job.summary.distinct_skus == null ? 0 : job.summary.distinct_skus);
+
+      const response = await fetch("/api/jobs/" + jobId + "/slotting-layout");
+      const payload = await response.json();
+      const warehouse = document.getElementById("warehouse");
+      const scene = document.getElementById("scene");
+      const slots = payload.slots || [];
+      const areas = payload.areas || [];
+      const elements = slots.concat(areas);
+      warehouse.replaceChildren();
+      if (!elements.length) {
+        warehouse.innerHTML = "<div class='muted'>没有可展示的结果。</div>";
+        return;
+      }
+      function displayWidth(item) { return Number(item.width == null ? 3 : item.width); }
+      function displayHeight(item) { return Number(item.length == null ? 3 : item.length); }
+      const xs = elements.flatMap(function (s) { return [s.x, s.x + displayWidth(s)]; });
+      const ys = elements.flatMap(function (s) { return [s.y, s.y + displayHeight(s)]; });
+      const minX = Math.min.apply(null, xs);
+      const maxX = Math.max.apply(null, xs);
+      const minY = Math.min.apply(null, ys);
+      const maxY = Math.max.apply(null, ys);
+      const unit = 10;
+      const cardW = 34;
+      const cardH = 28;
+      const pad = 10;
+      const width = (maxX - minX + 1) * unit + cardW + pad * 2;
+      const contentHeight = Math.max.apply(null, elements.map(function (item) {
+        const nodeHeight = item.is_storage === 1
+          ? Math.max(cardH, displayHeight(item) * unit)
+          : Math.max(56, displayHeight(item) * unit);
+        return (item.y - minY) * unit + nodeHeight;
+      }));
+      const height = contentHeight + pad * 2;
+      warehouse.style.width = width + "px";
+      warehouse.style.height = height + "px";
+      scene.style.width = width + "px";
+      scene.style.height = height + "px";
+      const vp = ensureViewport();
+      vp.setSceneSize(width, height);
+      areas.forEach(function (area) {
+        const node = document.createElement("div");
+        node.className = "layout-area";
+        node.style.left = (pad + (area.x - minX) * unit) + "px";
+        node.style.top = (pad + (area.y - minY) * unit) + "px";
+        node.style.width = Math.max(cardW, displayWidth(area) * unit) + "px";
+        node.style.height = Math.max(56, displayHeight(area) * unit) + "px";
+        node.innerHTML =
+          '<div class="area-name">' + window.escapeHtml(area.slot_name || area.slot_id) + '</div>' +
+          '<div class="area-type">' + window.escapeHtml(area.area_type || "area") + (area.is_pick_endpoint ? " / picking endpoint" : "") + '</div>';
+        warehouse.appendChild(node);
+      });
+      slots.forEach(function (slot) {
+        const node = document.createElement("div");
+        node.className = "slot";
+        node.style.left = (pad + (slot.x - minX) * unit) + "px";
+        node.style.top = (pad + (slot.y - minY) * unit) + "px";
+        node.style.width = Math.max(cardW, displayWidth(slot) * unit) + "px";
+        node.style.height = Math.max(cardH, displayHeight(slot) * unit) + "px";
+        node.style.background = slotColor(slot);
+        node.innerHTML = '<div class="slot-id">' + window.escapeHtml(slot.slot_name || slot.slot_id) + '</div>';
+        node.addEventListener("click", function (event) {
+          event.stopPropagation();
+          renderDetails(slot, event);
+        });
+        warehouse.appendChild(node);
+      });
+      vp.reset();
+    };
+
+    document.addEventListener("click", function (event) {
+      if (!event.target.closest(".slot")) {
+        document.getElementById("slotTooltip").classList.add("hidden");
+      }
+    });
+  })();
+</script>

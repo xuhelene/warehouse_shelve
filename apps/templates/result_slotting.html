@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block body %}
+<section class="hero">
+  <span class="eyebrow">Result View</span>
+  <h1>{{ module_title }}结果</h1>
+  <p class="sub">按货位坐标绘制布局。点击货位可查看分配明细，结果文件保存在 <code>{{ outputs_dir }}</code>。支持鼠标滚轮缩放和拖拽平移。</p>
+</section>
+{% include "partials/result_slotting.html" %}
+<script>
+  window.initSlottingResult({{ job_id | tojson }});
+</script>
+{% endblock %}

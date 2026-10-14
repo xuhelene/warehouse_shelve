@@ -1,0 +1,171 @@
+{% extends "base.html" %}
+
+{% block body %}
+<section class="hero">
+  <span class="eyebrow">Module Setup</span>
+  <h1>{{ display_title }}</h1>
+  <p class="sub">{{ display_description }}</p>
+</section>
+<section class="layout module-layout{% if not result_partial %} single-column{% endif %}" id="moduleLayout">
+  <div class="panel config-panel">
+    <div class="panel-head">
+      <h2>{{ form_title }}</h2>
+      {% if result_partial %}
+      <button class="tool-btn collapse-btn" id="collapseBtn" type="button" title="收起任务配置">收起 ‹</button>
+      {% endif %}
+    </div>
+    <div class="config-body">
+      <form id="jobForm">
+        {% for field in file_fields %}
+        <div class="field">
+          <label class="label" for="{{ field.name }}">{{ field.label }}</label>
+          <input id="{{ field.name }}" name="{{ field.name }}" type="file" accept=".csv">
+          <div class="hint">{{ file_hint }} <code>{{ field.default }}</code></div>
+        </div>
+        {% endfor %}
+        <div class="field">
+          <label class="label" for="backend">{{ backend_label }}</label>
+          <select id="backend" name="backend">
+            {% for opt in backend_options %}
+            <option value="{{ opt.value }}">{{ opt.label }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="field">
+          <label class="label" for="time_limit">{{ time_limit_label }}</label>
+          <input id="time_limit" name="time_limit" type="number" step="1" min="1" value="60">
+        </div>
+        {{ advanced_html | safe }}
+        <div class="button-row">
+          <button type="submit">{{ submit_label }}</button>
+          <button class="secondary" type="reset">{{ reset_label }}</button>
+        </div>
+        <div class="hint" id="formMessage"></div>
+      </form>
+    </div>
+    {% if result_partial %}
+    <div class="config-rail">
+      <button class="tool-btn collapse-btn" id="expandBtn" type="button" title="展开任务配置">›</button>
+      <div class="rail-title">任务配置</div>
+    </div>
+    {% endif %}
+  </div>
+  {% if result_partial %}
+  <div class="panel result-panel">
+    <div class="panel-head">
+      <h2>求解结果</h2>
+      <div class="job-meta muted" id="jobMeta"></div>
+    </div>
+    <div class="result-placeholder" id="resultPlaceholder">
+      <div class="spinner hidden" id="resultSpinner"></div>
+      <div class="muted" id="resultPlaceholderText">完成左侧参数配置并开始求解后，结果将在此处展示。</div>
+    </div>
+    <div id="resultContent" class="hidden">
+      {% include result_partial %}
+    </div>
+  </div>
+  {% endif %}
+</section>
+<script>
+  (function () {
+    const form = document.getElementById("jobForm");
+    const message = document.getElementById("formMessage");
+    const submitButton = form.querySelector('button[type="submit"]');
+    const moduleKey = {{ module_key | tojson }};
+    const loadingMessage = {{ loading_message | tojson }};
+    const errorMessage = {{ error_message | tojson }};
+    const resultInitName = {{ result_init | tojson }};
+    const layout = document.getElementById("moduleLayout");
+    const placeholder = document.getElementById("resultPlaceholder");
+    const placeholderText = document.getElementById("resultPlaceholderText");
+    const spinner = document.getElementById("resultSpinner");
+    const resultContent = document.getElementById("resultContent");
+    const jobMeta = document.getElementById("jobMeta");
+    let activeJobId = null;
+
+    function setCollapsed(collapsed) {
+      layout.classList.toggle("collapsed", collapsed);
+    }
+    const collapseBtn = document.getElementById("collapseBtn");
+    const expandBtn = document.getElementById("expandBtn");
+    if (collapseBtn) collapseBtn.addEventListener("click", function () { setCollapsed(true); });
+    if (expandBtn) expandBtn.addEventListener("click", function () { setCollapsed(false); });
+
+    function showPlaceholder(text, busy) {
+      resultContent.classList.add("hidden");
+      placeholder.classList.remove("hidden");
+      placeholderText.textContent = text;
+      spinner.classList.toggle("hidden", !busy);
+    }
+
+    function stamp(value) {
+      return value ? String(value).replace("T", " ").replace("Z", "") : "-";
+    }
+
+    function updateJobMeta(job) {
+      if (!jobMeta) return;
+      jobMeta.textContent = "任务 " + job.id + " · 创建 " + stamp(job.created_at) +
+        (job.finished_at ? " · 完成 " + stamp(job.finished_at) : "");
+    }
+
+    async function waitForResult(jobId) {
+      while (activeJobId === jobId) {
+        const response = await fetch("/api/jobs/" + jobId);
+        const job = await response.json();
+        if (!response.ok) throw new Error(job.detail || "读取任务状态失败");
+        updateJobMeta(job);
+        if (job.status === "completed") {
+          placeholder.classList.add("hidden");
+          resultContent.classList.remove("hidden");
+          setCollapsed(true);  // 结果比配置表单宽得多，求解完成后自动让出左栏空间。
+          await window[resultInitName](jobId);
+          message.textContent = "求解完成，结果已展示在右侧。";
+          return;
+        }
+        if (job.status === "failed") throw new Error(job.error || "求解失败");
+        const running = job.status === "running";
+        showPlaceholder(running ? "正在求解..." : "任务已创建，正在等待求解...", true);
+        message.textContent = running ? "正在求解..." : "任务已创建，正在等待求解...";
+        await new Promise(function (resolve) { window.setTimeout(resolve, 600); });
+      }
+    }
+
+    if (resultInitName) {
+      form.addEventListener("reset", function () {
+        window.setTimeout(function () {
+          activeJobId = null;
+          if (jobMeta) jobMeta.textContent = "";
+          message.textContent = "";
+          setCollapsed(false);
+          showPlaceholder("完成左侧参数配置并开始求解后，结果将在此处展示。", false);
+        }, 0);
+      });
+    }
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      message.textContent = loadingMessage;
+      const formData = new FormData(form);
+      if (resultInitName) showPlaceholder("正在创建任务...", true);
+      submitButton.disabled = true;
+      try {
+        const response = await fetch("/api/jobs/" + moduleKey, { method: "POST", body: formData });
+        const payload = await response.json();
+        if (!response.ok) throw new Error(payload.detail || payload.error || errorMessage);
+        if (!resultInitName) {
+          // 未配置内嵌视图时打开独立任务页。
+          window.location.href = "/jobs/" + payload.job_id;
+          return;
+        }
+        activeJobId = payload.job_id;
+        await waitForResult(payload.job_id);
+      } catch (error) {
+        message.textContent = error.message;
+        if (resultInitName) showPlaceholder("求解失败：" + error.message, false);
+      } finally {
+        submitButton.disabled = false;
+      }
+    });
+  })();
+</script>
+{% endblock %}

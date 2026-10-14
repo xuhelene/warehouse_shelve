@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>三维货架预览</title>
+  <link rel="stylesheet" href="/static/warehouse-preview.css">
+</head>
+<body>
+<header><a href="/">仓储演示</a><h1>三维货架预览</h1><span>示意比例 · 657 个有效货位</span></header>
+<main>
+  <aside>
+    <h2>场景与视角</h2>
+    <label>展示内容<select id="mode"><option value="empty">空布局</option><option value="inventory">演示库存</option><option value="inbound">演示入库</option><option value="outbound">演示拣货</option></select></label>
+    <p class="muted">演示数据用于检查显示效果，路径不是业务求解结果。</p>
+    <div class="buttons"><button id="perspective">立体视角</button><button id="top">俯视</button></div>
+    <label>显示到第几层<select id="level"><option value="5">全部 5 层</option><option value="4">1—4 层</option><option value="3">1—3 层</option><option value="2">1—2 层</option><option value="1">第 1 层</option></select></label>
+    <h2>门口起点坐标</h2>
+    <div class="coordinates"><label>X<input id="originX" type="number" step="0.1" value="0"></label><label>Y<input id="originY" type="number" step="0.1" value="0"></label></div>
+    <button id="applyOrigin">更新起点</button>
+    <p class="muted">门口中央为 (0, 0, 0)。X 向右，Y 向墙，Z 向上；单位为示意单位。起点仅可设在前方横向通道内。</p>
+    <h2>货位定位</h2>
+    <label>货位编号<input id="slotId" value="C14-1-1" placeholder="C14-1-1"></label><button id="locate">定位货位</button>
+    <div id="detail" role="status">点击货位查看编号与状态。</div>
+    <h2>图例</h2>
+    <p class="legend"><i class="empty"></i>空货位 <i class="stock"></i>库存<br><i class="inbound"></i>待入库 <i class="outbound"></i>待出库<br><i class="selected"></i>选中货位</p>
+    <div id="summary"></div>
+  </aside>
+  <section class="view"><div id="canvas"></div><div class="hint">左键旋转 · 滚轮缩放 · 右键平移<br>20—22 列底部两层为贯通通道，上方保留三层</div><div id="error" role="alert"></div></section>
+</main>
+<script src="/static/vendor/three.min.js"></script>
+<script src="/static/vendor/OrbitControls.js"></script>
+<script src="/static/warehouse-preview.js"></script>
+</body></html>

@@ -1,0 +1,278 @@
+{# 拣货路径结果视图：模块配置页（内嵌右栏）与独立结果页共用，脚本暴露 window.initPickingPathResult(jobId)。 #}
+<style>
+  #routeTooltip {
+    pointer-events: none;
+    background: #fff;
+    color: #000;
+  }
+  #routeTooltip .tooltip-row span:first-child { color: #000; flex-shrink: 0; }
+</style>
+<div class="slot-tooltip" id="routeTooltip" role="tooltip" hidden></div>
+<div class="stats">
+  <div class="stat"><div class="k">拣货模式</div><div class="v" id="pickMode" style="font-size:18px;">-</div></div>
+  <div class="stat"><div class="k">Orders</div><div class="v" id="totalOrders">-</div></div>
+  <div class="stat"><div class="k">Routes</div><div class="v" id="routeCount">-</div></div>
+  <div class="stat"><div class="k">Pick Stops</div><div class="v" id="totalPickStops">-</div></div>
+  <div class="stat"><div class="k">Distance</div><div class="v" id="totalDistance">-</div></div>
+  <div class="stat"><div class="k">Unfulfilled</div><div class="v" id="unfulfilledLines">-</div></div>
+</div>
+<section class="panel" style="margin-bottom:18px;">
+  <h2>订单汇总</h2>
+  <div id="orderSummaryBox"></div>
+</section>
+<section class="panel">
+  <div class="toolbar">
+    <div class="toolbar-title">路线可视化</div>
+    <div class="toolbar-actions">
+      <button class="tool-btn" id="routeZoomOutBtn" type="button">缩小</button>
+      <div class="zoom-badge" id="routeZoomBadge">100%</div>
+      <button class="tool-btn" id="routeZoomInBtn" type="button">放大</button>
+      <button class="tool-btn" id="routeResetViewBtn" type="button">重置视图</button>
+    </div>
+  </div>
+  <div class="route-viz viewport" id="routeViewport">
+    <div class="scene" id="routeScene">
+      <div id="routeViz"></div>
+    </div>
+  </div>
+  <div class="legend">
+    <span><i style="background:#e4ddd1;border:1px solid rgba(31,39,35,0.18);"></i>货位</span>
+    <span><i style="background:#dc2626;"></i>待出库货物所在货位</span>
+    <span><i style="background:rgba(46,122,100,0.18);border:1px dashed rgba(46,122,100,0.7);"></i>待出库区</span>
+    <span><i style="background:#d8c4a0;"></i>拣货通道</span>
+    <span><i style="background:#d96c4d;"></i>拣货路线</span>
+  </div>
+</section>
+<div class="button-row" style="margin-top:18px;">
+  <a class="button secondary" data-download="route" href="#">下载 picking_route.csv</a>
+  <a class="button secondary" data-download="order_summary" href="#">下载 picking_order_summary.csv</a>
+  <a class="button secondary" data-download="unfulfilled" href="#">下载 picking_unfulfilled.csv</a>
+  {{ result_extra_actions | default("") | safe }}
+</div>
+<script src="/static/viewport.js"></script>
+<script>
+  (function () {
+    let viewport = null;
+    let pickStops = [];
+    let tooltipBound = false;
+
+    // 视口控制器只在首次展示结果时创建，避免在 display:none 状态下初始化拿到 0 尺寸。
+    function ensureViewport() {
+      if (!viewport) {
+        viewport = window.initViewport({
+          viewportId: "routeViewport",
+          sceneId: "routeScene",
+          zoomBadgeId: "routeZoomBadge",
+          zoomInId: "routeZoomInBtn",
+          zoomOutId: "routeZoomOutBtn",
+          resetId: "routeResetViewBtn",
+          initialOffsetX: 20,
+          initialOffsetY: 20,
+        });
+      }
+      return viewport;
+    }
+
+    function num(value, fallback) {
+      const n = Number(value);
+      return Number.isFinite(n) ? n : (fallback == null ? 0 : fallback);
+    }
+    function dims(item) {
+      return {
+        x: num(item.x),
+        y: num(item.y),
+        width: num(item.width, 1),
+        length: num(item.length, 1),
+      };
+    }
+
+    function hideTooltip() { document.getElementById("routeTooltip").hidden = true; }
+
+    // tooltip 监听只绑定一次；重复求解时只更新 pickStops，避免监听器叠加。
+    function bindTooltip() {
+      if (tooltipBound) return;
+      tooltipBound = true;
+      const tooltip = document.getElementById("routeTooltip");
+      // tooltip 用 position:fixed 按 clientX/clientY 定位，但模块配置页把结果嵌在 .panel 里，
+      // 而 .panel 的 backdrop-filter 会成为 fixed 的包含块导致整体偏移，所以挂到 body 下。
+      if (tooltip.parentElement !== document.body) document.body.appendChild(tooltip);
+      const routeViz = document.getElementById("routeViz");
+      const esc = window.escapeHtml;
+      routeViz.addEventListener("pointermove", function (event) {
+        const stop = event.target.closest("[data-pick-index]");
+        if (!stop || event.buttons) { hideTooltip(); return; }
+        const picked = pickStops[Number(stop.dataset.pickIndex)];
+        if (!picked) { hideTooltip(); return; }
+        const row = picked.row;
+        const totalQty = picked.lines.reduce(function (sum, line) { return sum + Number(line.pick_qty || 0); }, 0);
+        const orderNos = [];
+        const skuCodes = [];
+        picked.lines.forEach(function (line) {
+          const orderNo = line.order_no == null || line.order_no === "" ? "" : String(line.order_no);
+          if (orderNo && orderNos.indexOf(orderNo) === -1) orderNos.push(orderNo);
+          const skuCode = String(line.sku_code);
+          if (skuCodes.indexOf(skuCode) === -1) skuCodes.push(skuCode);
+        });
+        const detailRows = [["货位号", row.slot_id]];
+        if (orderNos.length) detailRows.push(["订单号", orderNos.join(" / ")]);
+        detailRows.push(["SKU", skuCodes.join(" / ")]);
+        detailRows.push(["待拣货数量", totalQty]);
+        // 波次模式下同一货位可能被多个订单共用，逐行列出便于二次分拣核对。
+        if (picked.lines.length > 1) {
+          picked.lines.forEach(function (line) {
+            const label = line.order_no == null || line.order_no === ""
+              ? String(line.sku_code)
+              : String(line.sku_code) + " / " + String(line.order_no);
+            detailRows.push([label, line.pick_qty]);
+          });
+        }
+        tooltip.innerHTML = '<div class="tooltip-title">拣货详情</div>' + detailRows.map(function (kv) {
+          return '<div class="tooltip-row"><span>' + esc(kv[0]) + '：</span><span>' + esc(kv[1]) + '</span></div>';
+        }).join("");
+        tooltip.hidden = false;
+        const width = tooltip.offsetWidth;
+        const height = tooltip.offsetHeight;
+        const viewportWidth = document.documentElement.clientWidth;
+        const viewportHeight = document.documentElement.clientHeight;
+        const pointerGap = 2;
+        const rightOfPointer = event.clientX + pointerGap;
+        const left = rightOfPointer + width <= viewportWidth - 12
+          ? rightOfPointer
+          : Math.max(12, event.clientX - width - pointerGap);
+        const top = Math.max(12, Math.min(event.clientY + pointerGap, viewportHeight - height - 12));
+        tooltip.style.left = left + "px";
+        tooltip.style.top = top + "px";
+      });
+      routeViz.addEventListener("pointerleave", hideTooltip);
+      routeViz.addEventListener("pointerdown", hideTooltip);
+      window.addEventListener("scroll", hideTooltip, true);
+      window.addEventListener("resize", hideTooltip);
+      document.getElementById("routeViewport").addEventListener("wheel", hideTooltip);
+    }
+
+    function renderRouteViz(payload) {
+      const slots = payload.layout_slots || [];
+      const areas = payload.layout_areas || [];
+      const aisles = payload.aisles || [];
+      const nodes = payload.nodes || [];
+      const pickPoints = payload.pick_points || [];
+      const routeRows = payload.route_rows || [];
+      const outboundSlotIds = new Set(routeRows.filter(function (row) {
+        return row.action === "pick" && row.slot_id != null;
+      }).map(function (row) { return String(row.slot_id); }));
+      const elements = slots.concat(areas).concat(aisles);
+      if (!elements.length) {
+        document.getElementById("routeViz").innerHTML = "<div class='muted' style='padding:18px;'>暂无布局数据</div>";
+        return;
+      }
+      const xs = elements.flatMap(function (item) {
+        const d = dims(item);
+        return [d.x, d.x + d.width];
+      });
+      const ys = elements.flatMap(function (item) {
+        const d = dims(item);
+        return [d.y, d.y + d.length];
+      });
+      const minX = Math.min.apply(null, xs);
+      const minY = Math.min.apply(null, ys);
+      const maxX = Math.max.apply(null, xs);
+      const maxY = Math.max.apply(null, ys);
+      const unit = 16;
+      const pad = 42;
+      const width = Math.max(900, (maxX - minX) * unit + pad * 2);
+      const height = Math.max(560, (maxY - minY) * unit + pad * 2);
+      const sx = function (x) { return pad + (num(x) - minX) * unit; };
+      const sy = function (y) { return pad + (num(y) - minY) * unit; };
+      const esc = window.escapeHtml;
+
+      const coordByNode = new Map();
+      nodes.forEach(function (node) { coordByNode.set(String(node.node_id), { x: num(node.x), y: num(node.y) }); });
+      pickPoints.forEach(function (point) { coordByNode.set(String(point.pick_node_id), { x: num(point.pick_x), y: num(point.pick_y) }); });
+      routeRows.forEach(function (row) {
+        if (row.node_id && row.x != null && row.y != null) coordByNode.set(String(row.node_id), { x: num(row.x), y: num(row.y) });
+      });
+
+      const routeCoords = [];
+      routeRows.forEach(function (row) {
+        String(row.path_nodes || row.node_id || "").split("->").filter(Boolean).forEach(function (nodeId) {
+          const coord = coordByNode.get(nodeId);
+          if (!coord) return;
+          const last = routeCoords[routeCoords.length - 1];
+          if (!last || last.nodeId !== nodeId) routeCoords.push({ nodeId: nodeId, x: coord.x, y: coord.y });
+        });
+      });
+      const polyline = routeCoords.map(function (p) { return sx(p.x) + "," + sy(p.y); }).join(" ");
+
+      const aisleSvg = aisles.map(function (aisle) {
+        const d = dims(aisle);
+        return '<rect x="' + sx(d.x) + '" y="' + sy(d.y) + '" width="' + (d.width * unit) + '" height="' + (d.length * unit) + '" rx="6" fill="#d8c4a0" opacity="0.72"><title>' + esc(aisle.aisle_id) + '</title></rect>';
+      }).join("");
+      const slotSvg = slots.map(function (slot) {
+        const d = dims(slot);
+        const label = esc(slot.slot_name || slot.slot_id);
+        const isOutbound = outboundSlotIds.has(String(slot.slot_id));
+        return '<g>' +
+          '<rect x="' + sx(d.x) + '" y="' + sy(d.y) + '" width="' + (d.width * unit) + '" height="' + (d.length * unit) + '" rx="4" fill="' + (isOutbound ? '#dc2626' : '#e4ddd1') + '" stroke="rgba(31,39,35,0.18)"><title>' + label + '</title></rect>' +
+          '<text x="' + sx(d.x + d.width / 2) + '" y="' + sy(d.y + d.length / 2) + '" text-anchor="middle" dominant-baseline="middle" font-size="10" font-weight="700" fill="' + (isOutbound ? '#ffffff' : '#4d514c') + '" pointer-events="none">' + label + '</text>' +
+          '</g>';
+      }).join("");
+      const areaSvg = areas.map(function (area) {
+        const d = dims(area);
+        return '<rect x="' + sx(d.x) + '" y="' + sy(d.y) + '" width="' + (d.width * unit) + '" height="' + (d.length * unit) + '" rx="8" fill="rgba(46,122,100,0.18)" stroke="rgba(46,122,100,0.75)" stroke-width="2" stroke-dasharray="7 5"></rect>' +
+          '<text x="' + sx(d.x + d.width / 2) + '" y="' + sy(d.y + d.length / 2) + '" text-anchor="middle" dominant-baseline="middle" font-size="15" font-weight="800" fill="#1f2723">' + esc(area.slot_name || area.slot_id) + '</text>';
+      }).join("");
+      // 波次模式下同一停靠点会按 SKU/订单展开成多行，可视化上仍然只画一个停靠点。
+      const stopIndexByKey = {};
+      pickStops = [];
+      routeRows.filter(function (row) { return row.action === "pick"; }).forEach(function (row) {
+        const key = String(row.route_id) + "#" + String(row.sequence) + "@" + String(row.node_id);
+        if (stopIndexByKey[key] === undefined) {
+          stopIndexByKey[key] = pickStops.length;
+          pickStops.push({ row: row, lines: [] });
+        }
+        pickStops[stopIndexByKey[key]].lines.push(row);
+      });
+      const stopSvg = pickStops.map(function (stop, index) {
+        const row = stop.row;
+        return '<g data-pick-index="' + index + '">' +
+          '<circle cx="' + sx(row.x) + '" cy="' + sy(row.y) + '" r="7" fill="#d96c4d" stroke="white" stroke-width="2"></circle>' +
+          '<text x="' + sx(row.x) + '" y="' + (sy(row.y) - 12) + '" text-anchor="middle" font-size="11" font-weight="800" fill="#9a4c27">' + esc(row.sequence) + '</text>' +
+          '</g>';
+      }).join("");
+      document.getElementById("routeScene").style.width = width + "px";
+      document.getElementById("routeScene").style.height = height + "px";
+      document.getElementById("routeViz").innerHTML =
+        '<svg width="' + width + '" height="' + height + '" viewBox="0 0 ' + width + ' ' + height + '" role="img" aria-label="拣货路径可视化">' +
+          '<rect x="0" y="0" width="' + width + '" height="' + height + '" fill="rgba(255,255,255,0.3)"></rect>' +
+          aisleSvg + slotSvg + areaSvg +
+          '<polyline points="' + polyline + '" fill="none" stroke="#d96c4d" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></polyline>' +
+          '<polyline points="' + polyline + '" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.75"></polyline>' +
+          stopSvg +
+        '</svg>';
+      bindTooltip();
+      ensureViewport().reset();
+    }
+
+    window.initPickingPathResult = async function initPickingPathResult(jobId) {
+      document.querySelectorAll("[data-download]").forEach(function (link) {
+        link.href = "/api/jobs/" + jobId + "/download/" + link.dataset.download;
+      });
+      const jobRes = await fetch("/api/jobs/" + jobId);
+      const job = await jobRes.json();
+      const mode = (job.meta || {}).mode;
+      document.getElementById("pickMode").textContent =
+        mode === "wave" ? "波次合并" : (mode === "per-order" ? "一单一趟" : "-");
+      document.getElementById("routeCount").textContent = job.summary.route_count == null ? 0 : job.summary.route_count;
+      document.getElementById("totalOrders").textContent = job.summary.total_orders == null ? 0 : job.summary.total_orders;
+      document.getElementById("totalPickStops").textContent = job.summary.total_pick_stops == null ? 0 : job.summary.total_pick_stops;
+      const totalDist = job.summary.total_distance == null ? 0 : job.summary.total_distance;
+      document.getElementById("totalDistance").textContent = (totalDist.toFixed ? totalDist.toFixed(1) : totalDist);
+      document.getElementById("unfulfilledLines").textContent = job.summary.unfulfilled_lines == null ? 0 : job.summary.unfulfilled_lines;
+
+      const response = await fetch("/api/jobs/" + jobId + "/picking-path-result");
+      const payload = await response.json();
+      document.getElementById("orderSummaryBox").innerHTML = window.renderTable(payload.order_summary_rows);
+      renderRouteViz(payload);
+    };
+  })();
+</script>
