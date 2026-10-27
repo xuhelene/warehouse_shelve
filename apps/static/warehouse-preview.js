@@ -10,6 +10,27 @@
   const slots = new Map();
   let data = {inventory:[],targets:[],paths:[],mode:'inventory'}, selected = null;
   let scene, camera, renderer, controls, routeGroup, originMarker;
+  function showSlotPopup(event) {
+    const popup=el('slot-popup'),content=el('slot-popup-content');
+    content.replaceChildren();
+    const title=document.createElement('strong');title.textContent='货位号：'+selected;content.append(title);
+    const item=data.inventory.find(row=>row.slot_id===selected);
+    const lines=item?.details || [];
+    if(lines.length) lines.forEach(row=>{
+      const block=document.createElement('div');block.className='slot-popup-item';
+      block.textContent='SKU编号：'+row.sku_id+'\n货物名称：'+row.name+
+        '\n货物数量：'+row.quantity+(row.unit==='件'?'箱':row.unit)+' / '+row.base_quantity+row.base_unit+
+        '\n入库时间：'+row.timestamp.slice(0,10);content.append(block);
+    });
+    else {
+      const block=document.createElement('div');block.className='slot-popup-item';
+      block.textContent=item?'货物：'+(item.item_id || '未提供')+'\n数量：'+(item.quantity ?? '未提供'):'空货位';content.append(block);
+    }
+    popup.hidden=false;
+    const host=el('canvas').getBoundingClientRect();
+    popup.style.left=Math.max(8,Math.min(event.clientX-host.left+12,host.width-popup.offsetWidth-8))+'px';
+    popup.style.top=Math.max(8,Math.min(event.clientY-host.top+12,host.height-popup.offsetHeight-8))+'px';
+  }
   function box(w,h,d,x,y,z,color,opacity=1) {
     const mesh = new THREE.Mesh(new THREE.BoxGeometry(w,h,d),new THREE.MeshPhongMaterial({color,transparent:opacity<1,opacity}));
     mesh.position.copy(point({x,y,z})); scene.add(mesh); return mesh;
@@ -24,6 +45,10 @@
   function setView(top) {
     controls.target.set(-.5,1,24);
     camera.position.set(top ? -.5 : -34,top ? 80 : 32,top ? 23.99 : -27);
+    if(document.documentElement.classList.contains('embedded')) {
+      camera.position.set(top ? -.5 : -20,top ? 38 : 20,top ? 23.99 : 24);
+      camera.up.set(top ? 1 : 0,top ? 0 : 1,0);controls.update();return;
+    }
     camera.up.set(0,1,0);controls.update();
   }
   function refresh() {
@@ -79,7 +104,7 @@
         }
       }
     }
-    data={inventory,targets,paths,mode};selected=null;el('detail').textContent='点击货位查看编号与状态。';refresh();
+    data={inventory,targets,paths,mode};selected=null;el('slot-popup').hidden=true;el('detail').textContent='点击货位查看编号与状态。';refresh();
   }
   function demo(mode) {
     if(mode==='empty') return setData({});
@@ -98,6 +123,9 @@
     camera=new THREE.PerspectiveCamera(42,1,.1,250);
     renderer=new THREE.WebGLRenderer({antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio,2));el('canvas').appendChild(renderer.domElement);
     controls=new THREE.OrbitControls(camera,renderer.domElement);controls.enableDamping=true;controls.maxDistance=130;controls.minDistance=3;
+    controls.addEventListener('start',()=>{el('slot-popup').hidden=true;});
+    el('close-slot-popup').onclick=()=>{el('slot-popup').hidden=true;};
+    document.addEventListener('keydown',event=>{if(event.key==='Escape')el('slot-popup').hidden=true;});
     scene.add(new THREE.AmbientLight(0xffffff,.8));const light=new THREE.DirectionalLight(0xffffff,.6);light.position.set(-10,25,-10);scene.add(light);
     box(10,.08,50,-1.2,23.5,-.1,0xfafcfe);
     box(2.4,.025,45,-4.2,24.5,0,0xd5e8ed);box(2.4,.025,45,.6,24.5,0,0xd5e8ed);
@@ -134,10 +162,11 @@
       if(!down||Math.hypot(event.clientX-down.x,event.clientY-down.y)>5)return;
       const rect=renderer.domElement.getBoundingClientRect();mouse.set((event.clientX-rect.left)/rect.width*2-1,-(event.clientY-rect.top)/rect.height*2+1);
       ray.setFromCamera(mouse,camera);const hit=ray.intersectObjects(Array.from(slots.values()).filter(mesh=>mesh.visible))[0];
-      if(hit){selected=hit.object.userData.slot_id;el('slotId').value=selected;refresh();}
+      if(hit){selected=hit.object.userData.slot_id;el('slotId').value=selected;refresh();showSlotPopup(event);}
+      else el('slot-popup').hidden=true;
     });
     el('mode').onchange=()=>demo(el('mode').value);
-    el('level').onchange=()=>{refresh();scene.children.forEach(mesh=>{if(mesh.userData.level&&!mesh.userData.slot_id)mesh.visible=mesh.userData.level<=Number(el('level').value);});};
+    el('level').onchange=()=>{el('slot-popup').hidden=true;refresh();scene.children.forEach(mesh=>{if(mesh.userData.level&&!mesh.userData.slot_id)mesh.visible=mesh.userData.level<=Number(el('level').value);});};
     el('perspective').onclick=()=>setView(false);el('top').onclick=()=>setView(true);
     el('locate').onclick=()=>{
       const id=el('slotId').value.trim().toUpperCase(),mesh=slots.get(id);

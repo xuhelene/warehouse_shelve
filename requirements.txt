@@ -12,3 +12,4 @@ coptpy==8.0.3
 
 # Tests
 pytest==8.4.2
+httpx==0.28.1

@@ -4,6 +4,8 @@
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
   <title>三维货架预览</title>
   <link rel="stylesheet" href="/static/warehouse-preview.css">
+  <link rel="stylesheet" href="/static/warehouse-embedded.css">
+  <script>if(new URLSearchParams(location.search).get('embedded')==='1')document.documentElement.classList.add('embedded');</script>
 </head>
 <body>
 <header><a href="/">仓储演示</a><h1>三维货架预览</h1><span>示意比例 · 657 个有效货位</span></header>
@@ -25,9 +27,9 @@
     <p class="legend"><i class="empty"></i>空货位 <i class="stock"></i>库存<br><i class="inbound"></i>待入库 <i class="outbound"></i>待出库<br><i class="selected"></i>选中货位</p>
     <div id="summary"></div>
   </aside>
-  <section class="view"><div id="canvas"></div><div class="hint">左键旋转 · 滚轮缩放 · 右键平移<br>20—22 列底部两层为贯通通道，上方保留三层</div><div id="error" role="alert"></div></section>
+  <section class="view"><div id="canvas"></div><div id="slot-popup" role="dialog" aria-label="货位信息" hidden><button id="close-slot-popup" aria-label="关闭货位信息">×</button><div id="slot-popup-content"></div></div><div class="hint">左键旋转 · 滚轮缩放 · 右键平移<br>20—22 列底部两层为贯通通道，上方保留三层</div><div id="error" role="alert"></div></section>
 </main>
 <script src="/static/vendor/three.min.js"></script>
 <script src="/static/vendor/OrbitControls.js"></script>
-<script src="/static/warehouse-preview.js"></script>
+<script src="/static/warehouse-preview.js?v=20261020-popup"></script>
 </body></html>
