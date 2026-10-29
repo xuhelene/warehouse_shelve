@@ -131,3 +131,34 @@ pre { white-space: pre-wrap; background: #221c17; color: #f8e7d8; border-radius:
   .module-layout.collapsed .config-rail { flex-direction: row; }
   .config-rail .rail-title { writing-mode: horizontal-tb; letter-spacing: 0.1em; }
 }
+
+/* 首页工作台：限定作用域，沿用模块页原有样式。 */
+body.home-page{background:#06111e;color:#edf5fc;isolation:isolate}
+body.home-page::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(90deg,rgba(3,12,23,.38),rgba(3,12,23,.08)),linear-gradient(0deg,rgba(3,12,23,.62),transparent 70%),url("/static/home-warehouse.png") center / cover no-repeat}
+.home-page .page{max-width:1160px;padding-top:30px}
+.home-page .topbar{padding-bottom:24px;border-bottom:1px solid #ffffff24;margin-bottom:0}
+.home-page .brand{letter-spacing:0;font-weight:700}
+.home-page .brand-mark{background:#ffffff12;border:1px solid #ffffff26;border-radius:12px;box-shadow:none}
+.home-page .nav .nav-link:not(.home-settings){display:none}
+.home-page .home-settings{display:flex;align-items:center;gap:8px;border-radius:10px;background:#0a1b2dcc;color:#e9f5ff;border-color:#ffffff30;font-weight:600}
+.home-hero{display:flex;align-items:center;min-height:250px;padding:30px 0;margin:24px 0 28px}
+.home-kicker{font-size:13px;color:#a3c4dc;letter-spacing:2px;margin:0 0 20px}
+.home-page h1{font-size:42px;font-weight:750;line-height:1.3;letter-spacing:-1px;margin:0;color:#f5faff;text-shadow:0 2px 16px #0006}
+.home-section-heading{display:flex;align-items:center;justify-content:space-between;margin:0 0 20px}
+.home-section-heading h2{font-size:18px;margin:0}.home-section-heading>span{font-size:12px;color:#b1c6d8}
+.home-modules{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.home-module{display:flex;flex-direction:column;padding:24px 28px 0;border:1px solid #a9cbe53b;background:rgba(8,24,40,.84);backdrop-filter:blur(12px);border-radius:18px;transition:transform .18s,box-shadow .18s,border-color .18s}
+.home-module:hover{transform:translateY(-4px);border-color:#8bceff9c;box-shadow:0 16px 36px #0004}
+.home-module-top{display:flex;align-items:center;justify-content:space-between}
+.home-module-icon{display:grid;place-items:center;width:52px;height:52px;border-radius:14px;background:#61baff20;color:#9cd6ff;font-size:30px}
+.home-module.picking .home-module-icon{background:#66dcb820;color:#99ead2}
+.home-module-number{font-size:13px;color:#a8bfd1;font-variant-numeric:tabular-nums}
+.home-module h3{font-size:23px;margin:18px 0 10px;letter-spacing:-.5px}
+.home-module p{font-size:14px;color:#bdcede;line-height:1.9;margin:0 0 22px;max-width:420px}
+.home-module-icon svg{width:32px;height:32px}
+.home-module-bottom{display:flex;justify-content:space-between;align-items:center;border-top:1px solid #ffffff1f;padding:20px 0;margin-top:auto;font-size:14px;font-weight:600;color:#a4daff}
+.home-module.picking .home-module-bottom{color:#99ead2}
+.home-module-bottom span:last-child{font-size:22px}
+.home-page a:focus-visible{outline:3px solid #9cd6ff;outline-offset:5px}
+@media(max-width:650px){.home-page .page{padding:20px}.home-page .brand{font-size:13px}.home-page .topbar{gap:10px}.home-page .nav-link{padding:8px 12px}.home-hero{min-height:220px;padding:24px 0;margin:12px 0 20px}.home-page h1{font-size:36px}.home-modules{grid-template-columns:1fr;gap:16px}.home-module{padding:24px 24px 0}.home-section-heading>span{display:none}}
+@media(prefers-reduced-motion:reduce){.home-module{transition:none}.home-module:hover{transform:none}}

@@ -1,25 +1,20 @@
 {% extends "base.html" %}
-
+{% block body_class %}home-page{% endblock %}
+{% block nav_extra %}<a class="nav-link home-settings" href="/settings"><span aria-hidden="true">⚙</span> 设置</a>{% endblock %}
 {% block body %}
-<section class="hero">
-  <span class="eyebrow">Unified Portal</span>
-  <h1>仓储优化 Web 入口</h1>
-  <p class="sub">面向仓储物流领域的优化能力，支持多个求解器。</p>
-  <a class="button" href="/warehouse-preview">三维货架预览</a>
-  <a class="button" href="/settings">算法设置</a>
-  <a class="button" href="/sku-turnover">SKU 周转等级</a>
-</section>
-<section class="card-grid">
-  {% for key, config in modules.items() %}
-  <div class="card">
-    <div class="tag">module</div>
-    <div class="card-title">{{ config.title }}</div>
-    <p>{{ config.description }}</p>
-    <div class="muted">默认求解器 {{ config.default_backend | upper }}</div>
-    <div class="button-row">
-      <a class="button" href="/modules/{{ key }}">进入模块</a>
-    </div>
-  </div>
-  {% endfor %}
-</section>
+<main>
+  <section class="home-hero">
+    <div class="home-intro"><p class="home-kicker">仓储作业 · 优化工作台</p><h1>让每一次存取<br>更有章法。</h1></div>
+  </section>
+  <div class="home-section-heading"><h2>选择作业模块</h2><span>从当前作业开始</span></div>
+  <section class="home-modules" aria-label="优化模块">
+    {% for key, config in modules.items() %}
+    <a class="home-module{% if key == 'picking-path' %} picking{% endif %}" href="/modules/{{ key }}">
+      <div class="home-module-top"><span class="home-module-icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" focusable="false">{% if key == 'slotting' %}<path d="M5 28V4h22v24M5 15h22M5 27h22M16 4v23"/><path d="M8 8h5v7H8zM19 6h5v9h-5zM8 20h5v7H8zM19 19h5v8h-5z"/>{% else %}<rect x="3" y="21" width="8" height="8" rx="2"/><path d="M7 21v-8a5 5 0 0 1 5-5h9M11 25h9a5 5 0 0 0 5-5v-4" stroke-dasharray="3 3"/><circle cx="25" cy="8" r="4"/><circle cx="25" cy="15" r="1" fill="currentColor" stroke="none"/>{% endif %}</svg></span><span class="home-module-number">0{{ loop.index }}</span></div>
+      <h3>{{ config.title }}</h3><p>{{ config.description }}</p>
+      <div class="home-module-bottom"><span>进入模块</span><span aria-hidden="true">→</span></div>
+    </a>
+    {% endfor %}
+  </section>
+</main>
 {% endblock %}

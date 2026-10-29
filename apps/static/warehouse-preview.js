@@ -4,11 +4,11 @@
   const config = { columnWidth: 1, rowDepth: 1.2, levelHeight: 1, frontY: 2,
     rows: [{id:'C14',x:-2.4,face:-1},{id:'C15',x:-1.2,face:1},{id:'C16',x:2.4,face:-1}],
     origin: {x:0,y:0,z:0} };
-  const colors = {empty:0xd5e1eb,stock:0x488dcc,inbound:0x29bc88,outbound:0xf09840,selected:0xe658ae};
+  const colors = {empty:0xd5e1eb,stock:0x488dcc,inbound:0x29bc88,outbound:0x29bc88,selected:0xe658ae};
   const el = id => document.getElementById(id);
   const point = p => new THREE.Vector3(p.x,p.z || 0,p.y);
   const slots = new Map();
-  let data = {inventory:[],targets:[],paths:[],mode:'inventory'}, selected = null;
+  let data = {inventory:[],targets:[],paths:[],mode:'inventory'}, selected = null, rack = '';
   let scene, camera, renderer, controls, routeGroup, originMarker;
   function showSlotPopup(event) {
     const popup=el('slot-popup'),content=el('slot-popup-content');
@@ -40,7 +40,7 @@
     const ctx=canvas.getContext('2d');ctx.font='36px Microsoft YaHei';ctx.textAlign='center';
     ctx.fillStyle='#ffffff';ctx.fillRect(0,0,512,96);ctx.fillStyle='#304860';ctx.fillText(text,256,60);
     const sprite=new THREE.Sprite(new THREE.SpriteMaterial({map:new THREE.CanvasTexture(canvas)}));
-    sprite.position.copy(point({x,y,z}));sprite.scale.set(size*4,size*.75,1);scene.add(sprite);
+    sprite.position.copy(point({x,y,z}));sprite.scale.set(size*4,size*.75,1);scene.add(sprite);return sprite;
   }
   function setView(top) {
     controls.target.set(-.5,1,24);
@@ -57,14 +57,16 @@
     for (const [id,mesh] of slots) {
       const state=id===selected?'selected':targets.has(id)?data.mode:inventory.has(id)?'stock':'empty';
       mesh.material.color.setHex(colors[state]);
-      mesh.visible=mesh.userData.level<=Number(el('level').value);
+      mesh.visible=mesh.userData.level<=Number(el('level').value)&&(!rack||mesh.userData.rack===rack);
       mesh.material.opacity=state==='empty'?.22:.92;
     }
+    scene.children.forEach(mesh=>{
+      if(mesh.userData.rack&&!mesh.userData.slot_id)mesh.visible=(!rack||mesh.userData.rack===rack)&&(!mesh.userData.level||mesh.userData.level<=Number(el('level').value));
+    });
     if(selected) {
       const item=inventory.get(selected),target=targets.has(selected);
       el('detail').textContent=selected+'\n状态：'+(target?(data.mode==='inbound'?'待入库':'待出库'):item?'有库存':'空货位')+
-        (item?'\n货物：'+(item.item_id || '未提供')+'\n数量：'+(item.quantity ?? '未提供'):'')+
-        '\n坐标：'+JSON.stringify(slots.get(selected).userData.coordinate);
+        (item?'\n货物：'+(item.item_id || '未提供')+'\n数量：'+(item.quantity ?? '未提供'):'');
     }
     el('summary').textContent='有效货位 '+slots.size+' · 库存货位 '+inventory.size+' · 目标货位 '+targets.size;
     while(routeGroup.children.length) {
@@ -138,19 +140,25 @@
         if(col>=20&&col<=22&&level<=2) continue;
         const y=config.frontY+(col-.5)*config.columnWidth,z=(level-.5)*config.levelHeight;
         const mesh=box(1.06,.74,.84,row.x,y,z,colors.empty,.22);
-        const id=row.id+'-'+col+'-'+level;mesh.userData={slot_id:id,level,coordinate:{x:row.x,y,z}};slots.set(id,mesh);
-        const shelf=new THREE.Mesh(shelfGeo,shelfMat);shelf.position.copy(point({x:row.x,y,z:level-1}));shelf.userData.level=level;scene.add(shelf);
+        const id=row.id+'-'+col+'-'+level;mesh.userData={slot_id:id,level,rack:row.id,coordinate:{x:row.x,y,z}};slots.set(id,mesh);
+        const shelf=new THREE.Mesh(shelfGeo,shelfMat);shelf.position.copy(point({x:row.x,y,z:level-1}));shelf.userData={level,rack:row.id};scene.add(shelf);
       }
       for(let col=0;col<=45;col++) for(const dx of [-.57,.57]) {
         if(col===20||col===21) continue;
-        const post=new THREE.Mesh(postGeo,postMat);post.position.copy(point({x:row.x+dx,y:2+col,z:2.5}));scene.add(post);
+        const post=new THREE.Mesh(postGeo,postMat);post.position.copy(point({x:row.x+dx,y:2+col,z:2.5}));post.userData.rack=row.id;scene.add(post);
       }
-      label(row.id,row.x,.9,2, .6);
+      label(row.id,row.x,.9,2, .9).userData.rack=row.id;
     });
-    label('门口 / 出货区',0,-.65,.15,.7);label('双向通道',-4.2,13,.2,.5);label('双向通道',.6,13,.2,.5);
-    label('20—22 列贯通',-1.2,22.5,5.5,.7);label('第 45 列 · 靠墙',-1.2,47,6,.7);label('其他项目货架',3.6,35,5.5,.6);
+    label('门口 / 出货区',0,-.65,.15,1);
+    for(const x of [-4.2,.6]) for(const direction of [-1,1]) {
+      scene.add(new THREE.ArrowHelper(new THREE.Vector3(0,0,direction),point({x:x+direction*.35,y:13-direction*1.5,z:.2}),3,0x304860,.55,.4));
+    }
+    for(const direction of [-1,1]) {
+      scene.add(new THREE.ArrowHelper(new THREE.Vector3(direction,0,0),point({x:-1.2-direction*1.5,y:22.5-direction*.4,z:.2}),3,0x304860,.55,.4));
+    }
+    label('20—22 列贯通',-1.2,22.5,5.5,1);label('第 45 列 · 靠墙',-1.2,47,6,.7);label('其他项目货架',3.6,35,5.5,.6);
     for(const col of [1,10,19,23,30,40,45]) label(String(col),-5.1,col+1.5,.2,.25);
-    const axes=new THREE.AxesHelper(2);scene.add(axes);label('X 向右',2,0,.2,.35);label('Y 向墙',0,2,.2,.35);label('Z 向上',0,0,2.5,.35);
+    const axes=new THREE.AxesHelper(2);scene.add(axes);
     routeGroup=new THREE.Group();scene.add(routeGroup);
     originMarker=new THREE.Mesh(new THREE.SphereGeometry(.18,16,12),new THREE.MeshPhongMaterial({color:0x23364b}));scene.add(originMarker);originMarker.position.copy(point({...config.origin,z:.2}));
     setView(false);demo('empty');
@@ -166,18 +174,18 @@
       else el('slot-popup').hidden=true;
     });
     el('mode').onchange=()=>demo(el('mode').value);
-    el('level').onchange=()=>{el('slot-popup').hidden=true;refresh();scene.children.forEach(mesh=>{if(mesh.userData.level&&!mesh.userData.slot_id)mesh.visible=mesh.userData.level<=Number(el('level').value);});};
+    el('level').onchange=()=>{el('slot-popup').hidden=true;refresh();};
     el('perspective').onclick=()=>setView(false);el('top').onclick=()=>setView(true);
     el('locate').onclick=()=>{
       const id=el('slotId').value.trim().toUpperCase(),mesh=slots.get(id);
       if(!mesh){el('detail').textContent='货位不存在（20—22 列的第 1、2 层为通道）。';return;}
-      selected=id;el('level').value='5';el('level').onchange();controls.target.copy(mesh.position);camera.position.copy(mesh.position).add(new THREE.Vector3(-5,5,-6));controls.update();
+      selected=id;rack='';el('level').value='5';el('level').onchange();controls.target.copy(mesh.position);camera.position.copy(mesh.position).add(new THREE.Vector3(-5,5,-6));controls.update();
     };
     el('applyOrigin').onclick=()=>{
       const x=el('originX').valueAsNumber,y=el('originY').valueAsNumber;
       if(!Number.isFinite(x)||!Number.isFinite(y)||x < -5.4||x>3||y<0||y>=2){el('detail').textContent='起点范围：X 为 -5.4 到 3，Y 为 0 到小于 2。';return;}
       config.origin={x,y,z:0};originMarker.position.copy(point({x,y,z:.2}));demo(el('mode').value);
     };
-    window.warehousePreview={config,setData,getSlots:()=>Array.from(slots.values()).map(mesh=>({...mesh.userData}))};
+    window.warehousePreview={config,setData,setRack:value=>{rack=value;selected=null;el('slot-popup').hidden=true;el('detail').textContent='点击货位查看编号与状态。';refresh();},getSlots:()=>Array.from(slots.values()).map(mesh=>({...mesh.userData}))};
   } catch(error) {el('error').textContent='三维预览加载失败：'+error.message;}
 })();

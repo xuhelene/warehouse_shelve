@@ -1,0 +1,16 @@
+{
+  "version": 4,
+  "updated_at": "2026-10-21T09:49:10.269093+00:00",
+  "slotting": {
+    "backend": "heuristic",
+    "time_limit_s": 60.0,
+    "threads": 8,
+    "mip_gap": 0.005
+  },
+  "picking_path": {
+    "backend": "heuristic",
+    "time_limit_s": 60.0,
+    "threads": 8,
+    "mip_gap": 0.005
+  }
+}

@@ -1,0 +1,10 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SKU 周转等级</title><link rel="stylesheet" href="/static/settings.css"></head>
+<body><nav><a href="/">产品列表</a><span>/</span>SKU 周转等级</nav><main>
+<header><div><h1>SKU 周转等级</h1><p>按近30天入库＋出库箱数，分仓库将货主＋SKU条目排为高、中、低三级。</p></div></header>
+<section class="card"><p>按仓库＋货主＋SKU分别统计，同一仓库内各货主＋SKU条目统一排名。箱数＝主单位数量÷转换率，保留拆零小数；1件＝1箱。累计贡献80%/95%分级，跨越阈值的条目归入当前等级，零搬运量最低；同量先按 SKU 编码、再按货主编码排序。</p>
+<p>请选择包含完整统计期的订单历史文件。每次更新使用本次文件重新计算，不与上次文件累加；每一行按一次作业明细计入，请勿重复提供相同作业记录。窗口内有入库或出库记录的条目参与评级，无任务日期按0处理。</p>
+<form id="update-form"><div class="field"><label for="file">订单历史（CSV / XLSX）</label><input id="file" type="file" accept=".csv,.xlsx" required></div><div class="field"><label for="end-date">截止日期（包含当天，留空使用今天）</label><input id="end-date" type="date"></div><div class="actions"><button id="sample" type="button">使用初始样例更新</button><button class="primary" type="submit">上传并更新</button></div></form>
+<p>初始样例使用 data/slotting/orders.csv，以最新作业记录日期为截止日。每次更新保存输入和结果，周期更新尚未启用；入库规划按最近一次上传历史及截止日重新计算等级，无等级默认低。</p><p id="status" role="status" aria-live="polite">正在读取…</p></section>
+<section class="card"><h2>最新结果</h2><p id="summary"></p><div style="overflow:auto"><table><thead><tr><th scope="col">仓库</th><th scope="col">货主</th><th scope="col">SKU</th><th scope="col">入库＋出库箱数</th><th scope="col">排名</th><th scope="col">等级</th></tr></thead><tbody id="rows"></tbody></table></div></section>
+</main><script src="/static/sku-turnover.js"></script></body></html>

@@ -7,11 +7,12 @@
   <link rel="stylesheet" href="/static/portal.css?v={{ static_version }}">
   {% block head_extra %}{% endblock %}
 </head>
-<body>
+<body class="{% block body_class %}{% endblock %}">
   <div class="page{% if wide_page %} page-wide{% endif %}">
     <div class="topbar">
       <a class="brand" href="/"><div class="brand-mark">WO</div><div>物流仓储优化演示系统</div></a>
       <div class="nav">
+        {% block nav_extra %}{% endblock %}
         {% for key, config in modules.items() %}
             <a class="nav-link{% if key == active_module_key %} active{% endif %}" href="/modules/{{ key }}">{{ config.title }}</a>
         {% endfor %}
