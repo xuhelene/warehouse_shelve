@@ -6,7 +6,7 @@ import pytest
 
 from core.warehouse_layout import WarehouseLayout
 from apps.warehouse_service import plan
-from apps.warehouse_data import prepare
+from apps.warehouse_data import load_specs, prepare
 from solvers.warehouse_inbound_heuristic import solve as inbound
 from solvers.warehouse_outbound_heuristic import solve as outbound
 
@@ -216,6 +216,22 @@ def test_frozen_inventory_occupies_slot_but_is_not_pickable():
     assert not result["picks"]
     assert result["shortages"][0]["shortage_quantity"] == 5
     assert result["remaining_inventory"][0]["base_quantity"] == 10
+
+
+@pytest.mark.parametrize("operation", ["slotting", "picking_path"])
+def test_specs_match_sku_regardless_of_owner(operation):
+    specs = [dict(编码="A", 所属客户="其他客户", 货主编码="OTHER", 托含量="40"),
+             dict(编码="A", 所属客户="另一客户", 托含量="40")]
+    _, _, caps = prepare([], [row(), row(owner="P")], specs, WarehouseLayout(), operation)
+    assert caps == {("O", "A"): D(40), ("P", "A"): D(40)}
+    specs[1]["托含量"] = "60"
+    with pytest.raises(ValueError):
+        prepare([], [row()], specs, WarehouseLayout(), operation)
+
+
+def test_specs_file_does_not_require_owner():
+    content = "编码,货品名称,托含量\nA,测试货品,40\n".encode("utf-8-sig")
+    assert load_specs(content, "specs.csv")["rows"] == [dict(编码="A", 货品名称="测试货品", 托含量="40")]
 
 
 def test_missing_owner_and_ambiguous_specs_fail_without_fallback():

@@ -1,6 +1,7 @@
 """入出库共用的文件解析与标准化，不依赖 HTTP 或平台响应格式。"""
 from copy import deepcopy
 from decimal import Decimal, InvalidOperation
+from fractions import Fraction
 import json
 from io import BytesIO
 import re
@@ -117,7 +118,7 @@ def load_specs(content=None, filename=""):
     else:
         raise ValueError("SKU规格仅支持 CSV、XLSX")
     frame.columns = frame.columns.str.strip()
-    required = {"编码", "货品名称", "所属客户", "托含量"}
+    required = {"编码", "货品名称", "托含量"}
     if required - set(frame.columns):
         raise ValueError("SKU规格缺少字段：" + "、".join(sorted(required - set(frame.columns))))
     return dict(filename=filename, rows=frame.to_dict("records"), count=len(frame))
@@ -159,9 +160,7 @@ def prepare(inventory, orders, specs, layout, operation):
         key = (row["owner_code"], row["sku_id"])
         if operation == "picking_path" and key not in required_skus:
             continue
-        matches = [s for s in specs if str(s.get("编码", "")).strip() == row["sku_id"] and
-                   (str(s.get("货主编码", "")).strip() == row["owner_code"] if str(s.get("货主编码", "")).strip()
-                    else _owner_name(s.get("所属客户", "")) == _owner_name(row.get("owner_name", "")))]
+        matches = [s for s in specs if str(s.get("编码", "")).strip() == row["sku_id"]]
         values = set()
         for spec in matches:
             try:
@@ -199,7 +198,7 @@ def prepare(inventory, orders, specs, layout, operation):
         if len({r["owner_code"] for r in rows}) != 1:
             raise ValueError(f"货位{slot}包含不同货主")
         limits = [capacities.get((r["owner_code"], r["sku_id"])) for r in rows]
-        if all(limit is not None for limit in limits) and sum(r["boxes"] for r in rows) > min(limits):
+        if all(limit is not None for limit in limits) and sum(Fraction(r["base_quantity"]) / Fraction(r["conversion_ratio"]) for r in rows) > min(limits):
             raise ValueError(f"货位{slot}库存超过单托容量")
     for row in orders:
         if not row.get("order_no"):

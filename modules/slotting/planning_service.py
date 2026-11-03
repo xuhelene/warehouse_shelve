@@ -18,6 +18,12 @@ def plan(inventory, orders, capacities, layout, payload, config):
     # 每次从完整历史重算已确认的入库+出库累计贡献等级。
     grades = calculate(path.read_bytes(), path.name, end_date)["rows"]
     grade_map = {(r["warehouse_code"], r["owner_code"], r["sku_id"]): r["grade"] for r in grades}
-    result = solve(inventory, orders, capacities, layout, grade_map, monotonic() + config["time_limit_s"])
+    if config["backend"] == "copt":
+        from solvers.warehouse_inbound_copt import solve as solve_copt
+        result = solve_copt(inventory, orders, capacities, layout, grade_map, config)
+    elif config["backend"] == "heuristic":
+        result = solve(inventory, orders, capacities, layout, grade_map, monotonic() + config["time_limit_s"])
+    else:
+        raise ValueError("立体库入库暂不支持该求解器，请选择COPT或启发式")
     result["turnover"] = grades
     return result

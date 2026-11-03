@@ -1,4 +1,4 @@
-"""算法配置持久化；新立体库规划当前仅支持启发式。"""
+"""算法配置持久化；立体库入库支持启发式及COPT。"""
 import json
 import os
 import threading
@@ -13,7 +13,7 @@ from core.paths import runtime_path
 
 class SolverSettings(BaseModel):
     model_config = ConfigDict(extra="forbid", allow_inf_nan=False)
-    backend: Literal["copt", "ortools", "heuristic"] = "copt"
+    backend: Literal["copt", "ortools", "heuristic"] = "heuristic"
     time_limit_s: float = Field(default=60, gt=0)
     threads: int = Field(default=8, gt=0, strict=True)
     mip_gap: float = Field(default=0.005, ge=0, le=1)

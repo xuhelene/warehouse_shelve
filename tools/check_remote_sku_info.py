@@ -16,6 +16,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--without-erp-id', action='store_true')
     parser.add_argument('--erp-id', default='10')
+    parser.add_argument('--warehouse-id')
     parser.add_argument('--url', default='http://61.237.224.162:61888/api/open/owtbmetadata/getGcInfo')
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[1]
@@ -34,6 +35,8 @@ def main():
         if code in cache:
             continue
         params = {'itemCode': code} if args.without_erp_id else {'erpId': args.erp_id, 'itemCode': code}
+        if args.warehouse_id:
+            params['warehouseId'] = args.warehouse_id
         url = endpoint + '?' + urllib.parse.urlencode(params)
         result = {'url': url, 'checked_at': datetime.now(ZoneInfo('Asia/Singapore')).isoformat()}
         for attempt in range(3):
@@ -70,7 +73,7 @@ def main():
             matches = result.get('matches', [])
             body = result.get('response', {})
             writer.writerow([row_number, code, name, result['status'], len(matches), ' | '.join(str(item.get('itemName', '')) for item in matches), result.get('http_status'), body.get('code'), result.get('error', body.get('message')), result['checked_at'], result['url']])
-    summary = {'source': str(source), 'erpId': None if args.without_erp_id else args.erp_id, 'rows': len(records), 'unique_codes': len(cache), 'counts': dict(Counter(result['status'] for result in cache.values())), 'output': str(output)}
+    summary = {'source': str(source), 'erpId': None if args.without_erp_id else args.erp_id, 'warehouseId': args.warehouse_id, 'rows': len(records), 'unique_codes': len(cache), 'counts': dict(Counter(result['status'] for result in cache.values())), 'output': str(output)}
     (output / 'summary.json').write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding='utf-8')
     print(json.dumps(summary, ensure_ascii=False), flush=True)
 

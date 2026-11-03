@@ -117,7 +117,7 @@ def plan(operation, payload, *, output_root=None, settings=None):
                   settings=settings, source=payload.get("source", "file_snapshot"), started_at=datetime.now(timezone.utc).isoformat(),
                   shortages=[], unassigned=[], warnings=[], layer_weight=payload.get("layer_weight", 1))
     try:
-        if config["backend"] != "heuristic":
+        if config["backend"] != "heuristic" and not (operation == "slotting" and config["backend"] == "copt"):
             raise ValueError("本轮立体库规则仅支持启发式，请在算法设置中选择启发式后规划")
         source = payload.get("source", "file_snapshot")
         if source == "platform":
@@ -140,10 +140,11 @@ def plan(operation, payload, *, output_root=None, settings=None):
         inventory, orders, capacities = prepare(payload.get("inventory", []), payload.get("orders", []), specs, layout, operation)
         task_service = inbound_service if operation == "slotting" else outbound_service
         result.update(task_service.plan(inventory, orders, capacities, layout, payload, config))
-        result["warnings"].append("启发式为单线程；threads及mip_gap不生效，结果不保证全局最优。")
+        if config["backend"] == "heuristic":
+            result["warnings"].append("启发式为单线程；threads及mip_gap不生效，结果不保证全局最优。")
         result["layout"] = dict(slots=list(layout.slots.values()), nodes=layout.nodes,
                                 edges=[dict(start=a, end=b, distance=d) for a, targets in layout.graph.items() for b, d in targets.items() if a < b])
-    except (ValueError, TimeoutError, OSError, BadZipFile, NotImplementedError) as error:
+    except (ValueError, RuntimeError, TimeoutError, OSError, BadZipFile, NotImplementedError) as error:
         result.update(status="failed", message=str(error))
     result["finished_at"] = datetime.now(timezone.utc).isoformat()
     # Decimal保留为十进制字符串，避免把1瓶回写为1.002瓶。

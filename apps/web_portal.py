@@ -45,7 +45,7 @@ def home() -> HTMLResponse:
 
 @app.get("/warehouse-preview", response_class=HTMLResponse)
 def warehouse_preview() -> FileResponse:
-    return FileResponse(resource_path("apps/static/warehouse-preview.html"))
+    return FileResponse(resource_path("apps/static/warehouse-preview.html"), headers={"Cache-Control": "no-cache"})
 
 
 @app.get("/settings", response_class=HTMLResponse)
@@ -61,9 +61,9 @@ def turnover_page() -> FileResponse:
 @app.get("/modules/{module_key}", response_class=HTMLResponse)
 def module_page(module_key: str) -> HTMLResponse:
     if module_key == "slotting":
-        return FileResponse(resource_path("apps/static/slotting.html"))
+        return FileResponse(resource_path("apps/static/slotting.html"), headers={"Cache-Control": "no-cache"})
     if module_key == "picking-path":
-        return FileResponse(resource_path("apps/static/picking-path.html"))
+        return FileResponse(resource_path("apps/static/picking-path.html"), headers={"Cache-Control": "no-cache"})
     return render_module_page(module_key)
 
 

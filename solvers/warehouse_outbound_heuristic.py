@@ -1,11 +1,86 @@
-"""先固定尾板/FIFO选货数量，再按最近邻生成货主隔离的一托作业路线。"""
+"""先固定尾板/FIFO选货数量，再用后悔值插入和VNS优化完整运输路线。"""
 from collections import defaultdict
 from copy import deepcopy
-from decimal import Decimal
+from decimal import Decimal, localcontext
+from fractions import Fraction
+from functools import lru_cache
 from time import monotonic
 
+from solvers.warehouse_outbound_vns import search
 
-def solve(inventory, orders, capacities, layout, flag, deadline):
+
+def _decimal(value):
+    return Decimal(value.numerator) / Decimal(value.denominator)
+
+
+def _route(rows, capacities, layout, task, distance, deadline=None, emit=False):
+    """按任务序列推演取货、分托和卸货；搜索与输出共用同一容量规则。"""
+    legs, picks, trips = [], [], []
+    current, load, limit = "STAGING", Fraction(0), None
+    owner = rows[0]["owner_code"] if rows else None
+    loaded_skus, total, trip_start = set(), 0., 0
+
+    def unload():
+        nonlocal current, load, limit, total, trip_start
+        if load:
+            total += distance(current, "STAGING")
+            if emit:
+                leg = layout.leg(current, "STAGING")
+                leg.update(task=task, action="unload", owner_code=owner, load_before=_decimal(load), load_after=Decimal(0))
+                legs.append(leg)
+                trips.append(dict(task=task, owner_code=owner, loaded_boxes=_decimal(load),
+                                  legs=deepcopy(legs[trip_start:]), distance=sum(l["distance"] for l in legs[trip_start:])))
+        current, load, limit = "STAGING", Fraction(0), None
+        loaded_skus.clear()
+        trip_start = len(legs)
+
+    for row in rows:
+        remaining = row["base_quantity"]
+        cap = Fraction(capacities[(owner, row["sku_id"])])
+        ratio = Fraction(row["conversion_ratio"])
+        while remaining:
+            if deadline is not None and monotonic() >= deadline:
+                raise TimeoutError("出库路径规划达到时间上限，未发布不完整方案")
+            new_limit = min(limit, cap) if limit is not None else cap
+            take_boxes = min(Fraction(remaining) / ratio, cap)
+            if row["sku_id"] in loaded_skus:
+                take_boxes = min(take_boxes, new_limit - load)
+            if load and load + take_boxes > new_limit:
+                unload()
+                continue
+            limit = new_limit
+            full = load + take_boxes == limit
+            take_base = take_boxes * ratio
+            quantity = remaining if take_base == remaining else _decimal(take_base)
+            if Fraction(quantity) > take_base:
+                quantity = quantity.next_minus()
+            actual_boxes = Fraction(quantity) / ratio
+            total += distance(current, row["slot_id"])
+            if emit:
+                boxes = quantity / row["conversion_ratio"]
+                detail = {**row, **layout.slots[row["slot_id"]], "task": task, "trip": len(trips) + 1,
+                          "boxes": boxes, "base_quantity": quantity, "quantity": boxes, "unit": "箱"}
+                picks.append(detail)
+                leg = layout.leg(current, row["slot_id"])
+                leg.update(task=task, action="pick", owner_code=owner, order_no=row["order_no"],
+                           sku_id=row["sku_id"], boxes=boxes, load_before=_decimal(load),
+                           load_after=_decimal(load + actual_boxes), capacity=_decimal(limit))
+                legs.append(leg)
+            load += actual_boxes
+            loaded_skus.add(row["sku_id"])
+            current = row["slot_id"]
+            # quantity可能含28位循环小数近似；减法不能再次舍入并丢掉剩余主单位。
+            with localcontext() as context:
+                context.prec = max(context.prec, remaining.adjusted() - min(remaining.as_tuple().exponent, quantity.as_tuple().exponent) + 2)
+                remaining -= quantity
+            if full:
+                unload()
+    unload()
+    return dict(distance=total, legs=legs, picks=picks, trips=trips)
+
+
+def solve(inventory, orders, capacities, layout, flag, deadline, *, search_method=None, route_strategy="VNS"):
+    search_method = search if search_method is None else search_method
     stock = deepcopy(inventory)
     slots = defaultdict(list)
     for index, row in enumerate(stock):
@@ -18,7 +93,7 @@ def solve(inventory, orders, capacities, layout, flag, deadline):
     # 混托不判满；其中各SKU均参与尾板优先选择。
     required_skus = {(r["owner_code"], r["sku_id"]) for r in orders}
     tail = {slot: len({r["sku_id"] for r in rows}) > 1 or
-            sum(r["boxes"] for r in rows) < capacities[(rows[0]["owner_code"], rows[0]["sku_id"])]
+            sum(Fraction(r["base_quantity"]) / Fraction(r["conversion_ratio"]) for r in rows) < capacities[(rows[0]["owner_code"], rows[0]["sku_id"])]
             for slot, rows in slots.items()
             if any((r["owner_code"], r["sku_id"]) in required_skus for r in rows)}
     order_owners = defaultdict(set)
@@ -52,61 +127,55 @@ def solve(inventory, orders, capacities, layout, flag, deadline):
                                   fulfilled_quantity=order["base_quantity"] - need, shortage_quantity=need, unit=order["base_unit"]))
     tasks = defaultdict(list)
     for row in selected:
-        tasks["WAVE" if flag else row["order_no"]].append(deepcopy(row))
+        tasks[("WAVE" if flag else row["order_no"], row["owner_code"])].append(row)
+
+    @lru_cache(maxsize=None)
+    def distance(start, end):
+        return layout.leg(start, end)["distance"]
+
+    # 先构造全部任务的完整可行解，之后才在剩余时限内优化。
+    plans = []
+    initial_distance = 0.
+    for (task, owner), rows in tasks.items():
+        initial = sorted(range(len(rows)), key=lambda i: (rows[i]["slot_id"], rows[i]["sku_id"], rows[i]["order_no"], i))
+        value = _route([rows[i] for i in initial], capacities, layout, task, distance, deadline)["distance"]
+        plans.append((task, rows, initial, value))
+        initial_distance += value
     legs, picks, trips = [], [], []
-    for task, pending in tasks.items():
-        current, owner, load, limit = "STAGING", None, Decimal(0), None
-        loaded_skus = set()
-        trip_start = len(legs)
+    stats = dict(evaluations=0, improvements=0, perturbations=0, time_limit_reached=False)
+    search_details = []
+    for task, rows, initial, value in plans:
+        def evaluate(sequence):
+            return _route([rows[i] for i in sequence], capacities, layout, task, distance, deadline)["distance"]
 
-        def unload():
-            nonlocal current, owner, load, limit, trip_start
-            if load:
-                leg = layout.leg(current, "STAGING")
-                leg.update(task=task, action="unload", owner_code=owner, load_before=load, load_after=Decimal(0))
-                legs.append(leg)
-                trips.append(dict(task=task, owner_code=owner, loaded_boxes=load,
-                                  legs=deepcopy(legs[trip_start:]), distance=sum(l["distance"] for l in legs[trip_start:])))
-            current, owner, load, limit = "STAGING", None, Decimal(0), None
-            loaded_skus.clear()
-            trip_start = len(legs)
+        def tie_key(sequence):
+            return tuple((distance("STAGING", rows[i]["slot_id"]), rows[i]["slot_id"],
+                          rows[i]["sku_id"], rows[i]["order_no"], i) for i in sequence)
 
-        while pending:
-            if monotonic() >= deadline:
-                raise TimeoutError("出库路径规划达到时间上限，未发布不完整方案")
-            same_owner = [r for r in pending if owner is None or r["owner_code"] == owner]
-            if not same_owner:
-                unload()
-                continue
-            row = min(same_owner, key=lambda r: (layout.leg(current, r["slot_id"])["distance"], r["slot_id"], r["sku_id"], r["order_no"]))
-            cap = capacities[(row["owner_code"], row["sku_id"])]
-            new_limit = min(limit, cap) if limit is not None else cap
-            # 本次取货量先按空托容量确定；新SKU使上限降低且超限时先卸货。
-            take_boxes = min(row["boxes"], cap)
-            if row["sku_id"] in loaded_skus:
-                take_boxes = min(take_boxes, new_limit - load)
-            if load and load + take_boxes > new_limit:
-                unload()
-                continue
-            owner, limit = row["owner_code"], new_limit
-            leg = layout.leg(current, row["slot_id"])
-            detail = {**row, **layout.slots[row["slot_id"]], "task": task, "trip": len(trips) + 1,
-                      "boxes": take_boxes, "base_quantity": row["base_quantity"] if take_boxes == row["boxes"] else take_boxes * row["conversion_ratio"],
-                      "quantity": take_boxes, "unit": "箱"}
-            picks.append(detail)
-            leg.update(task=task, action="pick", owner_code=owner, order_no=row["order_no"],
-                       sku_id=row["sku_id"], boxes=take_boxes, load_before=load, load_after=load + take_boxes, capacity=limit)
-            legs.append(leg)
-            load += take_boxes
-            loaded_skus.add(row["sku_id"])
-            current = row["slot_id"]
-            row["boxes"] -= take_boxes
-            row["base_quantity"] -= detail["base_quantity"]
-            if row["boxes"] == 0:
-                pending.remove(row)
-            if load == limit:
-                unload()
-        unload()
+        if len({(r["slot_id"], r["sku_id"]) for r in rows}) == 1:
+            # 同货位同SKU只有一条物理路线，时间/批次明细的排列不会改善距离。
+            sequence, info = initial, dict(evaluations=0, improvements=0, perturbations=0, time_limit_reached=False)
+        else:
+            sequence, value, info = search_method(evaluate, initial, value, deadline, tie_key)
+        for key in stats:
+            if key == "time_limit_reached":
+                stats[key] = stats[key] or info[key]
+            else:
+                stats[key] += info[key]
+        search_details.append(info)
+        # 搜索耗尽时返回已有完整解；输出重建不再启动新的搜索。
+        route = _route([rows[i] for i in sequence], capacities, layout, task, distance, emit=True)
+        for detail in route["picks"]:
+            detail["trip"] += len(trips)
+        legs.extend(route["legs"])
+        picks.extend(route["picks"])
+        trips.extend(route["trips"])
+    stats["initial_distance"] = initial_distance
+    if route_strategy == "ALNS":
+        stats["groups"] = search_details
+        stats["iterations"] = sum(info.get("iterations", 0) for info in search_details)
+    if stats["time_limit_reached"]:
+        warnings.append(f"{route_strategy}达到搜索时间上限，返回已有完整可行方案，未证明全局最优")
     for row in stock:
         row["boxes"] = row["base_quantity"] / row["conversion_ratio"]
         row["quantity"] = row["boxes"]
@@ -116,7 +185,7 @@ def solve(inventory, orders, capacities, layout, flag, deadline):
             row["available_quantity"] = row["available_base"] / row["conversion_ratio"]
     cleared = [slot for slot, rows in slots.items() if all(r["base_quantity"] == 0 for r in rows)]
     return dict(status="partial" if shortages else "feasible", storeBatchFlag=flag, strategy="FIFO",
-                warnings=warnings,
+                warnings=warnings, route_strategy=route_strategy, search=stats,
                 picks=picks, trips=trips, legs=legs, shortages=shortages, remaining_inventory=stock,
                 cleared_slots=cleared, total_distance=sum(l["distance"] for l in legs),
                 message="存在缺货，已输出可满足部分" if shortages else "出库启发式规划完成")

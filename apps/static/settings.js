@@ -1,6 +1,6 @@
 (() => {
   'use strict';
-  const $=id=>document.querySelector('#algorithm-settings #'+id), defaults={backend:'copt',time_limit_s:60,threads:8,mip_gap:0.005};
+  const $=id=>document.querySelector('#algorithm-settings #'+id), defaults={backend:'heuristic',time_limit_s:60,threads:8,mip_gap:0.005};
   let current='slotting', drafts={}, saved={}, loaded=false, busy=false, persisted=false, version=0;
   const names={slotting:'入库推荐',picking_path:'拣货路径推荐'};
   function capture(){if(loaded)drafts[current]={backend:$('backend').value,time_limit_s:Number($('time-limit').value),threads:Number($('threads').value),mip_gap:current==='slotting'?Number($('gap').value)/100:drafts[current].mip_gap};}
@@ -10,7 +10,11 @@
     $('gap-field').hidden=picking||backend==='heuristic';$('gap').disabled=$('gap-field').hidden;
     $('threads-help').textContent='立体库启发式为单线程，threads及mip_gap不生效。';
     $('time-help').textContent='启发式在规划循环检查截止时间；超时返回失败并保存记录。不含数据准备及结果保存时间。';
-    $('backend-help').textContent=backend==='heuristic'?'已接入立体库页面规划，结果不保证全局最优。':'当前立体库规则仅支持启发式；此后端可保存预设，规划时会明确提示尚未支持。';
+    $('backend-help').textContent=backend==='heuristic'?'已接入立体库页面规划，结果不保证全局最优。':!picking&&backend==='copt'?'已接入入库规划：最大化上架箱数，其次最短距离，层位偏好用于同优方案。需要有效COPT许可。':'当前立体库规则尚不支持此后端。';
+    if(!picking&&backend==='copt'){
+      $('threads-help').textContent='COPT使用配置线程数；相对间隙仅用于最后的层位偏好阶段。';
+      $('time-help').textContent='各目标阶段共用时间上限（含建模）；超时保留可行解并标明未证明最优。';
+    }
     $('dirty').textContent=changed()?'有未保存修改':'未修改';
     $('save').disabled=!loaded||busy;
   }

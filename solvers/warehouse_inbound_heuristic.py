@@ -1,4 +1,4 @@
-"""先按层级偏好贪心分配；空位不足才追加单SKU尾板或组新混托。"""
+"""先按层级偏好贪心分配；总空位或一层空位不足时考虑合法混托。"""
 from copy import deepcopy
 from time import monotonic
 
@@ -25,15 +25,17 @@ def solve(inventory, orders, capacities, layout, grades, deadline):
             remaining -= quantity
     groups.sort(key=lambda g: (0 if g["tail"] and g["boxes"] < 1 else 1 if g["tail"] else 2,
                                {"高": 0, "中": 1, "低": 2}[g["grade"]]))
-    # 只有空位不足才考虑混放；已混托（多SKU）永远不作为追加目标。
-    if len(groups) > len(empty):
+    # 尾板先满足一层偏好；已混托（多SKU）永远不作为追加目标。
+    tail_required = sum(group["tail"] for group in groups)
+    floor_empty = sum(layout.slots[s]["level"] == 1 for s in empty)
+    if len(groups) > len(empty) or tail_required > floor_empty:
         retained = []
         required = len(groups)
         for group in groups:
             if monotonic() >= deadline:
                 raise TimeoutError("入库规划达到时间上限")
             row = group["details"][0]
-            if group["tail"] and required > len(empty):
+            if group["tail"] and (required > len(empty) or tail_required > floor_empty):
                 candidates = []
                 for slot, rows in occupied.items():
                     if layout.slots[slot]["level"] != 1 or len({r["sku_id"] for r in rows}) != 1:
@@ -52,6 +54,7 @@ def solve(inventory, orders, capacities, layout, grades, deadline):
                     occupied[target] = occupied[target] + deepcopy(group["details"])
                     retained.append(group)
                     required -= 1
+                    tail_required -= 1
                     continue
                 # 本次多个不同SKU尾板可以组托，不移动已有库存。
                 merged = False
@@ -68,6 +71,7 @@ def solve(inventory, orders, capacities, layout, grades, deadline):
                         other["boxes"] += group["boxes"]
                         other["cap"] = limit
                         required -= 1
+                        tail_required -= 1
                         merged = True
                         break
                 if not merged:

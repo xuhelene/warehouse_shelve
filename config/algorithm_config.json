@@ -1,6 +1,6 @@
 {
-  "version": 4,
-  "updated_at": "2026-10-21T09:49:10.269093+00:00",
+  "version": 6,
+  "updated_at": "2026-11-03T01:43:12.112769+00:00",
   "slotting": {
     "backend": "heuristic",
     "time_limit_s": 60.0,

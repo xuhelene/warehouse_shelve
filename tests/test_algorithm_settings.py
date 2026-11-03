@@ -12,7 +12,7 @@ def test_initial_values_do_not_write_file(tmp_path):
     assert not path.exists()
     assert data["persisted"] is False
     for module in ("slotting", "picking_path"):
-        assert data[module] == dict(backend="copt", time_limit_s=60, threads=8, mip_gap=0.005)
+        assert data[module] == dict(backend="heuristic", time_limit_s=60, threads=8, mip_gap=0.005)
 
 
 def test_tabs_save_independently_and_survive_reload(tmp_path):

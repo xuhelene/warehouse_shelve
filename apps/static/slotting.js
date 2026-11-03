@@ -3,7 +3,7 @@
   const $ = id => document.getElementById(id), state = {inventory:null, orders:null, specs:null, result:null};
   let busy=false;
   function ready(){ $('plan').disabled=busy||!state.inventory||!state.orders; }
-  function invalidate(){state.result=null;$('result').disabled=true;ready();}
+  function invalidate(){state.result=null;const tools=document.querySelector('.route-tools');if(tools)tools.hidden=true;$('result').disabled=true;ready();}
   const apiBase = document.body.dataset.apiBase || '/api/slotting';
   const ordersTitle = document.body.dataset.ordersTitle || '入库订单信息';
   const frame = $('layout');
@@ -21,18 +21,33 @@
     preview.setData({inventory,targets:[],paths:[],mode:'inventory'});
     $('layout-status').textContent = '657 个有效货位 · '+new Set(inventory.map(row=>row.slot_id)).size+' 个已占货位 · 备货区 '+(state.inventory?.staging_count || 0)+' 条记录';
   }
-  $('warehouse').onchange = () => {frame.src='/warehouse-preview?embedded=1';};
+  $('warehouse').onchange = () => {frame.src='/warehouse-preview?embedded=1&v=20261102-ui8';};
   frame.onload = () => {
     syncLayout();
+    if(!frame.contentWindow?.warehousePreview){$('layout-status').textContent=frame.contentDocument?.getElementById('error')?.textContent||'货架布局未能加载，请刷新页面重试。';return;}
+    $('top-view').setAttribute('aria-pressed','true');$('perspective-view').setAttribute('aria-pressed','false');
     $('view-level').value='5';
     if($('view-rack'))$('view-rack').value='';
-    const detail=frame.contentDocument.getElementById('detail');
-    if(detail)new MutationObserver(()=>{$('slot-detail').textContent=detail.textContent;}).observe(detail,{childList:true,subtree:true,characterData:true});
+    const summary=frame.contentDocument.getElementById('summary');
+    if(summary)new MutationObserver(()=>{if(state.result)$('layout-status').textContent=summary.textContent+(summary.textContent.includes('无目标')?'':' · 绿点可点击查看货位与层号，蓝色短线指向作业货位');}).observe(summary,{childList:true,subtree:true,characterData:true});
   };
-  $('perspective-view').onclick=()=>frame.contentDocument.getElementById('perspective')?.click();
-  $('top-view').onclick=()=>frame.contentDocument.getElementById('top')?.click();
+  $('perspective-view').onclick=()=>{frame.contentDocument.getElementById('perspective')?.click();$('perspective-view').setAttribute('aria-pressed','true');$('top-view').setAttribute('aria-pressed','false');};
+  $('top-view').onclick=()=>{frame.contentDocument.getElementById('top')?.click();$('top-view').setAttribute('aria-pressed','true');$('perspective-view').setAttribute('aria-pressed','false');};
   $('view-level').onchange=()=>{const level=frame.contentDocument.getElementById('level');if(level){level.value=$('view-level').value;level.dispatchEvent(new Event('change'));}};
   if($('view-rack'))$('view-rack').onchange=()=>frame.contentWindow?.warehousePreview?.setRack($('view-rack').value);
+  if($('layout-route'))$('layout-route').onchange=()=>{
+    frame.contentWindow?.warehousePreview?.setRoute($('layout-route').value);
+    const leg=state.result?.legs?.[Number($('layout-route').value)];
+    $('route-distance').textContent=leg?'本段 '+Number(leg.distance).toFixed(2)+' 米（含层间距离）':'';
+  };
+  async function showAlgorithm(settings){
+    try {
+      if(!settings){const response=await fetch('/api/settings');if(!response.ok)throw new Error();settings=await response.json();}
+      const backend=settings[apiBase.includes('picking')?'picking_path':'slotting'].backend;
+      $('algorithm').textContent=({heuristic:'启发式',copt:'COPT（杉数）',ortools:'OR-Tools（当前规则暂不支持）'})[backend]||backend;
+    }catch{$('algorithm').textContent='配置读取失败，请查看算法设置';}
+  }
+  showAlgorithm();
   $('warehouse').onchange();
   async function load(kind, file, button) {
     const status = $(kind+'-status');
@@ -80,9 +95,23 @@
       if(data.status!=='failed'){
         const targets=[...new Set((data.assignments||data.picks||[]).map(row=>row.slot_id))];
         const preview=frame.contentWindow?.warehousePreview;
+        // 将米制求解节点映射到示意图；保留前通道、贯通通道与列中心的对应关系。
+        const mapPoint=p=>({x:-4.2+(p.x+3.4375)*4.8/5.75,
+          y:p.y<=-1.75?(p.y+3.5)/1.75:p.y<.575?1+(p.y+1.75)*1.5/2.325:2+p.y/1.15});
+        const legs=data.legs||[];
+        const paths=legs.map(leg=>{const points=leg.path.map(mapPoint);return points.length===1?[points[0],points[0]]:points;});
+        const pathSlots=legs.map(leg=>[leg.start,leg.end].filter(id=>targets.includes(id)));
+        const route=$('layout-route');
+        if(route){
+          route.replaceChildren(new Option('全部相关路线','-1'));
+          legs.forEach((leg,index)=>route.append(new Option((index+1)+'. '+leg.start+' → '+leg.end,String(index))));
+          document.querySelector('.route-tools').hidden=!legs.length;$('route-distance').textContent='';
+        }
+        showAlgorithm(data.settings);
         const grouped=new Map();(data.remaining_inventory||[]).filter(row=>row.slot_id&&Number(row.base_quantity)>0).forEach(row=>{if(!grouped.has(row.slot_id))grouped.set(row.slot_id,[]);grouped.get(row.slot_id).push(row);});
-        preview?.setData({inventory:Array.from(grouped,([slot_id,details])=>({slot_id,details,item_id:details.map(r=>r.sku_id+' '+r.name).join('；'),quantity:details.map(r=>r.base_quantity+r.base_unit).join('；')})),targets,paths:[],mode:apiBase.includes('picking')?'outbound':'inbound'});
-        $('layout-status').textContent='推荐后预计库存 · 实际通道路径及取货明细请查看结果';
+        preview?.setData({inventory:Array.from(grouped,([slot_id,details])=>({slot_id,details,item_id:details.map(r=>r.sku_id+' '+r.name).join('；'),quantity:details.map(r=>r.base_quantity+r.base_unit).join('；')})),targets,paths,pathSlots,targetDetails:data.assignments||data.picks||[],mode:apiBase.includes('picking')?'outbound':'inbound'});
+        $('top-view').click();
+        $('layout-status').textContent=frame.contentDocument.getElementById('summary').textContent+' · 绿点可点击查看货位与层号，蓝色短线指向作业货位';
       }
     }catch(error){$('message').textContent='规划失败：'+error.message;}
     finally{busy=false;document.querySelectorAll('input,select,[data-sample]').forEach(el=>el.disabled=false);ready();}
