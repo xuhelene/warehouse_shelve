@@ -102,7 +102,7 @@ def render_result_page(job_id: str) -> HTMLResponse:
         "module_title": job["module_title"],
         "outputs_dir": outputs_dir,
         # 结果 partial 由配置页和结果页共用，"返回任务页" 只在独立结果页出现。
-        "result_extra_actions": f'<a class="button secondary" href="/jobs/{html.escape(job_id)}">返回任务页</a>',
+        "result_extra_actions": f'<a class="button secondary" href="/whshelve/jobs/{html.escape(job_id)}">返回任务页</a>',
     }
     if module == "slotting":
         return _render("result_slotting.html", **common)

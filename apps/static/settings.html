@@ -1,6 +1,6 @@
 <!doctype html>
-<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>设置</title><link rel="stylesheet" href="/static/settings.css"></head>
-<body><nav><a href="/">首页</a><span>/</span>设置</nav><main>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>设置</title><link rel="stylesheet" href="/whshelve/static/settings.css"></head>
+<body><nav><a href="/whshelve/">首页</a><span>/</span>设置</nav><main>
 <header><div><h1>设置</h1><p>统一维护算法参数与 SKU 周转等级。</p></div><span class="badge">武汉联众城配项目</span></header>
 <div class="settings-switch" aria-label="设置分类"><button type="button" data-section="algorithm" aria-pressed="true">算法设置</button><button type="button" data-section="turnover" aria-pressed="false">SKU 周转等级</button></div><div id="algorithm-settings"><div class="notice">配置保存在后端，刷新或重启后保留。当前尚未接入实际规划，保存不会改变已有任务的求解参数。</div>
 <section class="card"><div class="tabs" role="tablist" aria-label="算法模块"><button id="tab-slotting" role="tab" aria-controls="panel" aria-selected="true" data-module="slotting">入库推荐</button><button id="tab-picking" role="tab" aria-controls="panel" aria-selected="false" tabindex="-1" data-module="picking_path">拣货路径推荐</button></div>
@@ -15,4 +15,4 @@
 <form id="update-form"><div class="field"><label for="file">订单历史（CSV / XLSX）</label><input id="file" type="file" accept=".csv,.xlsx" required></div><div class="field"><label for="end-date">截止日期（包含当天，留空使用今天）</label><input id="end-date" type="date"></div><div class="actions"><button id="sample" type="button">使用初始样例更新</button><button class="primary" type="submit">上传并更新</button></div></form>
 <p>初始样例使用 data/slotting/orders.csv，以最新作业记录日期为截止日。每次更新保存输入和结果，周期更新尚未启用；入库规划按最近一次上传历史及截止日重新计算等级，无等级默认低。</p><p id="status" role="status" aria-live="polite">正在读取…</p></section>
 <section class="card"><h2>最新结果</h2><p id="summary"></p><div style="overflow:auto"><table><thead><tr><th scope="col">仓库</th><th scope="col">货主</th><th scope="col">SKU</th><th scope="col">入库＋出库箱数</th><th scope="col">排名</th><th scope="col">等级</th></tr></thead><tbody id="rows"></tbody></table></div></section>
-</div></main><script src="/static/settings.js"></script><script src="/static/sku-turnover.js"></script><script src="/static/settings-sections.js"></script></body></html>
+</div></main><script src="/whshelve/static/settings.js"></script><script src="/whshelve/static/sku-turnover.js"></script><script src="/whshelve/static/settings-sections.js"></script></body></html>

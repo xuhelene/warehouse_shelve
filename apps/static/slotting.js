@@ -4,7 +4,7 @@
   let busy=false;
   function ready(){ $('plan').disabled=busy||!state.inventory||!state.orders; }
   function invalidate(){state.result=null;const tools=document.querySelector('.route-tools');if(tools)tools.hidden=true;$('result').disabled=true;ready();}
-  const apiBase = document.body.dataset.apiBase || '/api/slotting';
+  const apiBase = document.body.dataset.apiBase || '/whshelve/api/slotting';
   const ordersTitle = document.body.dataset.ordersTitle || '入库订单信息';
   const frame = $('layout');
   function syncLayout() {
@@ -21,7 +21,7 @@
     preview.setData({inventory,targets:[],paths:[],mode:'inventory'});
     $('layout-status').textContent = '657 个有效货位 · '+new Set(inventory.map(row=>row.slot_id)).size+' 个已占货位 · 备货区 '+(state.inventory?.staging_count || 0)+' 条记录';
   }
-  $('warehouse').onchange = () => {frame.src='/warehouse-preview?embedded=1&v=20261102-ui8';};
+  $('warehouse').onchange = () => {frame.src='/whshelve/warehouse-preview?embedded=1&v=20261102-ui8';};
   frame.onload = () => {
     syncLayout();
     if(!frame.contentWindow?.warehousePreview){$('layout-status').textContent=frame.contentDocument?.getElementById('error')?.textContent||'货架布局未能加载，请刷新页面重试。';return;}
@@ -42,7 +42,7 @@
   };
   async function showAlgorithm(settings){
     try {
-      if(!settings){const response=await fetch('/api/settings');if(!response.ok)throw new Error();settings=await response.json();}
+      if(!settings){const response=await fetch('/whshelve/api/settings');if(!response.ok)throw new Error();settings=await response.json();}
       const backend=settings[apiBase.includes('picking')?'picking_path':'slotting'].backend;
       $('algorithm').textContent=({heuristic:'启发式',copt:'COPT（杉数）',ortools:'OR-Tools（当前规则暂不支持）'})[backend]||backend;
     }catch{$('algorithm').textContent='配置读取失败，请查看算法设置';}
@@ -72,7 +72,7 @@
     const file=event.target.files[0];if(!file)return;
     try{
       const body=new FormData();body.append('file',file);
-      const response=await fetch('/api/warehouse/specs',{method:'POST',body});const data=await response.json();
+      const response=await fetch('/whshelve/api/warehouse/specs',{method:'POST',body});const data=await response.json();
       if(!response.ok)throw new Error(data.detail||'规格加载失败');
       state.specs=data;$('specs-status').textContent=data.filename+' · '+data.count+' 条';invalidate();
     }catch(error){$('specs-status').textContent=error.message;}
@@ -116,7 +116,7 @@
     }catch(error){$('message').textContent='规划失败：'+error.message;}
     finally{busy=false;document.querySelectorAll('input,select,[data-sample]').forEach(el=>el.disabled=false);ready();}
   };
-  $('result').onclick=()=>{if(state.result)window.open('/warehouse-results/'+state.result.run_id,'_blank','noopener');};
+  $('result').onclick=()=>{if(state.result)window.open('/whshelve/warehouse-results/'+state.result.run_id,'_blank','noopener');};
   document.querySelectorAll('[data-details]').forEach(button=>button.onclick=()=>{
     const data=state[button.dataset.details];
     const fields=[['sku_id','货品编码'],['name','货品名称'],['location_code','货位编码'],['timestamp','时间'],['quantity','订单数量'],['unit','订单单位'],['conversion_ratio','转换比'],['base_quantity','主单位数量'],['base_unit','主单位']];

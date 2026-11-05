@@ -14,7 +14,7 @@ if str(PROJECT_ROOT) not in sys.path:
 
 import uvicorn
 
-from apps.web_portal import app
+from apps.web_portal import URL_PREFIX, app
 from core.paths import RUNTIME_ROOT
 
 HOST = "127.0.0.1"
@@ -50,7 +50,7 @@ def open_browser_when_ready(url: str, port: int, timeout_s: float = 30.0) -> Non
 
 def main() -> None:
     port = pick_port()
-    url = f"http://{HOST}:{port}/"
+    url = f"http://{HOST}:{port}{URL_PREFIX}/"
 
     print("=" * 62)
     print("  仓储优化演示系统")

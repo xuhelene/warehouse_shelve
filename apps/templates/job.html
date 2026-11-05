@@ -27,15 +27,15 @@
     <pre id="jobPayload">loading...</pre>
   </div>
   <div class="button-row">
-    <a class="button hidden" id="resultLink" href="/results/{{ job_id }}">查看结果</a>
-    <a class="button secondary" href="/modules/{{ module_key }}">返回模块配置</a>
+    <a class="button hidden" id="resultLink" href="/whshelve/results/{{ job_id }}">查看结果</a>
+    <a class="button secondary" href="/whshelve/modules/{{ module_key }}">返回模块配置</a>
   </div>
 </div>
 <script>
   (function () {
     const jobId = {{ job_id | tojson }};
     async function refreshJob() {
-      const response = await fetch("/api/jobs/" + jobId);
+      const response = await fetch("/whshelve/api/jobs/" + jobId);
       const job = await response.json();
       document.getElementById("statusPill").textContent = job.status;
       document.getElementById("createdAt").textContent = job.created_at || "-";

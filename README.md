@@ -6,8 +6,24 @@
 ## 功能
 
 - 货位推荐：基于已有库存和新增入库货物推荐货位，支持启发式、COPT、OR-Tools。
-- 拣货路径推荐：基于订单、库存和通道网络生成路径，支持启发式、OR-Tools；COPT 后端尚未实现。
+- 拣货路径推荐：立体库页面支持启发式和 COPT，旧版通道网络入口支持启发式和 OR-Tools。在算法设置中为拣货路径选择 COPT 后，系统先按尾板优先和 FIFO 选货，再联合优化已拆分拣货明细的分托和托内访问顺序。结果保存在 `results/warehouse/`，包含完整路线和各任务求解状态。
 - 三维货架预览：展示立体库布局。
+
+## 命令行测试立体库拣货路径
+
+安装 `requirements.txt` 中的依赖并配置有效的 COPT 许可后，从项目根目录执行以下命令。默认使用 COPT 跑四个内置场景，覆盖跨层路线、多趟卸货、波次货主隔离和缺货。
+
+```bash
+python -m tools.check_outbound_planning
+```
+
+传入自有数据时，JSON 格式与出库规划 API 请求相同，支持单个请求或请求数组。
+
+```bash
+python -m tools.check_outbound_planning --input outbound.json --time-limit 30 --threads 4 --output results/testing/my-outbound
+```
+
+使用 `--backend heuristic` 可运行启发式对照。命令逐场景打印 PASS 或 FAIL，并在输出目录保存 `summary.json` 及各次运行的 `input.json`、`result.json`。默认输出目录位于 `results/testing/`。全部通过时退出码为 0，场景失败（含 COPT 回退初始方案）为 1，参数或输入加载错误为 2。
 
 ## 目录
 
@@ -28,11 +44,11 @@
 python apps/web_portal.py --host 127.0.0.1 --port 8010
 ```
 
-浏览器访问 http://127.0.0.1:8010/。COPT 需要有效本机许可。
-货位推荐页面 `/modules/slotting` 支持 CSV/XLSX 上传、样例加载及三维库存预览。
+浏览器访问 http://127.0.0.1:8010/whshelve/。客户网关需将 `/whshelve` 及其子路径转发到本服务，并保留该前缀。COPT 需要有效本机许可。
+货位推荐页面 `/whshelve/modules/slotting` 支持 CSV/XLSX 上传、样例加载及三维库存预览。
 库存样例读取 `data/slotting/existing_inventory.csv`；订单样例读取 `data/slotting/orders.csv` 中 2026-09-22 的入库记录。
 页面支持启发式、COPT 入库规划及独立结果查看；使用前在算法设置中选择后端。原有算法接口保留。
-出库拣货页面 `/modules/picking-path` 使用相同布局、上传及库存悬浮提示；订单样例仅取 2026-09-22 的出库记录。
+出库拣货页面 `/whshelve/modules/picking-path` 使用相同布局、上传及库存悬浮提示；订单样例仅取 2026-09-22 的出库记录。
 出库采用 FIFO 选货，按批次开关控制按单或整次请求波次规划；支持一托容量、货主隔离及缺货明细。原有拣货算法接口保留。
 分层职责和数据接口见 `doc/前后端分层说明.md`。
 
@@ -43,7 +59,7 @@ python apps/web_portal.py --host 127.0.0.1 --port 8010
 滚动30天包含截止日，样例以最新出库日期为截止日，上传默认以当天（UTC+8）为截止日，也可指定日期。
 按主单位数量÷转换率计算入库＋出库箱数（1件=1箱），按仓库+货主+SKU分别统计；各仓库内按搬运量降序统一排名，累计贡献80%/95%分级，跨阈值条目归当前等级，零搬运量最低；同量先按SKU、再按货主编码排序。
 对窗口内有入库或出库记录的条目评级，每次使用本次完整文件重新计算，不累加旧文件，不自动去重；源文件应避免重复作业记录。
-`GET /api/sku-turnover` 读取最新等级，`POST /api/sku-turnover/sample` 初始化，`POST /api/sku-turnover/update` 接收 multipart `file` 和可选 `end_date`（YYYY-MM-DD）。
+`GET /whshelve/api/sku-turnover` 读取最新等级，`POST /whshelve/api/sku-turnover/sample` 初始化，`POST /whshelve/api/sku-turnover/update` 接收 multipart `file` 和可选 `end_date`（YYYY-MM-DD）。
 每次输入及计算结果保存在 `results/sku_turnover/<运行编号>/`，最新结果为 `results/sku_turnover/latest.json`；入库规划使用最近一次历史重算等级，周期更新尚未启用。
 
 周转阈值分析脚本：`python tools/analyze_turnover_thresholds.py`。可指定 `--orders`、`--end-date YYYY-MM-DD`、`--output`；默认按样例最新作业日期统计连续30天。

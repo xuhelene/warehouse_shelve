@@ -8,7 +8,7 @@
     const body=target.createTBody();rows.forEach(row=>{const line=body.insertRow();columns.forEach(([key])=>{line.insertCell().textContent=typeof row[key]==='boolean'?(row[key]?'是':'否'):row[key]??'—';});});
   }
   try{
-    const response=await fetch('/api/warehouse/runs/'+run),data=await response.json();if(!response.ok)throw new Error(data.detail||'读取失败');
+    const response=await fetch('/whshelve/api/warehouse/runs/'+run),data=await response.json();if(!response.ok)throw new Error(data.detail||'读取失败');
     $('title').textContent=data.operation==='slotting'?'入库规划结果':'出库规划结果';
     $('summary').textContent=data.message+(data.total_distance!=null?' · '+Number(data.total_distance).toFixed(2)+' 米':'');
     $('meta').textContent='状态：'+({feasible:'可行解（未证明最优）',partial:'部分满足',failed:'失败'}[data.status]||data.status)+' · 任务 '+run+' · 文件快照 · 权重 '+data.layer_weight;

@@ -42,7 +42,7 @@
   <a class="button secondary" data-download="solution" href="#">下载 solution.csv</a>
   {{ result_extra_actions | default("") | safe }}
 </div>
-<script src="/static/viewport.js"></script>
+<script src="/whshelve/static/viewport.js"></script>
 <script>
   (function () {
     const emptySlotColor = "#e4ddd1";
@@ -110,9 +110,9 @@
 
     window.initSlottingResult = async function initSlottingResult(jobId) {
       document.querySelectorAll("[data-download]").forEach(function (link) {
-        link.href = "/api/jobs/" + jobId + "/download/" + link.dataset.download;
+        link.href = "/whshelve/api/jobs/" + jobId + "/download/" + link.dataset.download;
       });
-      const jobRes = await fetch("/api/jobs/" + jobId);
+      const jobRes = await fetch("/whshelve/api/jobs/" + jobId);
       const job = await jobRes.json();
       document.getElementById("assignedRecords").textContent = job.summary.assigned_records == null ? 0 : job.summary.assigned_records;
       document.getElementById("distinctSlots").textContent = job.summary.distinct_slots == null ? 0 : job.summary.distinct_slots;
@@ -124,7 +124,7 @@
         "已占货位 " + (job.summary.distinct_slots == null ? 0 : job.summary.distinct_slots) +
         " / SKU " + (job.summary.distinct_skus == null ? 0 : job.summary.distinct_skus);
 
-      const response = await fetch("/api/jobs/" + jobId + "/slotting-layout");
+      const response = await fetch("/whshelve/api/jobs/" + jobId + "/slotting-layout");
       const payload = await response.json();
       const warehouse = document.getElementById("warehouse");
       const scene = document.getElementById("scene");

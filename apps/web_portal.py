@@ -5,7 +5,7 @@ import argparse
 import sys
 from pathlib import Path
 
-from fastapi import FastAPI
+from fastapi import APIRouter, FastAPI
 from fastapi.responses import FileResponse, HTMLResponse
 from fastapi.staticfiles import StaticFiles
 import uvicorn
@@ -23,12 +23,21 @@ from apps.turnover_api import router as turnover_router
 from apps.warehouse_service import router as warehouse_router
 
 
-app = FastAPI(title="Warehouse Optimization Portal")
-app.include_router(settings_router)
-app.include_router(turnover_router)
-app.include_router(web_router)
-app.include_router(warehouse_router)
-app.mount("/static", StaticFiles(directory=str(resource_path("apps/static"))), name="static")
+URL_PREFIX = "/whshelve"
+
+app = FastAPI(
+    title="Warehouse Optimization Portal",
+    docs_url=f"{URL_PREFIX}/docs",
+    redoc_url=f"{URL_PREFIX}/redoc",
+    openapi_url=f"{URL_PREFIX}/openapi.json",
+    swagger_ui_oauth2_redirect_url=f"{URL_PREFIX}/docs/oauth2-redirect",
+)
+pages_router = APIRouter(prefix=URL_PREFIX)
+app.include_router(settings_router, prefix=URL_PREFIX)
+app.include_router(turnover_router, prefix=URL_PREFIX)
+app.include_router(web_router, prefix=URL_PREFIX)
+app.include_router(warehouse_router, prefix=URL_PREFIX)
+app.mount(f"{URL_PREFIX}/static", StaticFiles(directory=str(resource_path("apps/static"))), name="static")
 
 
 @app.on_event("startup")
@@ -38,27 +47,27 @@ def _cleanup_stale_jobs() -> None:
         print(f"[startup] Marked {reconciled} interrupted job(s) as failed on restart.")
 
 
-@app.get("/", response_class=HTMLResponse)
+@pages_router.get("/", response_class=HTMLResponse)
 def home() -> HTMLResponse:
     return render_home()
 
 
-@app.get("/warehouse-preview", response_class=HTMLResponse)
+@pages_router.get("/warehouse-preview", response_class=HTMLResponse)
 def warehouse_preview() -> FileResponse:
     return FileResponse(resource_path("apps/static/warehouse-preview.html"), headers={"Cache-Control": "no-cache"})
 
 
-@app.get("/settings", response_class=HTMLResponse)
+@pages_router.get("/settings", response_class=HTMLResponse)
 def settings_page() -> FileResponse:
     return FileResponse(resource_path("apps/static/settings.html"))
 
 
-@app.get("/sku-turnover", response_class=HTMLResponse)
+@pages_router.get("/sku-turnover", response_class=HTMLResponse)
 def turnover_page() -> FileResponse:
     return FileResponse(resource_path("apps/static/sku-turnover.html"))
 
 
-@app.get("/modules/{module_key}", response_class=HTMLResponse)
+@pages_router.get("/modules/{module_key}", response_class=HTMLResponse)
 def module_page(module_key: str) -> HTMLResponse:
     if module_key == "slotting":
         return FileResponse(resource_path("apps/static/slotting.html"), headers={"Cache-Control": "no-cache"})
@@ -67,14 +76,17 @@ def module_page(module_key: str) -> HTMLResponse:
     return render_module_page(module_key)
 
 
-@app.get("/jobs/{job_id}", response_class=HTMLResponse)
+@pages_router.get("/jobs/{job_id}", response_class=HTMLResponse)
 def job_page(job_id: str) -> HTMLResponse:
     return render_job_page(job_id)
 
 
-@app.get("/results/{job_id}", response_class=HTMLResponse)
+@pages_router.get("/results/{job_id}", response_class=HTMLResponse)
 def result_page(job_id: str) -> HTMLResponse:
     return render_result_page(job_id)
+
+
+app.include_router(pages_router)
 
 
 def parse_args() -> argparse.Namespace:

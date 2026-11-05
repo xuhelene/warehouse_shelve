@@ -134,7 +134,7 @@ pre { white-space: pre-wrap; background: #221c17; color: #f8e7d8; border-radius:
 
 /* 首页工作台：限定作用域，沿用模块页原有样式。 */
 body.home-page{background:#06111e;color:#edf5fc;isolation:isolate}
-body.home-page::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(90deg,rgba(3,12,23,.38),rgba(3,12,23,.08)),linear-gradient(0deg,rgba(3,12,23,.62),transparent 70%),url("/static/home-warehouse.png") center / cover no-repeat}
+body.home-page::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(90deg,rgba(3,12,23,.38),rgba(3,12,23,.08)),linear-gradient(0deg,rgba(3,12,23,.62),transparent 70%),url("/whshelve/static/home-warehouse.png") center / cover no-repeat}
 .home-page .page{max-width:1160px;padding-top:30px}
 .home-page .topbar{padding-bottom:24px;border-bottom:1px solid #ffffff24;margin-bottom:0}
 .home-page .brand{letter-spacing:0;font-weight:700}

@@ -10,8 +10,11 @@
     $('gap-field').hidden=picking||backend==='heuristic';$('gap').disabled=$('gap-field').hidden;
     $('threads-help').textContent='立体库启发式为单线程，threads及mip_gap不生效。';
     $('time-help').textContent='启发式在规划循环检查截止时间；超时返回失败并保存记录。不含数据准备及结果保存时间。';
-    $('backend-help').textContent=backend==='heuristic'?'已接入立体库页面规划，结果不保证全局最优。':!picking&&backend==='copt'?'已接入入库规划：最大化上架箱数，其次最短距离，层位偏好用于同优方案。需要有效COPT许可。':'当前立体库规则尚不支持此后端。';
-    if(!picking&&backend==='copt'){
+    $('backend-help').textContent=backend==='heuristic'?'已接入立体库页面规划，结果不保证全局最优。':backend==='copt'?(picking?'联合优化分托和托内路径，最小化完整出库距离。需要有效COPT许可。':'已接入入库规划：最大化上架箱数，其次最短距离，层位偏好用于同优方案。需要有效COPT许可。'):'当前立体库规则尚不支持此后端。';
+    if(picking&&backend==='copt'){
+      $('threads-help').textContent='COPT使用配置线程数。';
+      $('time-help').textContent='选货、建模和求解共用时间上限；若已有完整可行路径则保留。';
+    }else if(backend==='copt'){
       $('threads-help').textContent='COPT使用配置线程数；相对间隙仅用于最后的层位偏好阶段。';
       $('time-help').textContent='各目标阶段共用时间上限（含建模）；超时保留可行解并标明未证明最优。';
     }
@@ -35,7 +38,7 @@
     if(!$('settings-form').reportValidity())return;
     const module=current, values={...drafts[current]};busy=true;support();$('defaults').disabled=true;$('algorithm-status').textContent='正在保存…';
     try{
-      const response=await fetch('/api/settings/'+module,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(values)});const data=await response.json();
+      const response=await fetch('/whshelve/api/settings/'+module,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(values)});const data=await response.json();
       if(!response.ok)throw new Error(typeof data.detail==='string'?data.detail:'配置无效，请检查数值范围。');
       saved[module]={...data[module]};version=data.version;persisted=true;
       $('algorithm-status').textContent='配置已保存 · 版本 '+version+'；下次规划使用此配置。';
@@ -43,7 +46,7 @@
     finally{busy=false;$('defaults').disabled=false;support();}
   };
   async function load(){try{
-    const response=await fetch('/api/settings');const data=await response.json();if(!response.ok)throw new Error(data.detail||'请求失败');
+    const response=await fetch('/whshelve/api/settings');const data=await response.json();if(!response.ok)throw new Error(data.detail||'请求失败');
     saved={slotting:{...data.slotting},picking_path:{...data.picking_path}};drafts={slotting:{...data.slotting},picking_path:{...data.picking_path}};persisted=data.persisted;version=data.version;loaded=true;render();
   }catch(error){$('algorithm-status').textContent='配置读取失败：'+error.message+' 请刷新重试。';}}
   load();

@@ -79,7 +79,8 @@ def _route(rows, capacities, layout, task, distance, deadline=None, emit=False):
     return dict(distance=total, legs=legs, picks=picks, trips=trips)
 
 
-def solve(inventory, orders, capacities, layout, flag, deadline, *, search_method=None, route_strategy="VNS"):
+def solve(inventory, orders, capacities, layout, flag, deadline, *, search_method=None, route_strategy="VNS",
+          route_optimizer=None):
     search_method = search if search_method is None else search_method
     stock = deepcopy(inventory)
     slots = defaultdict(list)
@@ -138,13 +139,27 @@ def solve(inventory, orders, capacities, layout, flag, deadline, *, search_metho
     initial_distance = 0.
     for (task, owner), rows in tasks.items():
         initial = sorted(range(len(rows)), key=lambda i: (rows[i]["slot_id"], rows[i]["sku_id"], rows[i]["order_no"], i))
-        value = _route([rows[i] for i in initial], capacities, layout, task, distance, deadline)["distance"]
-        plans.append((task, rows, initial, value))
-        initial_distance += value
+        baseline = _route([rows[i] for i in initial], capacities, layout, task, distance, deadline,
+                          emit=route_optimizer is not None)
+        plans.append((task, rows, initial, baseline))
+        initial_distance += baseline["distance"]
     legs, picks, trips = [], [], []
     stats = dict(evaluations=0, improvements=0, perturbations=0, time_limit_reached=False)
     search_details = []
-    for task, rows, initial, value in plans:
+    def append_route(route):
+        for detail in route["picks"]:
+            detail["trip"] += len(trips)
+        legs.extend(route["legs"])
+        picks.extend(route["picks"])
+        trips.extend(route["trips"])
+
+    for task, rows, initial, baseline in plans:
+        if route_optimizer is not None:
+            for route in route_optimizer(task, distance, baseline):
+                append_route(route)
+            continue
+        value = baseline["distance"]
+
         def evaluate(sequence):
             return _route([rows[i] for i in sequence], capacities, layout, task, distance, deadline)["distance"]
 
@@ -165,11 +180,7 @@ def solve(inventory, orders, capacities, layout, flag, deadline, *, search_metho
         search_details.append(info)
         # 搜索耗尽时返回已有完整解；输出重建不再启动新的搜索。
         route = _route([rows[i] for i in sequence], capacities, layout, task, distance, emit=True)
-        for detail in route["picks"]:
-            detail["trip"] += len(trips)
-        legs.extend(route["legs"])
-        picks.extend(route["picks"])
-        trips.extend(route["trips"])
+        append_route(route)
     stats["initial_distance"] = initial_distance
     if route_strategy == "ALNS":
         stats["groups"] = search_details
@@ -188,4 +199,5 @@ def solve(inventory, orders, capacities, layout, flag, deadline, *, search_metho
                 warnings=warnings, route_strategy=route_strategy, search=stats,
                 picks=picks, trips=trips, legs=legs, shortages=shortages, remaining_inventory=stock,
                 cleared_slots=cleared, total_distance=sum(l["distance"] for l in legs),
-                message="存在缺货，已输出可满足部分" if shortages else "出库启发式规划完成")
+                message="存在缺货，已输出可满足部分" if shortages else
+                "出库COPT规划完成" if route_optimizer is not None else "出库启发式规划完成")

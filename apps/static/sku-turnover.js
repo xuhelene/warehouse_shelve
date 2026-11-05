@@ -27,11 +27,11 @@
     }catch(error){$('status').textContent='处理失败：'+error.message;}
     finally{root.querySelectorAll('button').forEach(button=>button.disabled=false);}
   }
-  $('sample').onclick=()=>request('/api/sku-turnover/sample',{method:'POST'});
+  $('sample').onclick=()=>request('/whshelve/api/sku-turnover/sample',{method:'POST'});
   $('update-form').onsubmit=event=>{
     event.preventDefault();const body=new FormData();body.append('file',$('file').files[0]);
     if($('end-date').value)body.append('end_date',$('end-date').value);
-    request('/api/sku-turnover/update',{method:'POST',body});
+    request('/whshelve/api/sku-turnover/update',{method:'POST',body});
   };
-  request('/api/sku-turnover');
+  request('/whshelve/api/sku-turnover');
 })();
