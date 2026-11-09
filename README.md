@@ -53,7 +53,7 @@ python apps/web_portal.py --host 127.0.0.1 --port 8010
 分层职责和数据接口见 `doc/前后端分层说明.md`。
 
 首页“算法设置”进入 `/settings`，入库和拣货两个 tab 独立保存求解器、时间上限、线程数；入库精确后端还可设置相对最优间隙。
-初始值为启发式、60 秒、8 线程及入库相对间隙 0.5%。配置保存到运行目录的 `config/algorithm_config.json`。新立体库入库支持 COPT 和启发式；启发式的线程数及相对间隙不生效。COPT 入库及跨平台命令行测试见 [COPT入库推荐说明](doc/COPT入库推荐说明.md)。
+初始求解器为启发式。入库推荐默认 10 秒、1 线程及相对间隙 0.5%，拣货路径推荐默认 60 秒、8 线程。配置保存到运行目录的 `config/algorithm_config.json`。立体库入库支持启发式、COPT 和 OR-Tools。启发式为单线程。COPT 入库及跨平台命令行测试见 [COPT入库推荐说明](doc/COPT入库推荐说明.md)。
 
 首页“SKU 周转等级”进入 `/sku-turnover`：支持 CSV/XLSX 完整订单历史手动更新，以及使用 `data/slotting/orders.csv` 初始化。
 滚动30天包含截止日，样例以最新出库日期为截止日，上传默认以当天（UTC+8）为截止日，也可指定日期。

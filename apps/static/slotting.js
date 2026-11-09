@@ -43,8 +43,9 @@
   async function showAlgorithm(settings){
     try {
       if(!settings){const response=await fetch('/whshelve/api/settings');if(!response.ok)throw new Error();settings=await response.json();}
-      const backend=settings[apiBase.includes('picking')?'picking_path':'slotting'].backend;
-      $('algorithm').textContent=({heuristic:'启发式',copt:'COPT（杉数）',ortools:'OR-Tools（当前规则暂不支持）'})[backend]||backend;
+      const picking=apiBase.includes('picking');
+      const backend=settings[picking?'picking_path':'slotting'].backend;
+      $('algorithm').textContent=({heuristic:'启发式',copt:'COPT（杉数）',ortools:picking?'OR-Tools（当前规则暂不支持）':'OR-Tools'})[backend]||backend;
     }catch{$('algorithm').textContent='配置读取失败，请查看算法设置';}
   }
   showAlgorithm();

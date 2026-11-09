@@ -11,7 +11,11 @@
     $('threads-help').textContent='立体库启发式为单线程，threads及mip_gap不生效。';
     $('time-help').textContent='启发式在规划循环检查截止时间；超时返回失败并保存记录。不含数据准备及结果保存时间。';
     $('backend-help').textContent=backend==='heuristic'?'已接入立体库页面规划，结果不保证全局最优。':backend==='copt'?(picking?'联合优化分托和托内路径，最小化完整出库距离。需要有效COPT许可。':'已接入入库规划：最大化上架箱数，其次最短距离，层位偏好用于同优方案。需要有效COPT许可。'):'当前立体库规则尚不支持此后端。';
-    if(picking&&backend==='copt'){
+    if(!picking&&backend==='ortools'){
+      $('backend-help').textContent='一托一位时使用最小费用匹配；允许混托时使用 SCIP。依次优化上架箱数、距离和层位偏好。';
+      $('threads-help').textContent='线程数和相对间隙用于 SCIP；匹配采用单线程精确求解。';
+      $('time-help').textContent='建模与求解共用时限；SCIP 超时保留已有可行解。';
+    }else if(picking&&backend==='copt'){
       $('threads-help').textContent='COPT使用配置线程数。';
       $('time-help').textContent='选货、建模和求解共用时间上限；若已有完整可行路径则保留。';
     }else if(backend==='copt'){
@@ -32,7 +36,7 @@
     tab.onkeydown=event=>{if(['ArrowLeft','ArrowRight','Home','End'].includes(event.key)){event.preventDefault();const tabs=Array.from(document.querySelectorAll('[role=tab]'));const target=event.key==='Home'?tabs[0]:event.key==='End'?tabs[1]:tabs.find(item=>item!==tab);target.click();target.focus();}};
   });
   $('settings-form').oninput=()=>{capture();support();};$('backend').onchange=()=>{capture();support();};
-  $('defaults').onclick=()=>{if(!loaded||busy)return;capture();drafts[current]={...defaults};render();$('algorithm-status').textContent='已恢复当前 tab 的初始值，点击保存后写入后端。';};
+  $('defaults').onclick=()=>{if(!loaded||busy)return;capture();drafts[current]=current==='slotting'?{...defaults,time_limit_s:10,threads:1}:{...defaults};render();$('algorithm-status').textContent='已恢复当前 tab 的初始值，点击保存后写入后端。';};
   $('settings-form').onsubmit=async event=>{
     event.preventDefault();if(!loaded||busy)return;capture();
     if(!$('settings-form').reportValidity())return;

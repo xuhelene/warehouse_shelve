@@ -23,7 +23,7 @@ class SettingsDocument(BaseModel):
     model_config = ConfigDict(extra="forbid")
     version: int = Field(default=0, ge=0)
     updated_at: str | None = None
-    slotting: SolverSettings = Field(default_factory=SolverSettings)
+    slotting: SolverSettings = Field(default_factory=lambda: SolverSettings(time_limit_s=10, threads=1))
     picking_path: SolverSettings = Field(default_factory=SolverSettings)
 
 

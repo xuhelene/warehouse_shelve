@@ -117,8 +117,9 @@ def plan(operation, payload, *, output_root=None, settings=None):
                   settings=settings, source=payload.get("source", "file_snapshot"), started_at=datetime.now(timezone.utc).isoformat(),
                   shortages=[], unassigned=[], warnings=[], layer_weight=payload.get("layer_weight", 1))
     try:
-        if config["backend"] not in {"heuristic", "copt"}:
-            raise ValueError("立体库规划支持启发式和COPT，请在算法设置中选择后重试")
+        supported = {"heuristic", "copt", "ortools"} if operation == "slotting" else {"heuristic", "copt"}
+        if config["backend"] not in supported:
+            raise ValueError("该求解器不支持当前立体库任务，请在算法设置中选择后重试")
         source = payload.get("source", "file_snapshot")
         if source == "platform":
             # 正式请求不接受调用方的旧快照；每次都从统一入口获取新数据。

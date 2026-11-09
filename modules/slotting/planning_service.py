@@ -21,9 +21,12 @@ def plan(inventory, orders, capacities, layout, payload, config):
     if config["backend"] == "copt":
         from solvers.warehouse_inbound_copt import solve as solve_copt
         result = solve_copt(inventory, orders, capacities, layout, grade_map, config)
+    elif config["backend"] == "ortools":
+        from solvers.warehouse_inbound_ortools import solve as solve_ortools
+        result = solve_ortools(inventory, orders, capacities, layout, grade_map, config)
     elif config["backend"] == "heuristic":
         result = solve(inventory, orders, capacities, layout, grade_map, monotonic() + config["time_limit_s"])
     else:
-        raise ValueError("立体库入库暂不支持该求解器，请选择COPT或启发式")
+        raise ValueError("立体库入库支持启发式、COPT和OR-Tools")
     result["turnover"] = grades
     return result
