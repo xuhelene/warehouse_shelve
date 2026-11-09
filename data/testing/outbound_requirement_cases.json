@@ -1,0 +1,6269 @@
+[
+  {
+    "id": "tail_demand_0",
+    "rule": "BR-05/6.2",
+    "inventory": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "10",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "10",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "10"
+      }
+    ],
+    "orders": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "0",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "0",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "0"
+      }
+    ],
+    "specs": [
+      {
+        "编码": "A",
+        "所属客户": "O",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "O",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "O",
+        "货品名称": "货品C",
+        "托含量": "20"
+      },
+      {
+        "编码": "A",
+        "所属客户": "P",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "P",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "P",
+        "货品名称": "货品C",
+        "托含量": "20"
+      }
+    ],
+    "storeBatchFlag": 1,
+    "layer_weight": 1,
+    "expected": {
+      "fulfilled": "0",
+      "shortage": "0"
+    }
+  },
+  {
+    "id": "tail_demand_0.001",
+    "rule": "BR-05/6.2",
+    "inventory": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "10",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "10",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "10"
+      }
+    ],
+    "orders": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "0.001",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "0.001",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "0.001"
+      }
+    ],
+    "specs": [
+      {
+        "编码": "A",
+        "所属客户": "O",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "O",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "O",
+        "货品名称": "货品C",
+        "托含量": "20"
+      },
+      {
+        "编码": "A",
+        "所属客户": "P",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "P",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "P",
+        "货品名称": "货品C",
+        "托含量": "20"
+      }
+    ],
+    "storeBatchFlag": 1,
+    "layer_weight": 1,
+    "expected": {
+      "fulfilled": "0.001",
+      "shortage": "0"
+    }
+  },
+  {
+    "id": "tail_demand_1",
+    "rule": "BR-05/6.2",
+    "inventory": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "10",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "10",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "10"
+      }
+    ],
+    "orders": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      }
+    ],
+    "specs": [
+      {
+        "编码": "A",
+        "所属客户": "O",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "O",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "O",
+        "货品名称": "货品C",
+        "托含量": "20"
+      },
+      {
+        "编码": "A",
+        "所属客户": "P",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "P",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "P",
+        "货品名称": "货品C",
+        "托含量": "20"
+      }
+    ],
+    "storeBatchFlag": 1,
+    "layer_weight": 1,
+    "expected": {
+      "fulfilled": "1",
+      "shortage": "0"
+    }
+  },
+  {
+    "id": "tail_demand_9.999",
+    "rule": "BR-05/6.2",
+    "inventory": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "10",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "10",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "10"
+      }
+    ],
+    "orders": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "9.999",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "9.999",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "9.999"
+      }
+    ],
+    "specs": [
+      {
+        "编码": "A",
+        "所属客户": "O",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "O",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "O",
+        "货品名称": "货品C",
+        "托含量": "20"
+      },
+      {
+        "编码": "A",
+        "所属客户": "P",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "P",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "P",
+        "货品名称": "货品C",
+        "托含量": "20"
+      }
+    ],
+    "storeBatchFlag": 1,
+    "layer_weight": 1,
+    "expected": {
+      "fulfilled": "9.999",
+      "shortage": "0"
+    }
+  },
+  {
+    "id": "tail_demand_10",
+    "rule": "BR-05/6.2",
+    "inventory": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "10",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "10",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "10"
+      }
+    ],
+    "orders": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "10",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "10",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "10"
+      }
+    ],
+    "specs": [
+      {
+        "编码": "A",
+        "所属客户": "O",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "O",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "O",
+        "货品名称": "货品C",
+        "托含量": "20"
+      },
+      {
+        "编码": "A",
+        "所属客户": "P",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "P",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "P",
+        "货品名称": "货品C",
+        "托含量": "20"
+      }
+    ],
+    "storeBatchFlag": 1,
+    "layer_weight": 1,
+    "expected": {
+      "fulfilled": "10",
+      "shortage": "0"
+    }
+  },
+  {
+    "id": "tail_demand_10.001",
+    "rule": "BR-05/6.2",
+    "inventory": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "10",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "10",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "10"
+      }
+    ],
+    "orders": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "10.001",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "10.001",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "10.001"
+      }
+    ],
+    "specs": [
+      {
+        "编码": "A",
+        "所属客户": "O",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "O",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "O",
+        "货品名称": "货品C",
+        "托含量": "20"
+      },
+      {
+        "编码": "A",
+        "所属客户": "P",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "P",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "P",
+        "货品名称": "货品C",
+        "托含量": "20"
+      }
+    ],
+    "storeBatchFlag": 1,
+    "layer_weight": 1,
+    "expected": {
+      "fulfilled": "10",
+      "shortage": "0.001"
+    }
+  },
+  {
+    "id": "tail_demand_40",
+    "rule": "BR-05/6.2",
+    "inventory": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "10",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "10",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "10"
+      }
+    ],
+    "orders": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "40",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "40",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "40"
+      }
+    ],
+    "specs": [
+      {
+        "编码": "A",
+        "所属客户": "O",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "O",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "O",
+        "货品名称": "货品C",
+        "托含量": "20"
+      },
+      {
+        "编码": "A",
+        "所属客户": "P",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "P",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "P",
+        "货品名称": "货品C",
+        "托含量": "20"
+      }
+    ],
+    "storeBatchFlag": 1,
+    "layer_weight": 1,
+    "expected": {
+      "fulfilled": "10",
+      "shortage": "30"
+    }
+  },
+  {
+    "id": "tail_demand_41",
+    "rule": "BR-05/6.2",
+    "inventory": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "10",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "10",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "10"
+      }
+    ],
+    "orders": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "41",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "41",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "41"
+      }
+    ],
+    "specs": [
+      {
+        "编码": "A",
+        "所属客户": "O",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "O",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "O",
+        "货品名称": "货品C",
+        "托含量": "20"
+      },
+      {
+        "编码": "A",
+        "所属客户": "P",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "P",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "P",
+        "货品名称": "货品C",
+        "托含量": "20"
+      }
+    ],
+    "storeBatchFlag": 1,
+    "layer_weight": 1,
+    "expected": {
+      "fulfilled": "10",
+      "shortage": "31"
+    }
+  },
+  {
+    "id": "empty_inventory_0",
+    "rule": "6.2/6.4",
+    "inventory": [],
+    "orders": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "5",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "5",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "5"
+      }
+    ],
+    "specs": [
+      {
+        "编码": "A",
+        "所属客户": "O",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "O",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "O",
+        "货品名称": "货品C",
+        "托含量": "20"
+      },
+      {
+        "编码": "A",
+        "所属客户": "P",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "P",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "P",
+        "货品名称": "货品C",
+        "托含量": "20"
+      }
+    ],
+    "storeBatchFlag": 0,
+    "layer_weight": 1,
+    "expected": {
+      "fulfilled": "0",
+      "shortage": "5",
+      "trips": 0
+    }
+  },
+  {
+    "id": "multi_trip_0",
+    "rule": "BR-06",
+    "inventory": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "40",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "40",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "40"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "40",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "40",
+        "unit": "箱",
+        "slot_id": "C15-2-1",
+        "staging": false,
+        "available_base_quantity": "40"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "10",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "10",
+        "unit": "箱",
+        "slot_id": "C15-3-1",
+        "staging": false,
+        "available_base_quantity": "10"
+      }
+    ],
+    "orders": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "90",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "90",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "90"
+      }
+    ],
+    "specs": [
+      {
+        "编码": "A",
+        "所属客户": "O",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "O",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "O",
+        "货品名称": "货品C",
+        "托含量": "20"
+      },
+      {
+        "编码": "A",
+        "所属客户": "P",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "P",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "P",
+        "货品名称": "货品C",
+        "托含量": "20"
+      }
+    ],
+    "storeBatchFlag": 0,
+    "layer_weight": 1,
+    "expected": {
+      "trip_loads": [
+        "40",
+        "40",
+        "10"
+      ],
+      "cleared": [
+        "C15-1-1",
+        "C15-2-1",
+        "C15-3-1"
+      ]
+    }
+  },
+  {
+    "id": "order_boundary_0",
+    "rule": "6.4",
+    "inventory": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "20",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "20",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "20"
+      }
+    ],
+    "orders": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "5",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "5",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "5"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-2",
+        "base_quantity": "5",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "5",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "5"
+      }
+    ],
+    "specs": [
+      {
+        "编码": "A",
+        "所属客户": "O",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "O",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "O",
+        "货品名称": "货品C",
+        "托含量": "20"
+      },
+      {
+        "编码": "A",
+        "所属客户": "P",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "P",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "P",
+        "货品名称": "货品C",
+        "托含量": "20"
+      }
+    ],
+    "storeBatchFlag": 0,
+    "layer_weight": 1,
+    "expected": {
+      "trips": 2
+    }
+  },
+  {
+    "id": "shortage_order_attribution_0",
+    "rule": "6.4",
+    "inventory": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "10",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "10",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "10"
+      }
+    ],
+    "orders": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "8",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "8",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "8"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-2",
+        "base_quantity": "8",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "8",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "8"
+      }
+    ],
+    "specs": [
+      {
+        "编码": "A",
+        "所属客户": "O",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "O",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "O",
+        "货品名称": "货品C",
+        "托含量": "20"
+      },
+      {
+        "编码": "A",
+        "所属客户": "P",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "P",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "P",
+        "货品名称": "货品C",
+        "托含量": "20"
+      }
+    ],
+    "storeBatchFlag": 0,
+    "layer_weight": 1,
+    "expected": {
+      "shortage": "6",
+      "shortage_orders": [
+        "SO-2"
+      ]
+    }
+  },
+  {
+    "id": "empty_inventory_1",
+    "rule": "6.2/6.4",
+    "inventory": [],
+    "orders": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "5",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "5",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "5"
+      }
+    ],
+    "specs": [
+      {
+        "编码": "A",
+        "所属客户": "O",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "O",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "O",
+        "货品名称": "货品C",
+        "托含量": "20"
+      },
+      {
+        "编码": "A",
+        "所属客户": "P",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "P",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "P",
+        "货品名称": "货品C",
+        "托含量": "20"
+      }
+    ],
+    "storeBatchFlag": 1,
+    "layer_weight": 1,
+    "expected": {
+      "fulfilled": "0",
+      "shortage": "5",
+      "trips": 0
+    }
+  },
+  {
+    "id": "multi_trip_1",
+    "rule": "BR-06",
+    "inventory": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "40",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "40",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "40"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "40",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "40",
+        "unit": "箱",
+        "slot_id": "C15-2-1",
+        "staging": false,
+        "available_base_quantity": "40"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "10",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "10",
+        "unit": "箱",
+        "slot_id": "C15-3-1",
+        "staging": false,
+        "available_base_quantity": "10"
+      }
+    ],
+    "orders": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "90",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "90",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "90"
+      }
+    ],
+    "specs": [
+      {
+        "编码": "A",
+        "所属客户": "O",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "O",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "O",
+        "货品名称": "货品C",
+        "托含量": "20"
+      },
+      {
+        "编码": "A",
+        "所属客户": "P",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "P",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "P",
+        "货品名称": "货品C",
+        "托含量": "20"
+      }
+    ],
+    "storeBatchFlag": 1,
+    "layer_weight": 1,
+    "expected": {
+      "trip_loads": [
+        "40",
+        "40",
+        "10"
+      ],
+      "cleared": [
+        "C15-1-1",
+        "C15-2-1",
+        "C15-3-1"
+      ]
+    }
+  },
+  {
+    "id": "order_boundary_1",
+    "rule": "6.4",
+    "inventory": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "20",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "20",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "20"
+      }
+    ],
+    "orders": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "5",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "5",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "5"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-2",
+        "base_quantity": "5",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "5",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "5"
+      }
+    ],
+    "specs": [
+      {
+        "编码": "A",
+        "所属客户": "O",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "O",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "O",
+        "货品名称": "货品C",
+        "托含量": "20"
+      },
+      {
+        "编码": "A",
+        "所属客户": "P",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "P",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "P",
+        "货品名称": "货品C",
+        "托含量": "20"
+      }
+    ],
+    "storeBatchFlag": 1,
+    "layer_weight": 1,
+    "expected": {
+      "trips": 1
+    }
+  },
+  {
+    "id": "shortage_order_attribution_1",
+    "rule": "6.4",
+    "inventory": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "10",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "10",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "10"
+      }
+    ],
+    "orders": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "8",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "8",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "8"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-2",
+        "base_quantity": "8",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "8",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "8"
+      }
+    ],
+    "specs": [
+      {
+        "编码": "A",
+        "所属客户": "O",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "O",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "O",
+        "货品名称": "货品C",
+        "托含量": "20"
+      },
+      {
+        "编码": "A",
+        "所属客户": "P",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "P",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "P",
+        "货品名称": "货品C",
+        "托含量": "20"
+      }
+    ],
+    "storeBatchFlag": 1,
+    "layer_weight": 1,
+    "expected": {
+      "shortage": "6",
+      "shortage_orders": [
+        "SO-2"
+      ]
+    }
+  },
+  {
+    "id": "tail_before_old_full",
+    "rule": "BR-05",
+    "inventory": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2025-01-01",
+        "order_no": "SO-1",
+        "base_quantity": "40",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "40",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "40"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "10",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "10",
+        "unit": "箱",
+        "slot_id": "C15-3-1",
+        "staging": false,
+        "available_base_quantity": "10"
+      }
+    ],
+    "orders": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "5",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "5",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "5"
+      }
+    ],
+    "specs": [
+      {
+        "编码": "A",
+        "所属客户": "O",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "O",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "O",
+        "货品名称": "货品C",
+        "托含量": "20"
+      },
+      {
+        "编码": "A",
+        "所属客户": "P",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "P",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "P",
+        "货品名称": "货品C",
+        "托含量": "20"
+      }
+    ],
+    "storeBatchFlag": 1,
+    "layer_weight": 1,
+    "expected": {
+      "sources": {
+        "1": "5"
+      }
+    }
+  },
+  {
+    "id": "old_tail_before_near_tail",
+    "rule": "BR-05",
+    "inventory": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2025-01-01",
+        "order_no": "SO-1",
+        "base_quantity": "10",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "10",
+        "unit": "箱",
+        "slot_id": "C15-45-1",
+        "staging": false,
+        "available_base_quantity": "10"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "10",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "10",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "10"
+      }
+    ],
+    "orders": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "12",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "12",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "12"
+      }
+    ],
+    "specs": [
+      {
+        "编码": "A",
+        "所属客户": "O",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "O",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "O",
+        "货品名称": "货品C",
+        "托含量": "20"
+      },
+      {
+        "编码": "A",
+        "所属客户": "P",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "P",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "P",
+        "货品名称": "货品C",
+        "托含量": "20"
+      }
+    ],
+    "storeBatchFlag": 1,
+    "layer_weight": 1,
+    "expected": {
+      "sources": {
+        "0": "10",
+        "1": "2"
+      },
+      "first_slot": "C15-1-1"
+    }
+  },
+  {
+    "id": "old_full_before_near_full",
+    "rule": "BR-05",
+    "inventory": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2025-01-01",
+        "order_no": "SO-1",
+        "base_quantity": "40",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "40",
+        "unit": "箱",
+        "slot_id": "C15-45-2",
+        "staging": false,
+        "available_base_quantity": "40"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "40",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "40",
+        "unit": "箱",
+        "slot_id": "C15-1-2",
+        "staging": false,
+        "available_base_quantity": "40"
+      }
+    ],
+    "orders": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      }
+    ],
+    "specs": [
+      {
+        "编码": "A",
+        "所属客户": "O",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "O",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "O",
+        "货品名称": "货品C",
+        "托含量": "20"
+      },
+      {
+        "编码": "A",
+        "所属客户": "P",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "P",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "P",
+        "货品名称": "货品C",
+        "托含量": "20"
+      }
+    ],
+    "storeBatchFlag": 1,
+    "layer_weight": 1,
+    "expected": {
+      "sources": {
+        "0": "1"
+      }
+    }
+  },
+  {
+    "id": "same_time_nearest_tail",
+    "rule": "6.4",
+    "inventory": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "10",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "10",
+        "unit": "箱",
+        "slot_id": "C15-45-1",
+        "staging": false,
+        "available_base_quantity": "10"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "10",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "10",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "10"
+      }
+    ],
+    "orders": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      }
+    ],
+    "specs": [
+      {
+        "编码": "A",
+        "所属客户": "O",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "O",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "O",
+        "货品名称": "货品C",
+        "托含量": "20"
+      },
+      {
+        "编码": "A",
+        "所属客户": "P",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "P",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "P",
+        "货品名称": "货品C",
+        "托含量": "20"
+      }
+    ],
+    "storeBatchFlag": 1,
+    "layer_weight": 1,
+    "expected": {
+      "sources": {
+        "1": "1"
+      }
+    }
+  },
+  {
+    "id": "same_time_nearest_full",
+    "rule": "6.4",
+    "inventory": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "40",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "40",
+        "unit": "箱",
+        "slot_id": "C15-45-2",
+        "staging": false,
+        "available_base_quantity": "40"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "40",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "40",
+        "unit": "箱",
+        "slot_id": "C15-1-2",
+        "staging": false,
+        "available_base_quantity": "40"
+      }
+    ],
+    "orders": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      }
+    ],
+    "specs": [
+      {
+        "编码": "A",
+        "所属客户": "O",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "O",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "O",
+        "货品名称": "货品C",
+        "托含量": "20"
+      },
+      {
+        "编码": "A",
+        "所属客户": "P",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "P",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "P",
+        "货品名称": "货品C",
+        "托含量": "20"
+      }
+    ],
+    "storeBatchFlag": 1,
+    "layer_weight": 1,
+    "expected": {
+      "sources": {
+        "1": "1"
+      }
+    }
+  },
+  {
+    "id": "same_slot_multiple_timestamps",
+    "rule": "3/7.1",
+    "inventory": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2025-01-01",
+        "order_no": "SO-1",
+        "base_quantity": "5",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "5",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "5"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "5",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "5",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "5"
+      }
+    ],
+    "orders": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "6",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "6",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "6"
+      }
+    ],
+    "specs": [
+      {
+        "编码": "A",
+        "所属客户": "O",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "O",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "O",
+        "货品名称": "货品C",
+        "托含量": "20"
+      },
+      {
+        "编码": "A",
+        "所属客户": "P",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "P",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "P",
+        "货品名称": "货品C",
+        "托含量": "20"
+      }
+    ],
+    "storeBatchFlag": 1,
+    "layer_weight": 1,
+    "expected": {
+      "sources": {
+        "0": "5",
+        "1": "1"
+      }
+    }
+  },
+  {
+    "id": "batch_not_order_filter",
+    "rule": "6.4",
+    "inventory": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2025-01-01",
+        "order_no": "SO-1",
+        "base_quantity": "5",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "5",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "5",
+        "batch_no": "OLD"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "5",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "5",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "5",
+        "batch_no": "NEW"
+      }
+    ],
+    "orders": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "1",
+        "batch_no": "NEW"
+      }
+    ],
+    "specs": [
+      {
+        "编码": "A",
+        "所属客户": "O",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "O",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "O",
+        "货品名称": "货品C",
+        "托含量": "20"
+      },
+      {
+        "编码": "A",
+        "所属客户": "P",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "P",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "P",
+        "货品名称": "货品C",
+        "托含量": "20"
+      }
+    ],
+    "storeBatchFlag": 1,
+    "layer_weight": 1,
+    "expected": {
+      "sources": {
+        "0": "1"
+      }
+    }
+  },
+  {
+    "id": "frozen_old_tail_skipped",
+    "rule": "7.4",
+    "inventory": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2025-01-01",
+        "order_no": "SO-1",
+        "base_quantity": "10",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "10",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "0"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "10",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "10",
+        "unit": "箱",
+        "slot_id": "C15-2-1",
+        "staging": false,
+        "available_base_quantity": "10"
+      }
+    ],
+    "orders": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "5",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "5",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "5"
+      }
+    ],
+    "specs": [
+      {
+        "编码": "A",
+        "所属客户": "O",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "O",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "O",
+        "货品名称": "货品C",
+        "托含量": "20"
+      },
+      {
+        "编码": "A",
+        "所属客户": "P",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "P",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "P",
+        "货品名称": "货品C",
+        "托含量": "20"
+      }
+    ],
+    "storeBatchFlag": 1,
+    "layer_weight": 1,
+    "expected": {
+      "sources": {
+        "1": "5"
+      }
+    }
+  },
+  {
+    "id": "partial_available",
+    "rule": "7.1",
+    "inventory": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "10",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "10",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "3"
+      }
+    ],
+    "orders": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "8",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "8",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "8"
+      }
+    ],
+    "specs": [
+      {
+        "编码": "A",
+        "所属客户": "O",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "O",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "O",
+        "货品名称": "货品C",
+        "托含量": "20"
+      },
+      {
+        "编码": "A",
+        "所属客户": "P",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "P",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "P",
+        "货品名称": "货品C",
+        "托含量": "20"
+      }
+    ],
+    "storeBatchFlag": 1,
+    "layer_weight": 1,
+    "expected": {
+      "fulfilled": "3",
+      "shortage": "5",
+      "cleared": []
+    }
+  },
+  {
+    "id": "zero_stock",
+    "rule": "7.1",
+    "inventory": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "0",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "0",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "0"
+      }
+    ],
+    "orders": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      }
+    ],
+    "specs": [
+      {
+        "编码": "A",
+        "所属客户": "O",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "O",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "O",
+        "货品名称": "货品C",
+        "托含量": "20"
+      },
+      {
+        "编码": "A",
+        "所属客户": "P",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "P",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "P",
+        "货品名称": "货品C",
+        "托含量": "20"
+      }
+    ],
+    "storeBatchFlag": 1,
+    "layer_weight": 1,
+    "expected": {
+      "shortage": "1",
+      "trips": 0
+    }
+  },
+  {
+    "id": "staging_not_pickable",
+    "rule": "7.1",
+    "inventory": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "10",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "10",
+        "unit": "箱",
+        "slot_id": null,
+        "staging": true,
+        "available_base_quantity": "10"
+      }
+    ],
+    "orders": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      }
+    ],
+    "specs": [
+      {
+        "编码": "A",
+        "所属客户": "O",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "O",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "O",
+        "货品名称": "货品C",
+        "托含量": "20"
+      },
+      {
+        "编码": "A",
+        "所属客户": "P",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "P",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "P",
+        "货品名称": "货品C",
+        "托含量": "20"
+      }
+    ],
+    "storeBatchFlag": 1,
+    "layer_weight": 1,
+    "expected": {
+      "shortage": "1"
+    }
+  },
+  {
+    "id": "other_owner_no_substitution",
+    "rule": "BR-07",
+    "inventory": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "P",
+        "owner_name": "P",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "10",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "10",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "10"
+      }
+    ],
+    "orders": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      }
+    ],
+    "specs": [
+      {
+        "编码": "A",
+        "所属客户": "O",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "O",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "O",
+        "货品名称": "货品C",
+        "托含量": "20"
+      },
+      {
+        "编码": "A",
+        "所属客户": "P",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "P",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "P",
+        "货品名称": "货品C",
+        "托含量": "20"
+      }
+    ],
+    "storeBatchFlag": 1,
+    "layer_weight": 1,
+    "expected": {
+      "shortage": "1"
+    }
+  },
+  {
+    "id": "wave_owner_unload",
+    "rule": "BR-07/6.4",
+    "inventory": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "10",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "10",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "10"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "P",
+        "owner_name": "P",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "10",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "10",
+        "unit": "箱",
+        "slot_id": "C15-2-1",
+        "staging": false,
+        "available_base_quantity": "10"
+      }
+    ],
+    "orders": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "P",
+        "owner_name": "P",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-2",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      }
+    ],
+    "specs": [
+      {
+        "编码": "A",
+        "所属客户": "O",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "O",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "O",
+        "货品名称": "货品C",
+        "托含量": "20"
+      },
+      {
+        "编码": "A",
+        "所属客户": "P",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "P",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "P",
+        "货品名称": "货品C",
+        "托含量": "20"
+      }
+    ],
+    "storeBatchFlag": 1,
+    "layer_weight": 1,
+    "expected": {
+      "trips": 2
+    }
+  },
+  {
+    "id": "wave_same_order_owners_isolated",
+    "rule": "BR-07/6.4",
+    "inventory": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "10",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "10",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "10"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "P",
+        "owner_name": "P",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "10",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "10",
+        "unit": "箱",
+        "slot_id": "C15-2-1",
+        "staging": false,
+        "available_base_quantity": "10"
+      }
+    ],
+    "orders": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "P",
+        "owner_name": "P",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      }
+    ],
+    "specs": [
+      {
+        "编码": "A",
+        "所属客户": "O",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "O",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "O",
+        "货品名称": "货品C",
+        "托含量": "20"
+      },
+      {
+        "编码": "A",
+        "所属客户": "P",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "P",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "P",
+        "货品名称": "货品C",
+        "托含量": "20"
+      }
+    ],
+    "storeBatchFlag": 1,
+    "layer_weight": 1,
+    "expected": {
+      "trips": 2
+    }
+  },
+  {
+    "id": "wave_three_owner_runs",
+    "rule": "BR-07",
+    "inventory": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "40",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "40",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "40"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "40",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "40",
+        "unit": "箱",
+        "slot_id": "C15-3-1",
+        "staging": false,
+        "available_base_quantity": "40"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "P",
+        "owner_name": "P",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "10",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "10",
+        "unit": "箱",
+        "slot_id": "C15-2-1",
+        "staging": false,
+        "available_base_quantity": "10"
+      }
+    ],
+    "orders": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "80",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "80",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "80"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "P",
+        "owner_name": "P",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-2",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      }
+    ],
+    "specs": [
+      {
+        "编码": "A",
+        "所属客户": "O",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "O",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "O",
+        "货品名称": "货品C",
+        "托含量": "20"
+      },
+      {
+        "编码": "A",
+        "所属客户": "P",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "P",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "P",
+        "货品名称": "货品C",
+        "托含量": "20"
+      }
+    ],
+    "storeBatchFlag": 1,
+    "layer_weight": 1,
+    "expected": {
+      "trips": 3
+    }
+  },
+  {
+    "id": "new_sku_capacity_9.999",
+    "rule": "6.4",
+    "inventory": [
+      {
+        "sku_id": "B",
+        "name": "货品B",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "30",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "30",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "30"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "9.999",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "9.999",
+        "unit": "箱",
+        "slot_id": "C15-2-1",
+        "staging": false,
+        "available_base_quantity": "9.999"
+      }
+    ],
+    "orders": [
+      {
+        "sku_id": "B",
+        "name": "货品B",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "30",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "30",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "30"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "9.999",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "9.999",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "9.999"
+      }
+    ],
+    "specs": [
+      {
+        "编码": "A",
+        "所属客户": "O",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "O",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "O",
+        "货品名称": "货品C",
+        "托含量": "20"
+      },
+      {
+        "编码": "A",
+        "所属客户": "P",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "P",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "P",
+        "货品名称": "货品C",
+        "托含量": "20"
+      }
+    ],
+    "storeBatchFlag": 1,
+    "layer_weight": 1,
+    "expected": {
+      "trip_loads": [
+        "39.999"
+      ]
+    }
+  },
+  {
+    "id": "new_sku_capacity_10",
+    "rule": "6.4",
+    "inventory": [
+      {
+        "sku_id": "B",
+        "name": "货品B",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "30",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "30",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "30"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "10",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "10",
+        "unit": "箱",
+        "slot_id": "C15-2-1",
+        "staging": false,
+        "available_base_quantity": "10"
+      }
+    ],
+    "orders": [
+      {
+        "sku_id": "B",
+        "name": "货品B",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "30",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "30",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "30"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "10",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "10",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "10"
+      }
+    ],
+    "specs": [
+      {
+        "编码": "A",
+        "所属客户": "O",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "O",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "O",
+        "货品名称": "货品C",
+        "托含量": "20"
+      },
+      {
+        "编码": "A",
+        "所属客户": "P",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "P",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "P",
+        "货品名称": "货品C",
+        "托含量": "20"
+      }
+    ],
+    "storeBatchFlag": 1,
+    "layer_weight": 1,
+    "expected": {
+      "trip_loads": [
+        "40"
+      ]
+    }
+  },
+  {
+    "id": "new_sku_capacity_10.001",
+    "rule": "6.4",
+    "inventory": [
+      {
+        "sku_id": "B",
+        "name": "货品B",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "30",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "30",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "30"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "10.001",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "10.001",
+        "unit": "箱",
+        "slot_id": "C15-2-1",
+        "staging": false,
+        "available_base_quantity": "10.001"
+      }
+    ],
+    "orders": [
+      {
+        "sku_id": "B",
+        "name": "货品B",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "30",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "30",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "30"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "10.001",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "10.001",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "10.001"
+      }
+    ],
+    "specs": [
+      {
+        "编码": "A",
+        "所属客户": "O",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "O",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "O",
+        "货品名称": "货品C",
+        "托含量": "20"
+      },
+      {
+        "编码": "A",
+        "所属客户": "P",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "P",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "P",
+        "货品名称": "货品C",
+        "托含量": "20"
+      }
+    ],
+    "storeBatchFlag": 1,
+    "layer_weight": 1,
+    "expected": {
+      "trip_loads": [
+        "30",
+        "10.001"
+      ]
+    }
+  },
+  {
+    "id": "new_sku_capacity_15",
+    "rule": "6.4",
+    "inventory": [
+      {
+        "sku_id": "B",
+        "name": "货品B",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "30",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "30",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "30"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "15",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "15",
+        "unit": "箱",
+        "slot_id": "C15-2-1",
+        "staging": false,
+        "available_base_quantity": "15"
+      }
+    ],
+    "orders": [
+      {
+        "sku_id": "B",
+        "name": "货品B",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "30",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "30",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "30"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "15",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "15",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "15"
+      }
+    ],
+    "specs": [
+      {
+        "编码": "A",
+        "所属客户": "O",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "O",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "O",
+        "货品名称": "货品C",
+        "托含量": "20"
+      },
+      {
+        "编码": "A",
+        "所属客户": "P",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "P",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "P",
+        "货品名称": "货品C",
+        "托含量": "20"
+      }
+    ],
+    "storeBatchFlag": 1,
+    "layer_weight": 1,
+    "expected": {
+      "trip_loads": [
+        "30",
+        "15"
+      ]
+    }
+  },
+  {
+    "id": "same_sku_continue_until_full",
+    "rule": "BR-06",
+    "inventory": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "20",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "20",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "20"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "30",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "30",
+        "unit": "箱",
+        "slot_id": "C15-2-1",
+        "staging": false,
+        "available_base_quantity": "30"
+      }
+    ],
+    "orders": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "50",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "50",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "50"
+      }
+    ],
+    "specs": [
+      {
+        "编码": "A",
+        "所属客户": "O",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "O",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "O",
+        "货品名称": "货品C",
+        "托含量": "20"
+      },
+      {
+        "编码": "A",
+        "所属客户": "P",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "P",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "P",
+        "货品名称": "货品C",
+        "托含量": "20"
+      }
+    ],
+    "storeBatchFlag": 1,
+    "layer_weight": 1,
+    "expected": {
+      "trip_loads": [
+        "40",
+        "10"
+      ]
+    }
+  },
+  {
+    "id": "same_sku_orders_share_capacity",
+    "rule": "BR-06/6.4",
+    "inventory": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "40",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "40",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "40"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "10",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "10",
+        "unit": "箱",
+        "slot_id": "C15-2-1",
+        "staging": false,
+        "available_base_quantity": "10"
+      }
+    ],
+    "orders": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "25",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "25",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "25"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-2",
+        "base_quantity": "25",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "25",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "25"
+      }
+    ],
+    "specs": [
+      {
+        "编码": "A",
+        "所属客户": "O",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "O",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "O",
+        "货品名称": "货品C",
+        "托含量": "20"
+      },
+      {
+        "编码": "A",
+        "所属客户": "P",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "P",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "P",
+        "货品名称": "货品C",
+        "托含量": "20"
+      }
+    ],
+    "storeBatchFlag": 1,
+    "layer_weight": 1,
+    "expected": {
+      "trip_loads": [
+        "40",
+        "10"
+      ]
+    }
+  },
+  {
+    "id": "third_sku_lowers_capacity",
+    "rule": "6.4",
+    "inventory": [
+      {
+        "sku_id": "B",
+        "name": "货品B",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "10",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "10",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "10"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "10",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "10",
+        "unit": "箱",
+        "slot_id": "C15-2-1",
+        "staging": false,
+        "available_base_quantity": "10"
+      },
+      {
+        "sku_id": "C",
+        "name": "货品C",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-3-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      }
+    ],
+    "orders": [
+      {
+        "sku_id": "B",
+        "name": "货品B",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "10",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "10",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "10"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "10",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "10",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "10"
+      },
+      {
+        "sku_id": "C",
+        "name": "货品C",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      }
+    ],
+    "specs": [
+      {
+        "编码": "A",
+        "所属客户": "O",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "O",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "O",
+        "货品名称": "货品C",
+        "托含量": "20"
+      },
+      {
+        "编码": "A",
+        "所属客户": "P",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "P",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "P",
+        "货品名称": "货品C",
+        "托含量": "20"
+      }
+    ],
+    "storeBatchFlag": 1,
+    "layer_weight": 1,
+    "expected": {
+      "trips": 2,
+      "max_distance": 34.7
+    }
+  },
+  {
+    "id": "mixed_partial",
+    "rule": "BR-04/6.4",
+    "inventory": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "10",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "10",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "10"
+      },
+      {
+        "sku_id": "B",
+        "name": "货品B",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "10",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "10",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "10"
+      }
+    ],
+    "orders": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "3",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "3",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "3"
+      }
+    ],
+    "specs": [
+      {
+        "编码": "A",
+        "所属客户": "O",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "O",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "O",
+        "货品名称": "货品C",
+        "托含量": "20"
+      },
+      {
+        "编码": "A",
+        "所属客户": "P",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "P",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "P",
+        "货品名称": "货品C",
+        "托含量": "20"
+      }
+    ],
+    "storeBatchFlag": 1,
+    "layer_weight": 1,
+    "expected": {
+      "cleared": [],
+      "sources": {
+        "0": "3"
+      }
+    }
+  },
+  {
+    "id": "mixed_one_sku_empty",
+    "rule": "6.4",
+    "inventory": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "10",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "10",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "10"
+      },
+      {
+        "sku_id": "B",
+        "name": "货品B",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "10",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "10",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "10"
+      }
+    ],
+    "orders": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "10",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "10",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "10"
+      }
+    ],
+    "specs": [
+      {
+        "编码": "A",
+        "所属客户": "O",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "O",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "O",
+        "货品名称": "货品C",
+        "托含量": "20"
+      },
+      {
+        "编码": "A",
+        "所属客户": "P",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "P",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "P",
+        "货品名称": "货品C",
+        "托含量": "20"
+      }
+    ],
+    "storeBatchFlag": 1,
+    "layer_weight": 1,
+    "expected": {
+      "cleared": []
+    }
+  },
+  {
+    "id": "mixed_all_empty",
+    "rule": "6.4",
+    "inventory": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "10",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "10",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "10"
+      },
+      {
+        "sku_id": "B",
+        "name": "货品B",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "10",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "10",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "10"
+      }
+    ],
+    "orders": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "10",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "10",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "10"
+      },
+      {
+        "sku_id": "B",
+        "name": "货品B",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "10",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "10",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "10"
+      }
+    ],
+    "specs": [
+      {
+        "编码": "A",
+        "所属客户": "O",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "O",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "O",
+        "货品名称": "货品C",
+        "托含量": "20"
+      },
+      {
+        "编码": "A",
+        "所属客户": "P",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "P",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "P",
+        "货品名称": "货品C",
+        "托含量": "20"
+      }
+    ],
+    "storeBatchFlag": 1,
+    "layer_weight": 1,
+    "expected": {
+      "cleared": [
+        "C15-1-1"
+      ]
+    }
+  },
+  {
+    "id": "mixed_full_total_still_tail",
+    "rule": "6.4",
+    "inventory": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "30",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "30",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "30"
+      },
+      {
+        "sku_id": "B",
+        "name": "货品B",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "10",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "10",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "10"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2025-01-01",
+        "order_no": "SO-1",
+        "base_quantity": "40",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "40",
+        "unit": "箱",
+        "slot_id": "C15-2-2",
+        "staging": false,
+        "available_base_quantity": "40"
+      }
+    ],
+    "orders": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      }
+    ],
+    "specs": [
+      {
+        "编码": "A",
+        "所属客户": "O",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "O",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "O",
+        "货品名称": "货品C",
+        "托含量": "20"
+      },
+      {
+        "编码": "A",
+        "所属客户": "P",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "P",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "P",
+        "货品名称": "货品C",
+        "托含量": "20"
+      }
+    ],
+    "storeBatchFlag": 1,
+    "layer_weight": 1,
+    "expected": {
+      "sources": {
+        "0": "1"
+      }
+    }
+  },
+  {
+    "id": "upper_existing_mix_warning",
+    "rule": "6.4",
+    "inventory": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "10",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "10",
+        "unit": "箱",
+        "slot_id": "C15-11-2",
+        "staging": false,
+        "available_base_quantity": "10"
+      },
+      {
+        "sku_id": "B",
+        "name": "货品B",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "10",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "10",
+        "unit": "箱",
+        "slot_id": "C15-11-2",
+        "staging": false,
+        "available_base_quantity": "10"
+      }
+    ],
+    "orders": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      }
+    ],
+    "specs": [
+      {
+        "编码": "A",
+        "所属客户": "O",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "O",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "O",
+        "货品名称": "货品C",
+        "托含量": "20"
+      },
+      {
+        "编码": "A",
+        "所属客户": "P",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "P",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "P",
+        "货品名称": "货品C",
+        "托含量": "20"
+      }
+    ],
+    "storeBatchFlag": 1,
+    "layer_weight": 1,
+    "expected": {
+      "warning": true
+    }
+  },
+  {
+    "id": "vertical_same_column",
+    "rule": "6.2/7.4",
+    "inventory": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-1-2",
+        "staging": false,
+        "available_base_quantity": "1"
+      },
+      {
+        "sku_id": "B",
+        "name": "货品B",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-1-4",
+        "staging": false,
+        "available_base_quantity": "1"
+      }
+    ],
+    "orders": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      },
+      {
+        "sku_id": "B",
+        "name": "货品B",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      }
+    ],
+    "specs": [
+      {
+        "编码": "A",
+        "所属客户": "O",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "O",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "O",
+        "货品名称": "货品C",
+        "托含量": "20"
+      },
+      {
+        "编码": "A",
+        "所属客户": "P",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "P",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "P",
+        "货品名称": "货品C",
+        "托含量": "20"
+      }
+    ],
+    "storeBatchFlag": 1,
+    "layer_weight": 1,
+    "expected": {
+      "trips": 1,
+      "distance": 24.1
+    }
+  },
+  {
+    "id": "single_full_route_distance",
+    "rule": "6.2",
+    "inventory": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "40",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "40",
+        "unit": "箱",
+        "slot_id": "C15-1-2",
+        "staging": false,
+        "available_base_quantity": "40"
+      }
+    ],
+    "orders": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "40",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "40",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "40"
+      }
+    ],
+    "specs": [
+      {
+        "编码": "A",
+        "所属客户": "O",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "O",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "O",
+        "货品名称": "货品C",
+        "托含量": "20"
+      },
+      {
+        "编码": "A",
+        "所属客户": "P",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "P",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "P",
+        "货品名称": "货品C",
+        "托含量": "20"
+      }
+    ],
+    "storeBatchFlag": 1,
+    "layer_weight": 1,
+    "expected": {
+      "distance": 17.3
+    }
+  },
+  {
+    "id": "same_lane_continue_distance",
+    "rule": "6.2",
+    "inventory": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      },
+      {
+        "sku_id": "B",
+        "name": "货品B",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-2-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      }
+    ],
+    "orders": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      },
+      {
+        "sku_id": "B",
+        "name": "货品B",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      }
+    ],
+    "specs": [
+      {
+        "编码": "A",
+        "所属客户": "O",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "O",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "O",
+        "货品名称": "货品C",
+        "托含量": "20"
+      },
+      {
+        "编码": "A",
+        "所属客户": "P",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "P",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "P",
+        "货品名称": "货品C",
+        "托含量": "20"
+      }
+    ],
+    "storeBatchFlag": 1,
+    "layer_weight": 1,
+    "expected": {
+      "distance": 16.2
+    }
+  },
+  {
+    "id": "cross_rack_detour",
+    "rule": "6.2/7.4",
+    "inventory": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C14-30-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      },
+      {
+        "sku_id": "B",
+        "name": "货品B",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-30-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      }
+    ],
+    "orders": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      },
+      {
+        "sku_id": "B",
+        "name": "货品B",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      }
+    ],
+    "specs": [
+      {
+        "编码": "A",
+        "所属客户": "O",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "O",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "O",
+        "货品名称": "货品C",
+        "托含量": "20"
+      },
+      {
+        "编码": "A",
+        "所属客户": "P",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "P",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "P",
+        "货品名称": "货品C",
+        "托含量": "20"
+      }
+    ],
+    "storeBatchFlag": 1,
+    "layer_weight": 1,
+    "expected": {
+      "trips": 1
+    }
+  },
+  {
+    "id": "same_workpoint_other_rack",
+    "rule": "6.3",
+    "inventory": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      },
+      {
+        "sku_id": "B",
+        "name": "货品B",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C16-1-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      }
+    ],
+    "orders": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      },
+      {
+        "sku_id": "B",
+        "name": "货品B",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      }
+    ],
+    "specs": [
+      {
+        "编码": "A",
+        "所属客户": "O",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "O",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "O",
+        "货品名称": "货品C",
+        "托含量": "20"
+      },
+      {
+        "编码": "A",
+        "所属客户": "P",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "P",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "P",
+        "货品名称": "货品C",
+        "托含量": "20"
+      }
+    ],
+    "storeBatchFlag": 1,
+    "layer_weight": 1,
+    "expected": {
+      "distance": 13.9
+    }
+  },
+  {
+    "id": "rounded_boxes_exact_base",
+    "rule": "7.1",
+    "inventory": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "6",
+        "quantity": "0.167",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      }
+    ],
+    "orders": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "2",
+        "base_unit": "瓶",
+        "conversion_ratio": "6",
+        "quantity": "0.333",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "2"
+      }
+    ],
+    "specs": [
+      {
+        "编码": "A",
+        "所属客户": "O",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "O",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "O",
+        "货品名称": "货品C",
+        "托含量": "20"
+      },
+      {
+        "编码": "A",
+        "所属客户": "P",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "P",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "P",
+        "货品名称": "货品C",
+        "托含量": "20"
+      }
+    ],
+    "storeBatchFlag": 1,
+    "layer_weight": 1,
+    "expected": {
+      "fulfilled": "1",
+      "shortage": "1"
+    }
+  },
+  {
+    "id": "unrelated_sku_untouched",
+    "rule": "BR-07",
+    "inventory": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "10",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "10",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "10"
+      },
+      {
+        "sku_id": "C",
+        "name": "货品C",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "10",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "10",
+        "unit": "箱",
+        "slot_id": "C15-2-1",
+        "staging": false,
+        "available_base_quantity": "10"
+      }
+    ],
+    "orders": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      }
+    ],
+    "specs": [
+      {
+        "编码": "A",
+        "所属客户": "O",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "O",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "O",
+        "货品名称": "货品C",
+        "托含量": "20"
+      },
+      {
+        "编码": "A",
+        "所属客户": "P",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "P",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "P",
+        "货品名称": "货品C",
+        "托含量": "20"
+      }
+    ],
+    "storeBatchFlag": 1,
+    "layer_weight": 1,
+    "expected": {
+      "sources": {
+        "0": "1"
+      }
+    }
+  },
+  {
+    "id": "different_sku_units",
+    "rule": "6.1",
+    "inventory": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "10",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "10",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "10"
+      },
+      {
+        "sku_id": "B",
+        "name": "货品B",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "10",
+        "base_unit": "套",
+        "conversion_ratio": "2",
+        "quantity": "10",
+        "unit": "箱",
+        "slot_id": "C15-2-1",
+        "staging": false,
+        "available_base_quantity": "10"
+      }
+    ],
+    "orders": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      },
+      {
+        "sku_id": "B",
+        "name": "货品B",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "套",
+        "conversion_ratio": "2",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      }
+    ],
+    "specs": [
+      {
+        "编码": "A",
+        "所属客户": "O",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "O",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "O",
+        "货品名称": "货品C",
+        "托含量": "20"
+      },
+      {
+        "编码": "A",
+        "所属客户": "P",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "P",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "P",
+        "货品名称": "货品C",
+        "托含量": "20"
+      }
+    ],
+    "storeBatchFlag": 1,
+    "layer_weight": 1,
+    "expected": {
+      "trips": 1
+    }
+  },
+  {
+    "id": "fractional_full_not_tail",
+    "rule": "BR-05/7.1",
+    "inventory": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2025-01-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "3",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2025-01-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "3",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2025-01-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "3",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "3",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-45-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      }
+    ],
+    "orders": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "3",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      }
+    ],
+    "specs": [
+      {
+        "编码": "A",
+        "所属客户": "O",
+        "货品名称": "货品A",
+        "托含量": "1"
+      }
+    ],
+    "storeBatchFlag": 1,
+    "layer_weight": 1,
+    "expected": {
+      "sources": {
+        "3": "1"
+      }
+    }
+  },
+  {
+    "id": "fractional_exact_full_load",
+    "rule": "BR-06/7.1",
+    "inventory": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "3",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "3",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-2-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "3",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-3-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "3",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-4-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      }
+    ],
+    "orders": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "4",
+        "base_unit": "瓶",
+        "conversion_ratio": "3",
+        "quantity": "4",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "4"
+      }
+    ],
+    "specs": [
+      {
+        "编码": "A",
+        "所属客户": "O",
+        "货品名称": "货品A",
+        "托含量": "1"
+      }
+    ],
+    "storeBatchFlag": 1,
+    "layer_weight": 1,
+    "expected": {
+      "trips": 2
+    }
+  },
+  {
+    "id": "fractional_capacity_validation",
+    "rule": "BR-01/7.1",
+    "inventory": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "18",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "18",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "18",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "18",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "18",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "18",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "18",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "18",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "18",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "18",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "18",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "18",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "18",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "18",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "18",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "18",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "18",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "18",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      }
+    ],
+    "orders": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "18",
+        "base_unit": "瓶",
+        "conversion_ratio": "18",
+        "quantity": "18",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "18"
+      }
+    ],
+    "specs": [
+      {
+        "编码": "A",
+        "所属客户": "O",
+        "货品名称": "货品A",
+        "托含量": "1"
+      }
+    ],
+    "storeBatchFlag": 1,
+    "layer_weight": 1,
+    "expected": {
+      "trips": 1,
+      "cleared": [
+        "C15-1-1"
+      ]
+    }
+  },
+  {
+    "id": "partial_available_full_stays_full",
+    "rule": "BR-05/7.1",
+    "inventory": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2025-01-01",
+        "order_no": "SO-1",
+        "base_quantity": "40",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "40",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "5",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "5",
+        "unit": "箱",
+        "slot_id": "C15-45-1",
+        "staging": false,
+        "available_base_quantity": "5"
+      }
+    ],
+    "orders": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      }
+    ],
+    "specs": [
+      {
+        "编码": "A",
+        "所属客户": "O",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "O",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "O",
+        "货品名称": "货品C",
+        "托含量": "20"
+      },
+      {
+        "编码": "A",
+        "所属客户": "P",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "P",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "P",
+        "货品名称": "货品C",
+        "托含量": "20"
+      }
+    ],
+    "storeBatchFlag": 1,
+    "layer_weight": 1,
+    "expected": {
+      "sources": {
+        "1": "1"
+      }
+    }
+  },
+  {
+    "id": "repeated_order_sku_no_double_allocation",
+    "rule": "6.2/6.4",
+    "inventory": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "10",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "10",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "10"
+      }
+    ],
+    "orders": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "8",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "8",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "8"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "8",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "8",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "8"
+      }
+    ],
+    "specs": [
+      {
+        "编码": "A",
+        "所属客户": "O",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "O",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "O",
+        "货品名称": "货品C",
+        "托含量": "20"
+      },
+      {
+        "编码": "A",
+        "所属客户": "P",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "P",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "P",
+        "货品名称": "货品C",
+        "托含量": "20"
+      }
+    ],
+    "storeBatchFlag": 1,
+    "layer_weight": 1,
+    "expected": {
+      "fulfilled": "10",
+      "shortage": "6"
+    }
+  },
+  {
+    "id": "fractional_same_sku_fills_multiple_trips",
+    "rule": "BR-06",
+    "inventory": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "25",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "25",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "25"
+      },
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "25",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "25",
+        "unit": "箱",
+        "slot_id": "C15-2-1",
+        "staging": false,
+        "available_base_quantity": "25"
+      }
+    ],
+    "orders": [
+      {
+        "sku_id": "A",
+        "name": "货品A",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "50",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "50",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "50"
+      }
+    ],
+    "specs": [
+      {
+        "编码": "A",
+        "所属客户": "O",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "O",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "O",
+        "货品名称": "货品C",
+        "托含量": "20"
+      },
+      {
+        "编码": "A",
+        "所属客户": "P",
+        "货品名称": "货品A",
+        "托含量": "40"
+      },
+      {
+        "编码": "B",
+        "所属客户": "P",
+        "货品名称": "货品B",
+        "托含量": "60"
+      },
+      {
+        "编码": "C",
+        "所属客户": "P",
+        "货品名称": "货品C",
+        "托含量": "20"
+      }
+    ],
+    "storeBatchFlag": 1,
+    "layer_weight": 1,
+    "expected": {
+      "trip_loads": [
+        "40",
+        "10"
+      ]
+    }
+  },
+  {
+    "id": "leading_zero_sku_identity",
+    "rule": "7.2",
+    "inventory": [
+      {
+        "sku_id": "001",
+        "name": "货品001",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "5",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "5",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "5"
+      }
+    ],
+    "orders": [
+      {
+        "sku_id": "001",
+        "name": "货品001",
+        "owner_code": "O",
+        "owner_name": "O",
+        "warehouse_code": "WH",
+        "timestamp": "2026-10-01",
+        "order_no": "SO-1",
+        "base_quantity": "1",
+        "base_unit": "瓶",
+        "conversion_ratio": "1",
+        "quantity": "1",
+        "unit": "箱",
+        "slot_id": "C15-1-1",
+        "staging": false,
+        "available_base_quantity": "1"
+      }
+    ],
+    "specs": [
+      {
+        "编码": "001",
+        "所属客户": "O",
+        "托含量": "40"
+      }
+    ],
+    "storeBatchFlag": 1,
+    "layer_weight": 1,
+    "expected": {
+      "fulfilled": "1"
+    }
+  }
+]

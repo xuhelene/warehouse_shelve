@@ -200,4 +200,4 @@ def solve(inventory, orders, capacities, layout, flag, deadline, *, search_metho
                 picks=picks, trips=trips, legs=legs, shortages=shortages, remaining_inventory=stock,
                 cleared_slots=cleared, total_distance=sum(l["distance"] for l in legs),
                 message="存在缺货，已输出可满足部分" if shortages else
-                "出库COPT规划完成" if route_optimizer is not None else "出库启发式规划完成")
+                f"出库{route_strategy}规划完成" if route_optimizer is not None else "出库启发式规划完成")

@@ -3,6 +3,7 @@ from time import monotonic
 
 from solvers.warehouse_outbound_copt import solve as solve_copt
 from solvers.warehouse_outbound_heuristic import solve
+from solvers.warehouse_outbound_ortools import solve as solve_ortools
 
 
 def plan(inventory, orders, capacities, layout, payload, config):
@@ -11,4 +12,6 @@ def plan(inventory, orders, capacities, layout, payload, config):
         raise ValueError("storeBatchFlag仅支持0按单、1按波次")
     if config["backend"] == "copt":
         return solve_copt(inventory, orders, capacities, layout, flag, config)
+    if config["backend"] == "ortools":
+        return solve_ortools(inventory, orders, capacities, layout, flag, config)
     return solve(inventory, orders, capacities, layout, flag, monotonic() + config["time_limit_s"])

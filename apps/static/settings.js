@@ -15,6 +15,10 @@
       $('backend-help').textContent='一托一位时使用最小费用匹配；允许混托时使用 SCIP。依次优化上架箱数、距离和层位偏好。';
       $('threads-help').textContent='线程数和相对间隙用于 SCIP；匹配采用单线程精确求解。';
       $('time-help').textContent='建模与求解共用时限；SCIP 超时保留已有可行解。';
+    }else if(picking&&backend==='ortools'){
+      $('backend-help').textContent='使用 OR-Tools CP-SAT 联合优化分托和托内路径，最小化完整出库距离。';
+      $('threads-help').textContent='OR-Tools 使用配置线程数。';
+      $('time-help').textContent='选货、建模和求解共用时间上限；若已有完整可行路径则保留。';
     }else if(picking&&backend==='copt'){
       $('threads-help').textContent='COPT使用配置线程数。';
       $('time-help').textContent='选货、建模和求解共用时间上限；若已有完整可行路径则保留。';
