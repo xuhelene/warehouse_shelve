@@ -1,9 +1,7 @@
 // 业务坐标采用 Z 向上；转换到 Three.js 的 Y 向上坐标。
 (function () {
   'use strict';
-  const config = { columnWidth: 1, rowDepth: 1.2, levelHeight: 1, frontY: 2,
-    rows: [{id:'C14',x:-2.4,face:-1},{id:'C15',x:-1.2,face:1},{id:'C16',x:2.4,face:-1}],
-    origin: {x:0,y:0,z:0} };
+  let layout, config;
   const colors = {empty:0xd5e1eb,stock:0x488dcc,inbound:0x29bc88,outbound:0x29bc88,selected:0xe658ae};
   const el = id => document.getElementById(id);
   const point = p => new THREE.Vector3(p.x,p.z || 0,p.y);
@@ -197,6 +195,9 @@
     setData({inventory:stock,targets,paths,mode:inbound?'inbound':outbound?'outbound':'inventory'});
   }
   try {
+    layout=JSON.parse(el('warehouse-layout').textContent);
+    if(layout.schema_version!==1||layout.warehouse_type!=='rack'||!Array.isArray(layout.slots)||!layout.visualization)throw new Error('无效的立体库布局 JSON');
+    config=layout.visualization.config;
     // 兼容浏览器缓存的旧预览 HTML，缺少连线层也不能阻断三维初始化。
     if(!el('target-leaders')) {
       const overlay=document.createElementNS('http://www.w3.org/2000/svg','svg');
@@ -213,35 +214,28 @@
     el('close-slot-popup').onclick=()=>{el('slot-popup').hidden=true;};
     document.addEventListener('keydown',event=>{if(event.key==='Escape')el('slot-popup').hidden=true;});
     scene.add(new THREE.AmbientLight(0xffffff,.8));const light=new THREE.DirectionalLight(0xffffff,.6);light.position.set(-10,25,-10);scene.add(light);
-    box(10,.08,50,-1.2,23.5,-.1,0xfafcfe);
-    box(2.4,.025,45,-4.2,24.5,0,0xd5e8ed);box(2.4,.025,45,.6,24.5,0,0xd5e8ed);
-    box(8.4,.03,3,-1.2,22.5,.01,0xafe1dc);box(8.4,.025,2,-1.2,1,0,0xd5e8ed);
-    box(10,5.5,.15,-1.2,47.1,2.7,0xc8d2de);box(1.2,4.8,45,3.6,24.5,2.4,0xb6c0cd,.25);
-    const shelfGeo=new THREE.BoxGeometry(1.16,.055,.99),postGeo=new THREE.BoxGeometry(.045,5,.045);
-    const shelfMat=new THREE.MeshPhongMaterial({color:0xdf9d52}),postMat=new THREE.MeshPhongMaterial({color:0x516980});
-    config.rows.forEach(row=>{
-      for(let col=1;col<=45;col++) for(let level=1;level<=5;level++) {
-        if(col>=20&&col<=22&&level<=2) continue;
-        const y=config.frontY+(col-.5)*config.columnWidth,z=(level-.5)*config.levelHeight;
-        const mesh=box(1.06,.74,.84,row.x,y,z,colors.empty,.22);
-        const id=row.id+'-'+col+'-'+level;mesh.userData={slot_id:id,level,rack:row.id,coordinate:{x:row.x,y,z}};slots.set(id,mesh);
-        const shelf=new THREE.Mesh(shelfGeo,shelfMat);shelf.position.copy(point({x:row.x,y,z:level-1}));shelf.userData={level,rack:row.id};scene.add(shelf);
+    const slotDefinitions=new Map(layout.slots.map(slot=>[slot.slot_id,slot]));
+    for(const item of layout.visualization.objects) {
+      const p=item.position;
+      let object;
+      if(item.type==='box') {
+        const s=item.size;
+        object=box(s.width,s.height,s.depth,p.x,p.y,p.z,item.color,item.opacity??1);
+      } else if(item.type==='label') {
+        object=label(item.text,p.x,p.y,p.z,item.scale);
+        if(item.center)object.center.set(...item.center);
+      } else if(item.type==='arrow') {
+        object=new THREE.ArrowHelper(point(item.direction),point(p),item.length,item.color,item.head_length,item.head_width);
+        scene.add(object);
+      } else throw new Error('未知布局对象：'+item.type);
+      Object.assign(object.userData,item.metadata||{});
+      if(item.slot_id) {
+        const slot=slotDefinitions.get(item.slot_id);
+        if(!slot||slots.has(item.slot_id))throw new Error('无效或重复货位：'+item.slot_id);
+        object.userData={slot_id:slot.slot_id,level:slot.level,rack:slot.rack,coordinate:p};slots.set(slot.slot_id,object);
       }
-      for(let col=0;col<=45;col++) for(const dx of [-.57,.57]) {
-        if(col===20||col===21) continue;
-        const post=new THREE.Mesh(postGeo,postMat);post.position.copy(point({x:row.x+dx,y:2+col,z:2.5}));post.userData.rack=row.id;scene.add(post);
-      }
-      const rackLabel=label(row.id,row.x,-1.2,2,.9);rackLabel.userData.rack=row.id;
-    });
-    label('门口\n出货区',0,-1.2,.15,1).center.set(1.6,.5);
-    for(const x of [-4.2,.6]) for(const direction of [-1,1]) {
-      scene.add(new THREE.ArrowHelper(new THREE.Vector3(0,0,direction),point({x:x+direction*.35,y:13-direction*1.5,z:.2}),3,0x304860,.55,.4));
     }
-    for(const direction of [-1,1]) {
-      scene.add(new THREE.ArrowHelper(new THREE.Vector3(direction,0,0),point({x:-1.2-direction*1.5,y:22.5-direction*.4,z:.2}),3,0x304860,.55,.4));
-    }
-    label('20—22 列贯通',-1.2,22.5,5.5,1);label('靠墙',-1.2,47,6,.7);label('其他项目货架',3.6,35,5.5,.6);
-    for(const col of [1,10,19,23,30,40,45]) label(String(col),-5.1,col+1.5,.2,.25);
+    if(slots.size!==layout.slots.length)throw new Error('货位数据与布局图不一致');
     const axes=new THREE.AxesHelper(2);scene.add(axes);
     routeGroup=new THREE.Group();scene.add(routeGroup);
     originMarker=new THREE.Mesh(new THREE.SphereGeometry(.18,16,12),new THREE.MeshPhongMaterial({color:0x23364b}));scene.add(originMarker);originMarker.position.copy(point({...config.origin,z:.2}));

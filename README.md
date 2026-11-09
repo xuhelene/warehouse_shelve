@@ -38,6 +38,8 @@ python -m tools.check_outbound_planning --input outbound.json --time-limit 30 --
 
 ## 启动
 
+Linux Docker 离线交付、构建及部署方法见 [Docker 交付说明](packaging/DOCKER.md)。
+
 安装 requirements.txt 中的依赖后，在项目目录运行：
 
 ```powershell

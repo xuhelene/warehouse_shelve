@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 import sys
 from pathlib import Path
 
@@ -17,7 +18,7 @@ if str(PROJECT_ROOT) not in sys.path:
 from apps.web_jobs import reconcile_stale_jobs_on_startup
 from apps.web_pages import render_home, render_job_page, render_module_page, render_result_page
 from apps.web_api import router as web_router
-from core.paths import resource_path
+from core.paths import default_input_path, resource_path
 from apps.settings_api import router as settings_router
 from apps.turnover_api import router as turnover_router
 from apps.warehouse_service import router as warehouse_router
@@ -53,8 +54,13 @@ def home() -> HTMLResponse:
 
 
 @pages_router.get("/warehouse-preview", response_class=HTMLResponse)
-def warehouse_preview() -> FileResponse:
-    return FileResponse(resource_path("apps/static/warehouse-preview.html"), headers={"Cache-Control": "no-cache"})
+def warehouse_preview() -> HTMLResponse:
+    layout = json.loads(default_input_path("data/warehouse_layout.json").read_text(encoding="utf-8"))
+    # JSON 作为数据内嵌，确保 iframe 的 load 事件发生前布局已初始化。
+    payload = json.dumps(layout, ensure_ascii=False).replace("<", "\\u003c").replace(">", "\\u003e").replace("&", "\\u0026")
+    page = resource_path("apps/static/warehouse-preview.html").read_text(encoding="utf-8")
+    page = page.replace("<!-- warehouse-layout -->", '<script id="warehouse-layout" type="application/json">' + payload + '</script>')
+    return HTMLResponse(page, headers={"Cache-Control": "no-cache"})
 
 
 @pages_router.get("/settings", response_class=HTMLResponse)

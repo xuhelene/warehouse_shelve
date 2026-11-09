@@ -1,0 +1,12 @@
+services:
+  warehouse:
+    image: warehouse-shelve:linux-amd64
+    platform: linux/amd64
+    pull_policy: never
+    ports:
+      - "${WAREHOUSE_PORT:-8010}:8010"
+    restart: unless-stopped
+    init: true
+    volumes:
+      - ./results:/app/results
+      - ./config:/app/config

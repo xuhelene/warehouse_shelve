@@ -5,6 +5,7 @@ __pycache__/
 .Python
 .venv/
 .venv-build/
+.venv-docker/
 venv/
 env/
 ENV/
@@ -27,3 +28,28 @@ results/
 .DS_Store
 Thumbs.db
 agents.md
+
+# Local benchmarks, fixtures and generated artifacts
+/.tmp/
+/outputs/
+/data/slotting/orders - 副本.csv
+/data/slotting/orders-in-[123].csv
+/data/testing/outbound_order_profile.json
+/doc/ALNS与VNS技术指标对比.md
+/doc/VNS拣货路径对比报告.md
+/doc/出库测试数据分布扩展报告.md
+/doc/拣货路径启发式测试报告.md
+/doc/立体库最小示例JSON字段说明.md
+/doc/货位推荐启发式测试报告.md
+/packaging/DOCKER_TEST_REPORT.md
+/tests/test_outbound_alns.py
+/tests/test_outbound_distribution.py
+/tests/test_outbound_vns.py
+/tests/test_warehouse_layout_json.py
+/tests/test_warehouse_ui_compat.js
+/tests/test_web_prefix.py
+/tools/compare_outbound_alns.py
+/tools/compare_outbound_vns.py
+/tools/fetch_all_remote_specs.py
+/tools/generate_outbound_distribution.py
+/tools/run_outbound_test_data.py
