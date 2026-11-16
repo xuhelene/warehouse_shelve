@@ -39,7 +39,13 @@
     tab.onclick=()=>{if(!loaded||busy)return;capture();current=tab.dataset.module;render();};
     tab.onkeydown=event=>{if(['ArrowLeft','ArrowRight','Home','End'].includes(event.key)){event.preventDefault();const tabs=Array.from(document.querySelectorAll('[role=tab]'));const target=event.key==='Home'?tabs[0]:event.key==='End'?tabs[1]:tabs.find(item=>item!==tab);target.click();target.focus();}};
   });
-  $('settings-form').oninput=()=>{capture();support();};$('backend').onchange=()=>{capture();support();};
+  $('settings-form').oninput=()=>{capture();support();};$('backend').onchange=()=>{
+    if(current==='picking_path'&&$('backend').value==='ortools'){
+      $('time-limit').value=10;
+      $('threads').value=8;
+    }
+    capture();support();
+  };
   $('defaults').onclick=()=>{if(!loaded||busy)return;capture();drafts[current]=current==='slotting'?{...defaults,time_limit_s:10,threads:1}:{...defaults};render();$('algorithm-status').textContent='已恢复当前 tab 的初始值，点击保存后写入后端。';};
   $('settings-form').onsubmit=async event=>{
     event.preventDefault();if(!loaded||busy)return;capture();
