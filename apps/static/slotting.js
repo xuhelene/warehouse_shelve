@@ -46,6 +46,7 @@
       const picking=apiBase.includes('picking');
       const backend=settings[picking?'picking_path':'slotting'].backend;
       $('algorithm').textContent=({heuristic:'启发式',copt:'COPT（杉数）',ortools:'OR-Tools'})[backend]||backend;
+      if(picking&&backend==='heuristic')$('algorithm').textContent+=' · '+(settings.picking_path.heuristic_algorithm||'VNS');
     }catch{$('algorithm').textContent='配置读取失败，请查看算法设置';}
   }
   showAlgorithm();

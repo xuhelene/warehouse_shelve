@@ -3,15 +3,20 @@
   const $=id=>document.querySelector('#algorithm-settings #'+id), defaults={backend:'heuristic',time_limit_s:60,threads:8,mip_gap:0.005};
   let current='slotting', drafts={}, saved={}, loaded=false, busy=false, persisted=false, version=0;
   const names={slotting:'入库推荐',picking_path:'拣货路径推荐'};
-  function capture(){if(loaded)drafts[current]={backend:$('backend').value,time_limit_s:Number($('time-limit').value),threads:Number($('threads').value),mip_gap:current==='slotting'?Number($('gap').value)/100:drafts[current].mip_gap};}
+  function capture(){if(loaded)drafts[current]={backend:$('backend').value,time_limit_s:Number($('time-limit').value),threads:Number($('threads').value),mip_gap:current==='slotting'?Number($('gap').value)/100:drafts[current].mip_gap,...(current==='picking_path'?{heuristic_algorithm:$('heuristic-algorithm').value}: {})};}
   function changed(){return JSON.stringify(drafts[current])!==JSON.stringify(saved[current]);}
   function support(){
-    const backend=$('backend').value, picking=current==='picking_path';
+    const backend=$('backend').value, picking=current==='picking_path', heuristic=picking&&backend==='heuristic';
+    $('threads-field').hidden=heuristic;$('threads').disabled=heuristic;
+    $('heuristic-algorithm-field').hidden=!heuristic;$('heuristic-algorithm').disabled=!heuristic;
+    $('heuristic-algorithm-help').textContent=$('heuristic-algorithm').value==='ALNS'?'ALNS：可尝试复杂、较大规模场景，当前效果待验证。':'VNS：用于简单、较小规模场景。';
     $('gap-field').hidden=picking||backend==='heuristic';$('gap').disabled=$('gap-field').hidden;
     $('threads-help').textContent='立体库启发式为单线程，threads及mip_gap不生效。';
     $('time-help').textContent='启发式在规划循环检查截止时间；超时返回失败并保存记录。不含数据准备及结果保存时间。';
     $('backend-help').textContent=backend==='heuristic'?'已接入立体库页面规划，结果不保证全局最优。':backend==='copt'?(picking?'联合优化分托和托内路径，最小化完整出库距离。需要有效COPT许可。':'已接入入库规划：最大化上架箱数，其次最短距离，层位偏好用于同优方案。需要有效COPT许可。'):'当前立体库规则尚不支持此后端。';
-    if(!picking&&backend==='ortools'){
+    if(heuristic){
+      $('time-help').textContent='选货与路径搜索共用时间上限；超时保留已有完整可行方案，不保证全局最优。';
+    }else if(!picking&&backend==='ortools'){
       $('backend-help').textContent='一托一位时使用最小费用匹配；允许混托时使用 SCIP。依次优化上架箱数、距离和层位偏好。';
       $('threads-help').textContent='线程数和相对间隙用于 SCIP；匹配采用单线程精确求解。';
       $('time-help').textContent='建模与求解共用时限；SCIP 超时保留已有可行解。';
@@ -31,7 +36,7 @@
   }
   function render(){
     const value=drafts[current];$('module-title').textContent=names[current];$('save').textContent=current==='slotting'?'保存入库配置':'保存拣货配置';
-    $('backend').value=value.backend;$('time-limit').value=value.time_limit_s;$('threads').value=value.threads;$('gap').value=Number((value.mip_gap*100).toFixed(8));
+    $('heuristic-algorithm').value=value.heuristic_algorithm||'VNS';$('backend').value=value.backend;$('time-limit').value=value.time_limit_s;$('threads').value=value.threads;$('gap').value=Number((value.mip_gap*100).toFixed(8));
     document.querySelectorAll('[role=tab]').forEach(tab=>{const active=tab.dataset.module===current;tab.setAttribute('aria-selected',String(active));tab.tabIndex=active?0:-1;if(active)$('panel').setAttribute('aria-labelledby',tab.id);});
     $('algorithm-status').textContent=persisted?'已读取后端配置 · 版本 '+version+'；立体库启发式已接入规划。':'当前显示初始值，尚未保存到后端。';support();
   }
@@ -46,7 +51,7 @@
     }
     capture();support();
   };
-  $('defaults').onclick=()=>{if(!loaded||busy)return;capture();drafts[current]=current==='slotting'?{...defaults,time_limit_s:10,threads:1}:{...defaults};render();$('algorithm-status').textContent='已恢复当前 tab 的初始值，点击保存后写入后端。';};
+  $('defaults').onclick=()=>{if(!loaded||busy)return;capture();drafts[current]=current==='slotting'?{...defaults,time_limit_s:10,threads:1}:{...defaults,heuristic_algorithm:'VNS'};render();$('algorithm-status').textContent='已恢复当前 tab 的初始值，点击保存后写入后端。';};
   $('settings-form').onsubmit=async event=>{
     event.preventDefault();if(!loaded||busy)return;capture();
     if(!$('settings-form').reportValidity())return;

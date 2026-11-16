@@ -2,7 +2,7 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import ValidationError
 
-from core.algorithm_settings import SolverSettings, read_settings, save_settings
+from core.algorithm_settings import SolverSettings, PickingSettings, read_settings, save_settings
 
 router = APIRouter(prefix="/api/settings", tags=["settings"])
 
@@ -16,9 +16,11 @@ def get_settings():
 
 
 @router.put("/{module}")
-def update_settings(module: str, values: SolverSettings):
+def update_settings(module: str, values: PickingSettings | SolverSettings):
     if module not in {"slotting", "picking_path"}:
         raise HTTPException(404, "未知算法模块")
+    if module == "slotting":
+        values = SolverSettings.model_validate(values.model_dump(exclude={"heuristic_algorithm"}))
     try:
         return save_settings(module, values)
     except (OSError, ValueError, ValidationError) as error:

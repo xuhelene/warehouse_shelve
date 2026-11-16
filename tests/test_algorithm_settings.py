@@ -3,7 +3,7 @@ import json
 import pytest
 from pydantic import ValidationError
 
-from core.algorithm_settings import SolverSettings, read_settings, save_settings
+from core.algorithm_settings import SolverSettings, PickingSettings, read_settings, save_settings
 
 
 def test_initial_values_do_not_write_file(tmp_path):
@@ -12,7 +12,19 @@ def test_initial_values_do_not_write_file(tmp_path):
     assert not path.exists()
     assert data["persisted"] is False
     assert data["slotting"] == dict(backend="heuristic", time_limit_s=10, threads=1, mip_gap=0.005)
-    assert data["picking_path"] == dict(backend="heuristic", time_limit_s=60, threads=8, mip_gap=0.005)
+    assert data["picking_path"] == dict(backend="heuristic", time_limit_s=60, threads=8, mip_gap=0.005, heuristic_algorithm="VNS")
+
+
+def test_picking_algorithm_persists_and_legacy_defaults_to_vns(tmp_path):
+    path = tmp_path / "settings.json"
+    save_settings("picking_path", PickingSettings(heuristic_algorithm="ALNS", time_limit_s=12), path)
+    assert read_settings(path)["picking_path"]["heuristic_algorithm"] == "ALNS"
+    raw = json.loads(path.read_text())
+    del raw["picking_path"]["heuristic_algorithm"]
+    path.write_text(json.dumps(raw))
+    assert read_settings(path)["picking_path"]["heuristic_algorithm"] == "VNS"
+    with pytest.raises(ValidationError):
+        PickingSettings(heuristic_algorithm="other")
 
 
 def test_tabs_save_independently_and_survive_reload(tmp_path):

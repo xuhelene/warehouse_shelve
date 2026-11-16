@@ -3,6 +3,7 @@ from time import monotonic
 
 from solvers.warehouse_outbound_copt import solve as solve_copt
 from solvers.warehouse_outbound_heuristic import solve
+from solvers.warehouse_outbound_alns import solve as solve_alns
 from solvers.warehouse_outbound_ortools import solve as solve_ortools
 
 
@@ -14,4 +15,8 @@ def plan(inventory, orders, capacities, layout, payload, config):
         return solve_copt(inventory, orders, capacities, layout, flag, config)
     if config["backend"] == "ortools":
         return solve_ortools(inventory, orders, capacities, layout, flag, config)
-    return solve(inventory, orders, capacities, layout, flag, monotonic() + config["time_limit_s"])
+    algorithm = config.get("heuristic_algorithm", "VNS")
+    if algorithm not in {"VNS", "ALNS"}:
+        raise ValueError("拣货启发式算法仅支持VNS、ALNS")
+    solver = solve_alns if algorithm == "ALNS" else solve
+    return solver(inventory, orders, capacities, layout, flag, monotonic() + config["time_limit_s"])

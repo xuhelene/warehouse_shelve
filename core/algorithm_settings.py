@@ -19,12 +19,16 @@ class SolverSettings(BaseModel):
     mip_gap: float = Field(default=0.005, ge=0, le=1)
 
 
+class PickingSettings(SolverSettings):
+    heuristic_algorithm: Literal["VNS", "ALNS"] = "VNS"
+
+
 class SettingsDocument(BaseModel):
     model_config = ConfigDict(extra="forbid")
     version: int = Field(default=0, ge=0)
     updated_at: str | None = None
     slotting: SolverSettings = Field(default_factory=lambda: SolverSettings(time_limit_s=10, threads=1))
-    picking_path: SolverSettings = Field(default_factory=SolverSettings)
+    picking_path: PickingSettings = Field(default_factory=PickingSettings)
 
 
 _lock = threading.Lock()
@@ -51,7 +55,8 @@ def save_settings(module: str, values: SolverSettings, path: Path | None = None)
     path = path or runtime_path("config/algorithm_config.json")
     with _lock:
         document = _read(path)
-        setattr(document, module, SolverSettings.model_validate(values.model_dump()))
+        model = PickingSettings if module == "picking_path" else SolverSettings
+        setattr(document, module, model.model_validate(values.model_dump()))
         document.version += 1
         document.updated_at = datetime.now(timezone.utc).isoformat()
         path.parent.mkdir(parents=True, exist_ok=True)
