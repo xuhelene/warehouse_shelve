@@ -19,7 +19,7 @@ def plan(inventory, orders, capacities, layout, payload, config):
     grades = calculate(path.read_bytes(), path.name, end_date)["rows"]
     grade_map = {(r["warehouse_code"], r["owner_code"], r["sku_id"]): r["grade"] for r in grades}
     if config["backend"] == "copt":
-        from solvers.warehouse_inbound_copt import solve as solve_copt
+        from solvers.warehouse_inbound_runtime import solve as solve_copt
         result = solve_copt(inventory, orders, capacities, layout, grade_map, config)
     elif config["backend"] == "ortools":
         from solvers.warehouse_inbound_ortools import solve as solve_ortools

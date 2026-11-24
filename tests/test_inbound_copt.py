@@ -34,16 +34,24 @@ class Model:
     def solve(self):
         self.status = self.solver.Solve()
 
+    def clear(self):
+        self.solver.Clear()
+
+    def getInfo(self, infoname, variables):
+        assert infoname == "Value"
+        return [variable.solution_value() for variable in variables]
+
     hasmipsol = property(lambda self: self.status in (0, 1))
     objval = property(lambda self: self.solver.Objective().Value())
     bestbnd = property(lambda self: self.solver.Objective().BestBound())
-    mipgap = property(lambda self: 0 if self.status == 0 else 1)
+    bestgap = property(lambda self: 0 if self.status == 0 else 1)
 
 
 @pytest.fixture
 def engine(monkeypatch):
     monkeypatch.setattr(pywraplp.Variable, "x", property(lambda v: v.solution_value()), raising=False)
     constants = SimpleNamespace(BINARY="B", MAXIMIZE=1, MINIMIZE=-1, OPTIMAL=0,
+                                Info=SimpleNamespace(Value="Value"),
                                 Param=SimpleNamespace(Threads="threads", RelGap="gap", TimeLimit="time"))
     from ortools.linear_solver.python.linear_solver_natural_api import SumArray
     monkeypatch.setattr(backend, "load_copt", lambda: (SimpleNamespace(quicksum=lambda terms: SumArray(list(terms))), constants))
@@ -65,6 +73,7 @@ def execute(case):
 def test_all_requirement_invariants(engine, case):
     result = execute(case)
     assert len(result["solver_stages"]) == 3
+    assert result["optimality"] == "optimal"
 
 
 def test_box_priority_over_tail_count(engine):
@@ -78,7 +87,8 @@ def test_box_priority_over_tail_count(engine):
 def test_distance_before_preference(engine):
     case = scenarios()[0]
     case.update(orders=[row(qty=40)], inventory=[], slots=["C15-45-2", "C15-1-3"], grades=[["WH", "O", "A", "高"]])
-    assert execute(case)["assignments"][0]["slot_id"] == "C15-1-3"
+    result = execute(case)
+    assert result["assignments"][0]["slot_id"] == "C15-1-3"
 
 
 def test_global_capacity_selection(engine):
@@ -112,7 +122,15 @@ def test_builtin_cli_suite(engine, tmp_path):
     assert main(["--output", str(tmp_path)]) == 0
 
 
-def test_service_routes_copt_and_saves_failure(engine, tmp_path, monkeypatch):
+@pytest.fixture
+def managed_copt_runtime():
+    from solvers.warehouse_inbound_runtime import start_runtime, shutdown_runtime
+    start_runtime()
+    yield
+    shutdown_runtime()
+
+
+def test_service_routes_copt_and_saves_failure(engine, tmp_path, monkeypatch, managed_copt_runtime):
     from apps import warehouse_service
     from core import sku_turnover
     monkeypatch.setattr(sku_turnover, "read_latest", lambda: None)
@@ -123,12 +141,20 @@ def test_service_routes_copt_and_saves_failure(engine, tmp_path, monkeypatch):
     assert result["status"] == "feasible"
     assert result["backend"] == "copt"
     assert result["solver_stages"]
-    def fail(*args):
+    import json
+    saved_input = json.loads((tmp_path / result["run_id"] / "input.json").read_text(encoding="utf-8"))
+    assert saved_input["effective_solver_config"] == result["effective_solver_config"]
+    assert result["effective_solver_config"]["copt_read_mode"] == "bulk"
+    assert result["copt_runtime"]["profile"] == "optimized_inbound"
+    second = warehouse_service.plan("slotting", case, output_root=tmp_path, settings=settings)
+    assert second["environment_reused"] is True
+    def fail(*args, **kwargs):
         raise RuntimeError("license expired")
     monkeypatch.setattr(backend, "solve", fail)
     result = warehouse_service.plan("slotting", case, output_root=tmp_path, settings=settings)
     assert result["status"] == "failed"
     assert "license expired" in result["message"]
+    assert result["copt_runtime"]["profile"] == "optimized_inbound"
     assert (tmp_path / result["run_id"] / "result.json").exists()
 
 
@@ -140,6 +166,7 @@ def test_timeout_preserves_incumbent(engine, monkeypatch):
     monkeypatch.setattr(Model, "solve", timed_out)
     result = execute(scenarios()[0])
     assert len(result["solver_stages"]) == 1
+    assert result["optimality"] == "not_proven"
     assert result["warnings"]
 
 

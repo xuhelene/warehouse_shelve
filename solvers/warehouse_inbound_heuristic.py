@@ -111,7 +111,7 @@ def solve(inventory, orders, capacities, layout, grades, deadline):
             detail["unit"] = "箱"
             assignments.append(detail)
             stock.append(deepcopy(detail))
-    return dict(status="partial" if unassigned else "feasible", assignments=assignments,
+    return dict(status="partial" if unassigned else "feasible", optimality="not_proven", assignments=assignments,
                 remaining_inventory=stock, unassigned=unassigned, warnings=warnings, legs=legs,
                 total_distance=sum(leg["distance"] for leg in legs),
                 message="库位不足，需要移库" if unassigned else "入库启发式规划完成")

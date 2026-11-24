@@ -65,6 +65,6 @@ def match(groups, empty, layout, deadline):
         sum(legs[s]["distance"] for _, s in selected),
         sum(layout.slots[s]["level"] not in preferred_levels(groups[i]) for i, s in selected),
     )
-    stages = [dict(name=name, status=0, objective=float(value), best_bound=float(value), mip_gap=0)
+    stages = [dict(name=name, status=0, objective=float(value), best_bound=float(value), mip_gap=0, proven_optimal=True)
               for name, value in zip(("quantity", "distance", "preference"), values)]
     return selected, stages

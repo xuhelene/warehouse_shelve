@@ -107,14 +107,18 @@ def plan(operation, payload, *, output_root=None, settings=None):
         raise ValueError("未知任务")
     settings = settings or read_settings()
     config = settings[operation]
+    if operation == "slotting" and config["backend"] == "copt":
+        from solvers.warehouse_inbound_runtime import optimized_config
+        config = optimized_config(config)
     run_id = uuid4().hex
     folder = (output_root or runtime_path("results/warehouse")) / run_id
     folder.mkdir(parents=True)
     request = deepcopy(payload)
-    request.update(operation=operation, settings=settings)
+    request.update(operation=operation, settings=settings, effective_solver_config=config)
     (folder / "input.json").write_text(json.dumps(request, ensure_ascii=False, indent=2), encoding="utf-8")
     result = dict(run_id=run_id, operation=operation, status="failed", backend=config["backend"],
                   settings=settings, source=payload.get("source", "file_snapshot"), started_at=datetime.now(timezone.utc).isoformat(),
+                  effective_solver_config=config,
                   shortages=[], unassigned=[], warnings=[], layer_weight=payload.get("layer_weight", 1))
     try:
         if config["backend"] not in {"heuristic", "copt", "ortools"}:
@@ -146,6 +150,9 @@ def plan(operation, payload, *, output_root=None, settings=None):
                                 edges=[dict(start=a, end=b, distance=d) for a, targets in layout.graph.items() for b, d in targets.items() if a < b])
     except (ValueError, RuntimeError, TimeoutError, OSError, BadZipFile, NotImplementedError) as error:
         result.update(status="failed", message=str(error))
+        for field in ("timings", "solution_read", "objective_strategy", "copt_runtime"):
+            if hasattr(error, field):
+                result[field] = getattr(error, field)
     result["finished_at"] = datetime.now(timezone.utc).isoformat()
     # Decimal保留为十进制字符串，避免把1瓶回写为1.002瓶。
     text = json.dumps(result, ensure_ascii=False, indent=2, default=lambda x: str(x) if isinstance(x, Decimal) else x)

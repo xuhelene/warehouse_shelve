@@ -24,6 +24,9 @@ from apps.turnover_api import router as turnover_router
 from apps.warehouse_service import router as warehouse_router
 
 
+from solvers.warehouse_inbound_runtime import start_runtime, shutdown_runtime
+
+
 URL_PREFIX = "/whshelve"
 
 app = FastAPI(
@@ -43,9 +46,15 @@ app.mount(f"{URL_PREFIX}/static", StaticFiles(directory=str(resource_path("apps/
 
 @app.on_event("startup")
 def _cleanup_stale_jobs() -> None:
+    start_runtime()
     reconciled = reconcile_stale_jobs_on_startup()
     if reconciled > 0:
         print(f"[startup] Marked {reconciled} interrupted job(s) as failed on restart.")
+
+
+@app.on_event("shutdown")
+def _close_copt_inbound() -> None:
+    shutdown_runtime()
 
 
 @pages_router.get("/", response_class=HTMLResponse)

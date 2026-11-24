@@ -1,13 +1,14 @@
 """使用 OR-Tools 的 SCIP 后端逐阶段求解立体库入库模型。"""
-from time import monotonic
+from time import monotonic, perf_counter
 
 from modules.slotting.inbound_model import (
     build_assignment_model, build_result, preferred_levels, prepare_groups,
+    aggregate_groups, expand_selection, model_statistics,
 )
 from solvers.warehouse_inbound_matching import match
 
 
-def solve(inventory, orders, capacities, layout, grades, config):
+def solve(inventory, orders, capacities, layout, grades, config, *, use_matching=True):
     try:
         from ortools.linear_solver import linear_solver_pb2, pywraplp
     except (ImportError, OSError) as error:
@@ -23,7 +24,7 @@ def solve(inventory, orders, capacities, layout, grades, config):
     groups, occupied, empty, allow_mix = prepare_groups(
         inventory, orders, capacities, layout, grades, deadline,
     )
-    if groups and not allow_mix:
+    if use_matching and groups and not allow_mix:
         matched = match(groups, empty, layout, deadline)
         if matched is not None:
             selected, stages = matched
@@ -31,6 +32,8 @@ def solve(inventory, orders, capacities, layout, grades, config):
             result = build_result(inventory, layout, groups, occupied, allow_mix, selected, stages, warnings, started, "OR-Tools")
             result["solver_method"] = "min_cost_flow"
             return result
+    original_groups = groups
+    groups = aggregate_groups(groups, empty, layout, config.get("aggregate_full", False), deadline)
     model = pywraplp.Solver.CreateSolver("SCIP")
     threads = config["threads"]
     if model is None:
@@ -46,7 +49,7 @@ def solve(inventory, orders, capacities, layout, grades, config):
     params = pywraplp.MPSolverParameters()
     for name, objective in (("quantity", quantity), ("distance", distance), ("preference", penalty)):
         if not x:
-            stages.append(dict(name=name, status=model.OPTIMAL, objective=0, best_bound=0, mip_gap=0, trivial=True))
+            stages.append(dict(name=name, status=model.OPTIMAL, objective=0, best_bound=0, mip_gap=0, trivial=True, proven_optimal=True, solve_time_s=0))
             continue
         if name == "quantity":
             model.Maximize(objective)
@@ -76,7 +79,9 @@ def solve(inventory, orders, capacities, layout, grades, config):
             break
         stage_model.SetTimeLimit(max(1, int(remaining * 1000)))
         params.SetDoubleParam(params.RELATIVE_MIP_GAP, config.get("mip_gap", 0.005) if name == "preference" else 0)
+        solve_started = perf_counter()
         status = stage_model.Solve(params)
+        stage_seconds = perf_counter() - solve_started
         if status not in (model.OPTIMAL, model.FEASIBLE):
             if stages:
                 warnings.append("后续阶段未找到可行解，保留前一阶段方案")
@@ -88,7 +93,8 @@ def solve(inventory, orders, capacities, layout, grades, config):
         if threads > 1:
             del stage_variables, stage_model
         gap = abs(value - bound) / max(abs(value), 1e-10)
-        stages.append(dict(name=name, status=status, objective=value, best_bound=bound, mip_gap=gap))
+        stages.append(dict(name=name, status=status, objective=value, best_bound=bound, mip_gap=gap, solve_time_s=stage_seconds,
+                           proven_optimal=status == model.OPTIMAL and gap <= 1e-8))
         if status != model.OPTIMAL or gap > 1e-8:
             warnings.append(f"{name}阶段未证明最优，返回当前可行方案")
             break
@@ -96,6 +102,8 @@ def solve(inventory, orders, capacities, layout, grades, config):
             model.Add(objective == value)
     if not stages:
         raise TimeoutError("入库建模达到时间上限，未生成可行方案")
-    result = build_result(inventory, layout, groups, occupied, allow_mix, selected, stages, warnings, started, "OR-Tools")
+    result = build_result(inventory, layout, original_groups, occupied, allow_mix,
+                          expand_selection(selected, groups), stages, warnings, started, "OR-Tools")
+    result["model_stats"] = model_statistics(original_groups, groups, x, config.get("aggregate_full", False))
     result["solver_method"] = "scip"
     return result

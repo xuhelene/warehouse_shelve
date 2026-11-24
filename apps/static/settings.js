@@ -23,8 +23,9 @@
       $('threads-help').textContent='COPT使用配置线程数。';
       $('time-help').textContent='选货、建模和求解共用时间上限；若已有完整可行路径则保留。';
     }else if(backend==='copt'){
-      $('threads-help').textContent='COPT使用配置线程数；相对间隙仅用于最后的层位偏好阶段。';
-      $('time-help').textContent='各目标阶段共用时间上限（含建模）；超时保留可行解并标明未证明最优。';
+      $('backend-help').textContent='入库使用整托聚合、环境复用、批量读取及精确距离缓存；数量优先，其次距离，再次层位偏好。';
+      $('threads-help').textContent='线程数用于单个模型内部；合并目标使用零间隙，所设相对间隙仅用于回退三阶段后的偏好目标。';
+      $('time-help').textContent='建模与求解共用时限，不含排队；每进程串行求解，最多排队8个请求，超出提示繁忙。';
     }
     $('dirty').textContent=changed()?'有未保存修改':'未修改';
     $('save').disabled=!loaded||busy;
